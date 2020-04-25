@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\panier;
+use App\Panier;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PanierController extends Controller
 {
@@ -14,7 +15,10 @@ class PanierController extends Controller
      */
     public function index()
     {
-        //
+        $list_panier = Auth::user()->paniers()->get();
+        return view('panier/index',[
+            'list_panier' => $list_panier,
+        ]);
     }
 
     /**
@@ -34,8 +38,13 @@ class PanierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {     
+        $panier = new Panier();
+        $panier->user_id = Auth::id();
+        $panier->prod_id = $request->prod_id;
+        $panier->quantity_prod = 1;
+        $panier->save();
+        return redirect()->route('home')->with('AddPanier','Le produit a été ajouter avec succées');
     }
 
     /**
@@ -46,7 +55,9 @@ class PanierController extends Controller
      */
     public function show(panier $panier)
     {
-        //
+        return view('panier.show',[
+            'panier' => $panier
+        ]);
     }
 
     /**
@@ -57,7 +68,9 @@ class PanierController extends Controller
      */
     public function edit(panier $panier)
     {
-        //
+        return view('panier.edit',[
+            'panier'=>$panier
+        ]);
     }
 
     /**
@@ -69,7 +82,9 @@ class PanierController extends Controller
      */
     public function update(Request $request, panier $panier)
     {
-        //
+        $panier->quantity_prod=$request->quantity_prod;
+        $panier->update();
+        return redirect()->route('panier.index')->with('AddPanier','Le produit a été modifié avec succées');
     }
 
     /**
@@ -80,6 +95,7 @@ class PanierController extends Controller
      */
     public function destroy(panier $panier)
     {
-        //
+        $panier->delete();
+        return redirect()->route('panier.index');
     }
 }

@@ -31,7 +31,10 @@
         <!-- Product Catagories Area Start -->
         <div class="container products-catagories-area clearfix " ><!---->
             <div class="row amado-pro-catagory clearfix"><!---->
+            
             @foreach ($produit  as $prod)
+            <form action="{{route('panier.store')}}" method="post">
+            @csrf
                 <!-- Single Catagory -->
                 <div class="col-sm-4 "><!--class=""-->
                     <a href="#">
@@ -41,9 +44,12 @@
                             <div class="line"></div>
                             <p>From ${{$prod['price']}}</p>
                             <h4>{{$prod['name']}}</h4>
+                            <input type="hidden" name="prod_id" id="prod_id" value="{{$prod->id}}">
+                            <button type="submit">ajouter au panier</button>
                         </div>
                     </a>
                 </div>
+                </form>
             @endforeach
                 
             </div>
