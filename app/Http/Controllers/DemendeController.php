@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\demende;
+use App\Produit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DemendeController extends Controller
 {
@@ -14,7 +16,21 @@ class DemendeController extends Controller
      */
     public function index()
     {
-        //
+        
+        $produits = Produit::all();
+        if(Auth::user()->role == 'admin'){
+            $attenteDemandes= Produit::attenteDemandes()->get();
+            $accepteeDemandes= Produit::accepteeDemandes()->get();
+        }
+        /*else{
+            $attenteCommandes = Auth::user()->commandes()->attenteCommandes()->get();
+            $accepteeCommandes= Auth::user()->commandes()->accepteeCommandes()->get();
+        }*/
+
+        return view('admin.Demande.Demandeindex',[
+            'attenteDemandes'=>$attenteDemandes,
+            'accepteeDemandes'=>$accepteeDemandes,
+        ]);
     }
 
     /**

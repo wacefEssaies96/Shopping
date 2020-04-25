@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth','admin']],function(){
         return view('admin.dashboard');
        })->name('admin.dashboard');
        Route::resource('/admin/commandes', 'CommandeController'); 
+       Route::resource('/admin/Demandes', 'DemendeController');
 });
 Route::middleware('auth')->group(function () {
 
