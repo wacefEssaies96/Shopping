@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\commande;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommandeController extends Controller
 {
@@ -14,7 +15,18 @@ class CommandeController extends Controller
      */
     public function index()
     {
-        //
+        if(Auth::user()->role == 'admin'){
+            $attenteCommandes= commande::attenteCommandes()->get();
+            $accepteeCommandes= commande::accepteeCommandes()->get();
+        }
+        else{
+            $attenteCommandes = Auth::user()->commandes()->attenteCommandes()->get();
+            $accepteeCommandes= Auth::user()->commandes()->accepteeCommandes()->get();
+        }
+        return view('admin.commande.index',[
+            'attenteCommandes'=>$attenteCommandes,
+            'accepteeCommandes'=>$accepteeCommandes,
+        ]);
     }
 
     /**

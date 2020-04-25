@@ -17,6 +17,7 @@ class CreateCommandesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('prod_id')->unsigned();;
             $table->bigInteger('user_id')->unsigned();;
+            $table->integer('confirm');
             $table->integer('quantity_prod');
             $table->integer('livraison');
             $table->foreign('user_id')->references('id')->on('users');

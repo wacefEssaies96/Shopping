@@ -11,6 +11,7 @@ $factory->define(Commande::class, function (Faker $faker) {
     return [
         'prod_id' =>  Produit::get('id')->random(),
         'user_id' => User::get('id')->random(),
+        'confirm' =>$faker->biasedNumberBetween(0,1),
         'quantity_prod' =>$faker->biasedNumberBetween(0,100), 
         'livraison' =>$faker->biasedNumberBetween(0,1),
         'created_at' => now(),

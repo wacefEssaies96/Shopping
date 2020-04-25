@@ -14,5 +14,10 @@ class Commande extends Model
    {
       return $this->hasMany('App\Produit');
    }
-  
+   public function scopeAttentecommandes($query){
+      return $query->where('confirm', '=', 0)->orderBy('created_at', 'desc');
+   }
+   public function scopeAccepteecommandes($query){
+      return $query->where('confirm', '=', 1)->orderBy('created_at', 'desc');
+   }
 }
