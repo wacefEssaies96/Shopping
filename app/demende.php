@@ -20,3 +20,4 @@ class Demende extends Model
        return $query->where('status', '!=', 'New')->orderBy('created_at', 'desc');
     }
 }
+
