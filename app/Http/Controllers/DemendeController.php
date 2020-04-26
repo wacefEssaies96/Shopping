@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\demende;
-use App\Produit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,16 +16,14 @@ class DemendeController extends Controller
     public function index()
     {
         
-        $produits = Produit::all();
         if(Auth::user()->role == 'admin'){
-            $attenteDemandes= Produit::attenteDemandes()->get();
-            $accepteeDemandes= Produit::accepteeDemandes()->get();
+            $attenteDemandes= demende::attenteDemandes()->get();
+            $accepteeDemandes= demende::accepteeDemandes()->get();
         }
-        /*else{
-            $attenteCommandes = Auth::user()->commandes()->attenteCommandes()->get();
-            $accepteeCommandes= Auth::user()->commandes()->accepteeCommandes()->get();
-        }*/
-
+        else{
+            $attenteDemandes = Auth::user()->commandes()->attenteDemandes()->get();
+            $accepteeDemandes= Auth::user()->commandes()->accepteeDemandes()->get();
+        }
         return view('admin.Demande.Demandeindex',[
             'attenteDemandes'=>$attenteDemandes,
             'accepteeDemandes'=>$accepteeDemandes,
@@ -51,7 +48,14 @@ class DemendeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $demende = new demende;
+        $demende->id_user = Auth::id();
+        $demende->id_prod = $request->id_prod;
+        $demende->save();
+
+        return redirect()->route('Produit.index')->with('AddProduit', 'New Produit added successfully');
+    
     }
 
     /**

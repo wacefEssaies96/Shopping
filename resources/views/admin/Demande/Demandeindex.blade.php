@@ -21,19 +21,22 @@
               <th>#</th>
               <th>id produit</th>
               <th>User ID</th>
+              <th>Status</th>
               <th>Date</th>
               <th>Actions</th>
             </thead>
             <tbody>
             @foreach ($attenteDemandes as $demande)
-              <tr>
-                <th scope="row"><?=$counter++;?></th>
-                <td>{{$demande->prod_id}}</td>
-                <td>{{$demande->user_id}}</td>
-                <td>{{date('d-m-Y h:i', strtotime($demande->created_at))}}</td>
-                <td><a href="#" class="btn btn-success">Accepter</a></td>
-                <td><a href="#" class="btn btn-danger">Refuser</a></td>
-              </tr>
+                <tr>
+                  <th scope="row"><?=$counter++;?></th>
+                  <td>{{$demande->id_prod}}</td>
+                  <td>{{$demande->id_user}}</td>
+                  <td>{{$demande->status}}</td>
+                  <td>{{date('d-m-Y h:i', strtotime($demande->created_at))}}</td>
+                  <td><a href="#" class="btn btn-primary">Consulter</a></td>
+                  <td><a href="#" class="btn btn-success">Accepter</a></td>
+                  <td><a href="#" class="btn btn-danger">Refuser</a></td>
+                </tr>
             @endforeach
             </tbody>
           </table>
@@ -55,18 +58,21 @@
               <th>#</th>
               <th>id produit</th>
               <th>User ID</th>
+              <th>Status</th>
               <th>Date</th>
               <th>Actions</th>
             </thead>
             <tbody>
             @foreach ($accepteeDemandes as $demande)
-              <tr>
-                <th scope="row"><?=$counter++;?></th>
-                <td>{{$demande->prod_id}}</td>
-                <td>{{$demande->user_id}}</td>
-                <td>{{date('d-m-Y h:i', strtotime($demande->created_at))}}</td>
-                <td><a href="#" class="btn btn-danger">Supprimer</a></td>
-              </tr>
+                <tr>
+                  <th scope="row"><?=$counter++;?></th>
+                  <td>{{$demande->id_prod}}</td>
+                  <td>{{$demande->id_user}}</td>
+                  <td>{{$demande->status}}</td>
+                  <td>{{date('d-m-Y h:i', strtotime($demande->created_at))}}</td>
+                  <td><a href="#" class="btn btn-primary">Consulter</a></td>
+                  <td><a href="#" class="btn btn-danger">Supprimer</a></td>
+                </tr>
             @endforeach
             </tbody>
           </table>

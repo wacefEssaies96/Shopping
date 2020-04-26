@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProduitController extends Controller
 {
+    
 
     /**
      * Create a new controller instance.
@@ -75,7 +76,7 @@ class ProduitController extends Controller
 
         $Produit->save();
 
-        return redirect()->route('Produit.index')->with('AddProduit', 'New Produit added successfully');
+        return redirect()->route('Demandes.store')->with('Produit', $Produit);
     
     }
 
