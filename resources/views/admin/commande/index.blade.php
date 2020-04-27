@@ -43,7 +43,7 @@
                 <td>{{$commande->quantity_prod}}</td>
                 <td>{{$commande->livraison==1?"Livré":"Non livré"}}</td>
                 <td>{{date('d-m-Y h:i', strtotime($commande->created_at))}}</td>
-                <td><a href="/commande/accept/{{$commande->id}}" class="btn btn-success">Accepter</a></td>
+                <td><a href="/commande/approve/{{$commande->id}}" class="btn btn-success">Accepter</a></td>
                 <td><a href="/commande/delete/{{$commande->id}}" class="btn btn-danger delete"
                 data-toggle="modal" data-target="#confirmDeletionModal">Refuser</a>
                        

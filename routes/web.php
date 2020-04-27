@@ -49,3 +49,4 @@ Route::middleware('auth')->group(function () {
 
 //Commandes routes
 Route::delete('/commande/delete/{id}', 'CommandeController@destroy')->name('commande.destroy');
+Route::get('/commande/approve/{id}', 'CommandeController@approve')->name('commande.approve');
