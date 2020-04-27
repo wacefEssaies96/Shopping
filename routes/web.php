@@ -46,3 +46,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('/panier','PanierController');
     
 });
+
+//Commandes routes
+Route::delete('/commande/delete/{id}', 'CommandeController@destroy')->name('commande.destroy');

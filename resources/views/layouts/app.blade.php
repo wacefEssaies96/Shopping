@@ -57,6 +57,8 @@
     <link href="{{ asset('scss/_variables.scss') }}" rel="stylesheet">
     <link href="{{ asset('scss/style.scss') }}" rel="stylesheet">
     
+</script>
+    
 </head>
 <body>
     <div id="app">
