@@ -34,7 +34,7 @@ Auth::routes();
 
 
 Route::group(['middleware' => ['auth','admin']],function(){
-    Route::get('/dashboard',function(){
+    Route::get('/admin/dashboard',function(){
         return view('admin.dashboard');
        })->name('admin.dashboard');
        Route::resource('/admin/commandes', 'CommandeController'); 
