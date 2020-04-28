@@ -22,8 +22,8 @@ class DemendeController extends Controller
             $accepteeDemandes= demende::accepteeDemandes()->get();
         }
         else{
-            $attenteDemandes = Auth::user()->commandes()->attenteDemandes()->get();
-            $accepteeDemandes= Auth::user()->commandes()->accepteeDemandes()->get();
+            $attenteDemandes = Auth::user()->demendes()->attenteDemandes()->get();
+            $accepteeDemandes= Auth::user()->demendes()->accepteeDemandes()->get();
         }
         return view('admin.Demande.Demandeindex',[
             'attenteDemandes'=>$attenteDemandes,
@@ -47,16 +47,20 @@ class DemendeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id)
+    public function store(Request $request)
     {
-        // dd($id);  
         $demende = new demende;
         
         $demende->id_user = Auth::id();
-        $demende->id_prod = 1; //problem $request->prod;
+        $demende->id_prod = $request->prod;
         $demende->status = "New";
         $demende->save();
 
+        $PD = Produit::findOrFail($request->prod);
+        $PD->DemandeEnvoyer = 1;
+        $PD->DtEvoyerDm = $demende->created_at;
+        
+        $PD->save();
         return redirect()->route('Produit.index')->with('AddDemande', 'Demande Envoyer successfully');
     
     }
@@ -101,8 +105,17 @@ class DemendeController extends Controller
      * @param  \App\demende  $demende
      * @return \Illuminate\Http\Response
      */
-    public function destroy(demende $demende)
+    public function destroy($id)
     {
-        //
+        
+        $PD = Produit::findOrFail($id);
+
+        demende::where('id_prod', $id)->where('created_at',$PD->DtEvoyerDm)->delete();
+
+        $PD->DemandeEnvoyer = 0;
+        $PD->DtEvoyerDm = null;
+        $PD->save();
+
+        return redirect()->route('Produit.index')->with('deleteDemande', 'Demande deleted successfully');
     }
 }

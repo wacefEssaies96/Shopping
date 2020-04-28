@@ -15,7 +15,9 @@ $factory->define(Produit::class, function (Faker $faker) {
         'photo' =>  $faker->biasedNumberBetween(1,6) .  '.jpg',
         'description' =>$faker->sentence,
         'categorie' => $faker->sentence,
-        'confirm' => $faker->biasedNumberBetween(0,1),
+        'DemandeEnvoyer' => 0,
+        'confirm' => 0,
+        'DtEvoyerDm' => null,
         'created_at' => now(),
         'updated_at' => now(),
         

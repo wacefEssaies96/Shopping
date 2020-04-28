@@ -60,6 +60,7 @@ class ProduitController extends Controller
         $Produit->quantity = $request->quantity;
         $Produit->description = $request->description;
         $Produit->categorie = $request->categorie;
+        $Produit->DemandeEnvoyer = 0;
         $Produit->confirm = 0;
         $Produit->photo = $request->photo;
 
