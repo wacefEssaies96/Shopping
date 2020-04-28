@@ -76,7 +76,8 @@ class ProduitController extends Controller
 
         $Produit->save();
 
-        return redirect()->route('Demandes.store')->with('Produit', $Produit);
+        return redirect()->route('Produit.index')->with('AddProduit', 'Vous avez ajouter un Produit');
+    
     
     }
 
@@ -130,6 +131,7 @@ class ProduitController extends Controller
         //$validatedData = $request->validate($this->validationRules());
         //$Produit->update($validatedData);
         //return redirect()->route('Produit.show', $Produit->id)->with('updateProduit', 'Produit updated successfully');
+    
     }
 
     /**

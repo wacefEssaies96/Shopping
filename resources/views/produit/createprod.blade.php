@@ -4,7 +4,7 @@
 
 @section('content')
     <fieldset>
-        <legend>New booking</legend>
+        <legend>Ajouter Produit</legend>
         <form action="{{ route('Produit.store') }}" method="post">
             @csrf
 
@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <br>
-                <button type="submit" name="submit" class="btn btn-primary">Envoyer la demande </button>
+                <button type="submit" name="submit" class="btn btn-primary"> Ajouter </button>
             </div>
         </form>
     </fieldset>

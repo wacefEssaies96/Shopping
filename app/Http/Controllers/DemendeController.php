@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Produit;
 use App\demende;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,15 +47,17 @@ class DemendeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-
+        // dd($id);  
         $demende = new demende;
+        
         $demende->id_user = Auth::id();
-        $demende->id_prod = $request->id_prod;
+        $demende->id_prod = 1; //problem $request->prod;
+        $demende->status = "New";
         $demende->save();
 
-        return redirect()->route('Produit.index')->with('AddProduit', 'New Produit added successfully');
+        return redirect()->route('Produit.index')->with('AddDemande', 'Demande Envoyer successfully');
     
     }
 

@@ -21,6 +21,7 @@ Auth::routes();
 
    
 Route::get('/','HomeController@index')->name('home.index');
+
 Route::get('/home','HomeController@index')->name('home.index2');
 
 Route::get('/index', 'ProduitController@index');
@@ -45,4 +46,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('/Produit', 'ProduitController');
     Route::resource('/panier','PanierController');
+    
 });

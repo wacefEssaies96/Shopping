@@ -25,10 +25,43 @@
 <div class="row">
     <div class="col">
         <ul class="list-group">
+            <div class="row">
+                <div class="col-lg-2">
+                    Nom de Produit
+                </div>
+                <div class="col-lg-4 text-center">
+                    Operation
+                </div>
+            </div>
             @foreach ($produits as $prod)
-            <a href="{{ route('Produit.show', $prod->id) }}">
-                {{$prod->name}}
-            </a>
+            
+            <div class="row">
+                <div class="col-lg-2">
+                    {{$prod->name}}
+                </div>
+                <div class="col-lg-2">
+                    <a href="{{ route('Produit.show', $prod->id) }}">
+                        Consulter
+                    </a>
+                </div>
+                <div class="col-lg-2">
+                    @if($prod->confirm)
+                        Demande Envoyer
+                    @else
+                    <form action="#" method="post">
+                    <!-- {{ route('Demandes.store') }} -->
+                         @csrf
+                        
+                        <input type="text" name="prod" value="{{$prod->id}}"  id="prod" class="form-control" disabled>
+                            
+                        <button type="submit" name="submit" class="btn btn-primary">Envoyer une Demande </button>
+                    </form>
+                        <!-- <a href="{{ route('Demandes.store') }}">
+                            Envoyer une Demande
+                        </a> -->
+                    @endif
+                </div>
+            </div>
             @endforeach
         </ul>
     </div>
