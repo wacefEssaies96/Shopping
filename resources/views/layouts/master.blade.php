@@ -232,4 +232,6 @@
 
 </body>
 
+<!-- Ici les boites de confirmations -->
+
 </html>

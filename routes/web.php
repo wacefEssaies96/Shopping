@@ -35,7 +35,7 @@ Auth::routes();
 
 
 Route::group(['middleware' => ['auth','admin']],function(){
-    Route::get('/dashboard',function(){
+    Route::get('/admin/dashboard',function(){
         return view('admin.dashboard');
        })->name('admin.dashboard');
        Route::resource('/admin/commandes', 'CommandeController'); 
@@ -48,3 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/panier','PanierController');
     
 });
+
+//Commandes routes
+Route::delete('/commande/delete/{id}', 'CommandeController@destroy')->name('commande.destroy');
+Route::get('/commande/approve/{id}', 'CommandeController@approve')->name('commande.approve');
