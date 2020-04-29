@@ -69,25 +69,7 @@
                                 <a href="#" class="btn btn-outline-danger" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">
                                     Anuuler cette Demande
                                 </a>
-                        @else
-                        <form action="{{ route('Demandes.store') }}" method="post">
-                            @csrf
-                            
-                            <input type="hidden" name="prod" value="{{$prod['id']}}"  id="prod" class="form-control" >
-                                
-                            <button type="submit" name="submit" class="btn btn-primary">Envoyer une Demande </button>
-                        </form>
-                        @endif
-                    @endif
-                </div>
-            </div>
-            @endforeach
-        </ul>
-    </div>
-</div>
-
-
-  <!-- Modal -->
+                                <!-- Modal -->
   <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -113,4 +95,23 @@
       </div>
     </div>
   </div>
+                        @else
+                        <form action="{{ route('Demandes.store') }}" method="post">
+                            @csrf
+                            
+                            <input type="hidden" name="prod" value="{{$prod['id']}}"  id="prod" class="form-control" >
+                                
+                            <button type="submit" name="submit" class="btn btn-primary">Envoyer une Demande </button>
+                        </form>
+                        @endif
+                    @endif
+                </div>
+            </div>
+            @endforeach
+        </ul>
+    </div>
+</div>
+
+
+  
 @endsection

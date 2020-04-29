@@ -58,7 +58,7 @@
             </a>
           </li>
           <li>
-            <a href="./user.html">
+            <a href="/register">
               <i class="now-ui-icons users_single-02"></i>
               <p>User Profile</p>
             </a>

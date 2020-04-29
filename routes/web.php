@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth','admin']],function(){
     Route::get('/admin/dashboard',function(){
         return view('admin.dashboard');
        })->name('admin.dashboard');
+       Route::get('/register','Admin\DashboardController@registered');
        Route::resource('/admin/commandes', 'CommandeController'); 
        Route::resource('/admin/Demandes', 'DemendeController');
 });
