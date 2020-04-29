@@ -22,8 +22,10 @@ class CreateProduitsTable extends Migration
             $table->integer('quantity');
             $table->text('description');
             $table->string('categorie');
-            $table->integer('confirm');
+            $table->integer('DemandeEnvoyer')->nullable();
+            $table->integer('confirm')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->datetime('DtEvoyerDm')->nullable();
             $table->timestamps();
            
         });

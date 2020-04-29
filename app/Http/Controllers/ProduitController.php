@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProduitController extends Controller
 {
+    
 
     /**
      * Create a new controller instance.
@@ -59,6 +60,7 @@ class ProduitController extends Controller
         $Produit->quantity = $request->quantity;
         $Produit->description = $request->description;
         $Produit->categorie = $request->categorie;
+        $Produit->DemandeEnvoyer = 0;
         $Produit->confirm = 0;
         $Produit->photo = $request->photo;
 
@@ -75,7 +77,8 @@ class ProduitController extends Controller
 
         $Produit->save();
 
-        return redirect()->route('Produit.index')->with('AddProduit', 'New Produit added successfully');
+        return redirect()->route('Produit.index')->with('AddProduit', 'Vous avez ajouter un Produit');
+    
     
     }
 
@@ -129,6 +132,7 @@ class ProduitController extends Controller
         //$validatedData = $request->validate($this->validationRules());
         //$Produit->update($validatedData);
         //return redirect()->route('Produit.show', $Produit->id)->with('updateProduit', 'Produit updated successfully');
+    
     }
 
     /**

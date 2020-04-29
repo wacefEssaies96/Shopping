@@ -25,7 +25,13 @@ class Produit extends Model
    {
       return $this->hasMany('App\Comment');
    }
-public function demande(){
-    return $this->hasOne('App\Demande');
-}
+    public function demande(){
+        return $this->hasOne('App\Demande');
+    }
+    public function scopeProdConfirme($query){
+       return $query->where('confirm', '=', 0)->orderBy('created_at', 'desc');
+    }
+    public function scopeProdNonConfirme($query){
+       return $query->where('confirm', '=', 1)->orderBy('created_at', 'desc');
+    }
 }

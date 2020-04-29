@@ -17,6 +17,7 @@ class CreateDemendesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('id_user')->unsigned();
             $table->bigInteger('id_prod')->unsigned();
+            $table->string('status');
             $table->foreign('id_user')->references('id')->on('users');
             $table->foreign('id_prod')->references('id')->on('produits');
             $table->timestamps();

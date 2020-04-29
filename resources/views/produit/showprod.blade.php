@@ -96,19 +96,28 @@
                         <div class="short_overview my-5">
                           <p>{{ $Produit->description }}</p>
                         </div>
+                        <div class="cart">
+                            <a href="#" data-toggle="tooltip" data-placement="left" title="Add to Cart">
+                                <img src="{{ asset('img/core-img/cart.png') }}" alt="">
+                            </a>
+                        </div>
 
                         <!-- Add to Cart Form -->
                         <form class="cart clearfix" method="post">
-                            <div class="cart-btn d-flex mb-50">
+                            <!-- <div class="cart-btn d-flex mb-50">
                                 <p>Qty</p>
                                 <div class="quantity">
                                     <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
                                     <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="{{ $Produit->quantity }}">
                                     <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
                                 </div>
-                            </div>
-                            <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a><!--class="btn btn-outline-info"-->
-                            <a href="#" class="btn btn-outline-danger" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
+                            </div> -->
+                            @if($Produit->confirm)
+                                Votre Produit sur le site Vous ne pouvez ni modifier ni supprimer
+                            @else
+                                <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a><!--class="btn btn-outline-info"-->
+                                <a href="#" class="btn btn-outline-danger" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
+                            @endif
                         </form>
 
                     </div>

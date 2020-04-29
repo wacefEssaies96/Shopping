@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Produit;
 use App\demende;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DemendeController extends Controller
 {
@@ -14,7 +16,19 @@ class DemendeController extends Controller
      */
     public function index()
     {
-        //
+        
+        if(Auth::user()->role == 'admin'){
+            $attenteDemandes= demende::attenteDemandes()->get();
+            $accepteeDemandes= demende::accepteeDemandes()->get();
+        }
+        else{
+            $attenteDemandes = Auth::user()->demendes()->attenteDemandes()->get();
+            $accepteeDemandes= Auth::user()->demendes()->accepteeDemandes()->get();
+        }
+        return view('admin.Demande.Demandeindex',[
+            'attenteDemandes'=>$attenteDemandes,
+            'accepteeDemandes'=>$accepteeDemandes,
+        ]);
     }
 
     /**
@@ -35,7 +49,20 @@ class DemendeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $demende = new demende;
+        
+        $demende->id_user = Auth::id();
+        $demende->id_prod = $request->prod;
+        $demende->status = "New";
+        $demende->save();
+
+        $PD = Produit::findOrFail($request->prod);
+        $PD->DemandeEnvoyer = 1;
+        $PD->DtEvoyerDm = $demende->created_at;
+        
+        $PD->save();
+        return redirect()->route('Produit.index')->with('AddDemande', 'Demande Envoyer successfully');
+    
     }
 
     /**
@@ -78,8 +105,17 @@ class DemendeController extends Controller
      * @param  \App\demende  $demende
      * @return \Illuminate\Http\Response
      */
-    public function destroy(demende $demende)
+    public function destroy($id)
     {
-        //
+        
+        $PD = Produit::findOrFail($id);
+
+        demende::where('id_prod', $id)->where('created_at',$PD->DtEvoyerDm)->delete();
+
+        $PD->DemandeEnvoyer = 0;
+        $PD->DtEvoyerDm = null;
+        $PD->save();
+
+        return redirect()->route('Produit.index')->with('deleteDemande', 'Demande deleted successfully');
     }
 }

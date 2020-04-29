@@ -11,6 +11,7 @@ $factory->define(Demende::class, function (Faker $faker) {
     return [
         'id_user' =>  User::get('id')->random(),
         'id_prod' =>  Produit::get('id')->random(),
+        'status' => $faker->name,
         'created_at' => now(),
         'updated_at' => now(),
     ];

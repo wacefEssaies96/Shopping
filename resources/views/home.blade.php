@@ -33,23 +33,30 @@
             <div class="row amado-pro-catagory clearfix"><!---->
             
             @foreach ($produit  as $prod)
-            <form action="{{route('panier.store')}}" method="post">
-            @csrf
-                <!-- Single Catagory -->
-                <div class="col-sm-4 "><!--class=""-->
-                    <a href="#">
-                        <img src="{{ asset('img/image_projet/'.$prod['photo']) }}"  alt="check path " style="height:300px"/>
-                        <!-- Hover Content -->
-                        <div class="hover-content">
-                            <div class="line"></div>
-                            <p>From ${{$prod['price']}}</p>
-                            <h4>{{$prod['name']}}</h4>
-                            <input type="hidden" name="prod_id" id="prod_id" value="{{$prod->id}}">
-                            <button type="submit">ajouter au panier</button>
-                        </div>
-                    </a>
-                </div>
-                </form>
+            <!-- <form action="{{route('panier.store')}}" method="post"> -->
+            
+                @if($prod->confirm)
+                    @csrf
+                    <!-- Single Catagory -->
+                    <div class="col-sm-4 "><!--class=""-->
+                        <a href="#">
+                            <img src="{{ asset('img/image_projet/'.$prod['photo']) }}"  alt="check path " style="height:300px"/>
+                            <!-- Hover Content -->
+                            <div class="hover-content">
+                                <div class="line"></div>
+                                <p>${{$prod['price']}}</p>
+                                <h4>
+                                    <a href="{{ route('Produit.show', $prod->id) }}">
+                                        {{$prod['name']}}
+                                    </a>
+                                </h4>
+                                <!-- <input type="hidden" name="prod_id" id="prod_id" value="{{$prod->id}}">
+                                <button type="submit">ajouter au panier</button> -->
+                            </div>
+                        </a>
+                    </div>
+                @endif
+            <!-- </form> -->
             @endforeach
                 
             </div>
