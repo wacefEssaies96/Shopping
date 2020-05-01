@@ -38,7 +38,7 @@ Route::group(['middleware' => ['auth','admin']],function(){
     Route::get('/admin/dashboard',function(){
         return view('admin.dashboard');
        })->name('admin.dashboard');
-       Route::get('/register','Admin\DashboardController@registered');
+       Route::get('/admin/user','Admin\DashboardController@registered')->name('admin.user');
        Route::resource('/admin/commandes', 'CommandeController'); 
        Route::resource('/admin/Demandes', 'DemendeController');
 });
@@ -53,3 +53,7 @@ Route::middleware('auth')->group(function () {
 //Commandes routes
 Route::delete('/commande/delete/{id}', 'CommandeController@destroy')->name('commande.destroy');
 Route::get('/commande/approve/{id}', 'CommandeController@approve')->name('commande.approve');
+
+//Users routes
+Route::get('/admin/user/disable/{id}', 'Admin\UserController@disable')->name('admin.user.disable');
+Route::get('/admin/user/enable/{id}', 'Admin\UserController@enable')->name('admin.user.enable');

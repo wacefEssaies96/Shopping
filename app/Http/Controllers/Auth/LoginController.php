@@ -29,15 +29,17 @@ class LoginController extends Controller
     //protected $redirectTo = '/home';
     protected function redirectTo()
     {
-        if(Auth::user()->role == 'admin')
-        {
+        if(Auth::user()->etat !=1){
+            session(['alertType'=>'warning']);
+            session(['message'=>'Votre compte a été désactivé, veuillez contacté l\'administrateur']);
+            Auth::logout();
+            return "/";
+        }
+
+        if(Auth::user()->role == 'admin'){
             return '/admin/dashboard';
         }
-        else
-        {
-            return '/home';
-        }
-        
+        return '/home';
     }
     /**
      * Create a new controller instance.

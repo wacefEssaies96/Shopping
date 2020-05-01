@@ -21,8 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('role')->default('client');
             $table->string('adresse');
-            $table->bigInteger('phone');
+            $table->string('phone');
             $table->string('image')->nullable();
+            $table->bigInteger('etat');
             $table->rememberToken();
             $table->timestamps();
            

@@ -9,6 +9,6 @@ class DashboardController extends Controller
 {
     public function registered(){
         $users=User::all();
-        return view('admin.register')->with('users',$users);
+        return view('admin.user')->with('users',$users);
     }
 }
