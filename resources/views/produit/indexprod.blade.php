@@ -57,7 +57,7 @@
                     {{$prod->name}}
                 </div>
                 <div class="col-lg-2">
-                    <a href="{{ route('Produit.show', $prod->id) }}">
+                    <a href="{{ route('ConsulterProduit',['prodid' =>  $prod->id ]) }}" class="btn btn-success">
                         Consulter
                     </a>
                 </div>
@@ -66,9 +66,35 @@
                         Votre Produit sur le site
                     @else
                         @if($prod->DemandeEnvoyer)
-                                <a href="#" class="btn btn-outline-danger" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">
-                                    Anuuler cette Demande
-                                </a>
+                            <a href="#" class="btn btn-outline-danger"  data-toggle="modal" data-target="#confirmDeleteModal">
+                                Anuuler cette Demande
+                            </a>
+                            <!-- Modal -->
+                            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Delete Produit from demande</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    Are you sure to delete your demande to add this Produit to the site ?
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-outline-danger"
+                                        onclick="event.preventDefault();
+                                        document.querySelector('#delete-Produit-form').submit();">Confirm delete</button>
+                                    </div>
+                                    <form id="delete-Produit-form" action="{{ route('Demandes.destroy',$prod['id']) }}" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                </div>
+                                </div>
+                            </div>
                         @else
                         <form action="{{ route('Demandes.store') }}" method="post">
                             @csrf
@@ -87,30 +113,5 @@
 </div>
 
 
-  <!-- Modal -->
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Delete Produit from demande</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Are you sure to delete your demande to add this Produit to the site ?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-outline-danger"
-            onclick="event.preventDefault();
-            document.querySelector('#delete-Produit-form').submit();">Confirm delete</button>
-        </div>
-        <form id="delete-Produit-form" action="{{ route('Demandes.destroy',$prod['id']) }}" method="POST" style="display: none;">
-            @csrf
-            @method('DELETE')
-        </form>
-      </div>
-    </div>
-  </div>
+  
 @endsection

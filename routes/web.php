@@ -14,22 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/AllProduits', 'ProduitController@AllProd')->name('AllProd');
+
 Auth::routes();
 
-
-
-   
 Route::get('/','HomeController@index')->name('home.index');
 
 Route::get('/home','HomeController@index')->name('home.index2');
-
-Route::get('/index', 'ProduitController@index');
-
-
-Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home.index');
 
 
 
@@ -38,14 +28,31 @@ Route::group(['middleware' => ['auth','admin']],function(){
     Route::get('/admin/dashboard',function(){
         return view('admin.dashboard');
        })->name('admin.dashboard');
-       Route::resource('/admin/commandes', 'CommandeController'); 
-       Route::resource('/admin/Demandes', 'DemendeController');
+
+    Route::resource('/admin/commandes', 'CommandeController'); 
+    Route::get('/AllProduits', 'ProduitController@AllProd')->name('AllProd');
+    Route::get('admin/Produit/ConsulterDetailleProduit/{prodid}/{userid}', 'ProduitController@ConsulterDetailleProduit')->name('ConsulterDetailleProduit');
+    Route::get('/admin/Demandes/AccepterDemande/{id}/{prodid}/{userid}', 'DemendeController@AccepterDemande')->name('AccepterDemande');
+    Route::get('/admin/Demandes/AnnulerDemande/{id}/{prodid}/{userid}', 'DemendeController@AnnulerDemande')->name('AnnulerDemande');
+                        
+    Route::resource('/admin/Demandes', 'DemendeController'
+    // , [
+    //     'only' => ['store','destroy'],
+    //     'except' => ['edit', 'create']
+    // ]
+);
 });
 Route::middleware('auth')->group(function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('/Produit', 'ProduitController');
     Route::resource('/panier','PanierController');
+    Route::resource('/admin/Demandes', 'DemendeController', [
+        'only' => ['store','destroy']
+    ]);
+    
+    Route::get('/ConsulterProduit/{prodid}', 'ProduitController@ConsulterProduit')->name('ConsulterProduit');
+    
     
 });
 

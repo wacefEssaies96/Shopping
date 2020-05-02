@@ -13,7 +13,7 @@
 
                     <ul class="navbar-nav mr-auto">
                             <li class="nav-item">
-                                <a href="#" class="nav-link">Admin</a>
+                                <a href="/admin/dashboard" class="nav-link">HomeAdmin</a>
                             
                             </li>
                             <li class="nav-item">

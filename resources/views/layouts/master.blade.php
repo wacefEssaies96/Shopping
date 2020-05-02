@@ -24,19 +24,22 @@
   <div class="wrapper ">
     <div class="sidebar" data-color="yellow"><!--Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"-->
       <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
-          CT
-        </a>
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
-        </a>
+        <a class="fa fa-home fa-dark fa-lg " href="{{ url('/') }}">Home</a>
       </div>
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
           <li>
-            <a href="/dashboard">
+            <a href="/admin/Demandes">
+            
               <i class="now-ui-icons design_app"></i>
-              <p>Dashboard</p>
+              <p>Demandes</p>
+            </a>
+          </li>
+          <li>
+            <a href="/AllProduits">
+            
+              <i class="now-ui-icons design_app"></i>
+              <p>Gerer les Produits</p>
             </a>
           </li>
           <li>

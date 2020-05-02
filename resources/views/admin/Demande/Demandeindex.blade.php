@@ -33,8 +33,16 @@
                   <td>{{$demande->id_user}}</td>
                   <td>{{$demande->status}}</td>
                   <td>{{date('d-m-Y h:i', strtotime($demande->created_at))}}</td>
-                  <td><a href="#" class="btn btn-primary">Consulter</a></td>
-                  <td><a href="#" class="btn btn-success">Accepter</a></td>
+                  <td>
+                      <a href="{{ route('ConsulterDetailleProduit',['prodid' =>  $demande->id_prod,'userid' => $demande->id_user ]) }}" class="btn btn-primary">
+                          Consulter
+                      </a>
+                  </td>
+                  <td>
+                      <a href="{{ route('AccepterDemande',['id' =>  $demande->id,'prodid' =>  $demande->id_prod,'userid' => $demande->id_user ]) }}" class="btn btn-success">
+                        Accepter
+                      </a>
+                  </td>
                   <td><a href="#" class="btn btn-danger">Refuser</a></td>
                 </tr>
             @endforeach
@@ -70,8 +78,17 @@
                   <td>{{$demande->id_user}}</td>
                   <td>{{$demande->status}}</td>
                   <td>{{date('d-m-Y h:i', strtotime($demande->created_at))}}</td>
-                  <td><a href="#" class="btn btn-primary">Consulter</a></td>
-                  <td><a href="#" class="btn btn-danger">Supprimer</a></td>
+                  <td>
+                  <td>
+                      <a href="{{ route('ConsulterDetailleProduit',['prodid' =>  $demande->id_prod,'userid' => $demande->id_user ]) }}" class="btn btn-primary">
+                          Consulter
+                      </a>
+                  </td>
+                  <td>
+                      <a href="{{ route('AnnulerDemande',['id' =>  $demande->id,'prodid' =>  $demande->id_prod,'userid' => $demande->id_user ]) }}" class="btn btn-danger">
+                        Annuler
+                      </a>
+                  </td>
                 </tr>
             @endforeach
             </tbody>

@@ -14,10 +14,10 @@ class Demende extends Model
         return $this->hasOne('App\Produit');
     }
     public function scopeattenteDemandes($query){
-       return $query->where('status', '=' , 'New')->orderBy('created_at', 'desc');
+       return $query->where('status', '!=' , 'accepter')->orderBy('created_at', 'desc');
     }
     public function scopeaccepteeDemandes($query){
-       return $query->where('status', '!=', 'New')->orderBy('created_at', 'desc');
+       return $query->where('status', '=', 'accepter')->orderBy('created_at', 'desc');
     }
 }
 

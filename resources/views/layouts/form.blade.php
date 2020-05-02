@@ -59,8 +59,8 @@
     
     
 </head>
-<body>
-    <div id="app"  >
+<body style="background-image: url({{ asset('img/bg-img/bgf.jpg') }});background-repeat: no-repeat;size:100% 100%;background-size: 100% 100%;">
+    <div id="form"  >
         @include('layouts.nav')
 
         <main class="py-4" >

@@ -28,6 +28,12 @@
                     @endif
                 @endguest
                 @auth
+                    @admin
+                        <li class="nav-item">
+                            <a href="/admin/dashboard" class="nav-link">HomeAdmin</a>
+                        
+                        </li>
+                    @endadmin
                     <li class="nav-item">
                         <a href="{{ route('Produit.index') }}" >Mes Produits</a>
                     </li>

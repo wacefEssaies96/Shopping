@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+
+@if (session('updateProduit'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('updateProduit') }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+@endif
 <div class="main-content-wrapper d-flex clearfix">
     @include('layouts.navgauche')
 
@@ -90,28 +99,43 @@
 
                         <!-- Add to Cart Form -->
                         <form class="cart clearfix" method="post">
-                            <!-- <div class="cart-btn d-flex mb-50">
-                                <p>Qty</p>
-                                <div class="quantity">
-                                    <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="{{ $Produit->quantity }}">
-                                    <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty )) effect.value++;return false;"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
-                                </div>
-                            </div> -->
-                            @if($Produit->user_id == $user )
-                                C'est Votre Produit 
-                                <br> Vous ne pouvez ni le modifier ni le supprimer
-                                
-                            @else
-                            
-                                <div class="cart btn amado-btn">
-                                    <a href="#" data-toggle="tooltip" data-placement="left" title="Add to Cart">
-                                        <img src="{{ asset('img/core-img/cart.png') }}" alt="">ADD TO CART
-                                    </a>
-                                </div>
-                                <!-- <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a><!--class="btn btn-outline-info"-->
-                                <!-- <a href="#" class="btn btn-outline-danger" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a> -->
-                            @endif
+                            @admin
+                                <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a>
+                                <a href="#"  class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
+                            @elseadmin
+                                @if($Produit->confirm)
+                                    Votre Produit sur le site Vous ne pouvez ni modifier ni supprimer
+                                @else
+                                    <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a>
+                                    <a href="#" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete Produit</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>
+                                            <div class="modal-body">
+                                            Are you sure to delete your Produit ?
+                                            </div>
+                                            <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-outline-danger"
+                                                onclick="event.preventDefault();
+                                                document.querySelector('#delete-Produit-form').submit();">Confirm delete</button>
+                                            </div>
+                                            <form id="delete-Produit-form" action="{{ route('Produit.destroy', $Produit->id) }}" method="POST" style="display: none;">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endadmin
                         </form>
 
                     </div>
@@ -128,31 +152,6 @@
 
 
   
-  <!-- Modal -->
-  <!-- <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Delete Produit</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Are you sure to delete your Produit ?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-outline-danger"
-            onclick="event.preventDefault();
-            document.querySelector('#delete-Produit-form').submit();">Confirm delete</button>
-        </div>
-        <form id="delete-Produit-form" action="{{ route('Produit.destroy', $Produit->id) }}" method="POST" style="display: none;">
-            @csrf
-            @method('DELETE')
-        </form>
-      </div>
-    </div>
-  </div> -->
+  
     @include('layouts.footer')   
 @endsection

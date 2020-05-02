@@ -1,61 +1,75 @@
-@extends('layouts.app')
+@extends('layouts.form')
 
 @section('title', 'Edit Produit')
+
+
 @section('content')
-    <fieldset>
-        <legend>Edit your Produit</legend>
+<div class="row justify-content-center">
+    <fieldset class="col-lg-6"> 
+        <legend class="h4 text-gray-900 mb-4 text-warning ">Edit your Produit</legend>
         <form action="{{ route('Produit.update', $Produit->id) }}" method="post">
             @csrf
             @method('PATCH')
             <div class="jumbotron">
+            
+                <div class="row form-groupe">
+                    <label for="name" >Nom de produit</label>
+                    <input type="text" name="name" value="{{ old('name')  ?? $Produit->name }}"  id="name" class="form-control" >
+                    @error('name')<div class="text-danger">{{ $message }}</div> @enderror
+                </div>
+                <br>
+                <div class="row form-groupe">
+                    <label for="price">Prix de produit</label>
+                    <input type="Number" name="price"  min="1"  value="{{ old('price') ?? $Produit->price}}"  id="price" class="form-control" >
+                    @error('price')<div class="text-danger">{{ $message }}</div> @enderror
+                </div>
+                <br>
+
+
                 <div class="row">
-                    <div class="col">
-                        <div class="form-groupe">
-                            <label for="name" >Nom de produit</label>
-                            <input type="text" name="name" value="{{ old('name') ?? $Produit->name }}"  id="name" class="form-control" placeholder="Entrer Le Nom de produit">
-                            @error('name')<div class="text-danger">{{ $message }}</div> @enderror
-                        </div>
-                        <div class="form-groupe">
-                            <label for="price">Prix de produit</label>
-                            <input type="Number" name="price"  min="1"  value="{{ old('price') ?? $Produit->price}}"  id="price" class="form-control" placeholder="Entrer Le Prix de produit">
-                            @error('price')<div class="text-danger">{{ $message }}</div> @enderror
-                        </div>
+                    <div class="col-lg-6 form-groupe">
+                        <label for="quantity">Quantity de produit</label>
+                        <input type="Number" name="quantity"  value="{{ old('quantity') ?? $Produit->quantity}}"  id="quantity"  min="1" max="20" class="form-control" >
+                        @error('quantity')<div class="text-danger">{{ $message }}</div> @enderror
                     </div>
-                    <div class="col">
-                        <div class="form-groupe">
-                            <label for="quantity">Quantity de produit</label>
-                            <input type="Number" name="quantity"  value="{{ old('quantity') ?? $Produit->quantity }}"  id="quantity"  min="1" max="20" class="form-control" placeholder="Entrer La quantity de produit">
-                            @error('quantity')<div class="text-danger">{{ $message }}</div> @enderror
-                        </div>
-                        <div class="form-groupe">
-                            <label for="categorie">Categorie de produit</label>
-                            <input type="text" name="categorie"  value="{{ old('categorie') ?? $Produit->categorie }}"  id="categorie" class="form-control" placeholder="Entrer La Categorie de produit">
-                            @error('categorie')<div class="text-danger">{{ $message }}</div> @enderror
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-groupe">
-                            <label for="description">Description de produit</label>
-                            <input type="text" name="description"  value="{{ old('description') ?? $Produit->description}}"  id="description" class="form-control" placeholder="Entrer La description de produit">
-                            @error('description')<div class="text-danger">{{ $message }}</div> @enderror
-                        </div>
+                    <div class="col-lg-6 form-groupe" >
+                        <label for="categorie">Categorie de produit</label>
 
-                        <label > Image</label>
-                        <div class="input-groupe">
-                            <div class="custom-file">
-                                <input type="file"  name="photo" class="custom-file-input" placeholder="Entrer La Photo de produit">
-                                <label  class="custom-file-label" >Choisir une photo</label>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
+                        <select id="categorie" name="categorie" class="form-control">
+                            <option   value="{{ old('categorie') ?? $Produit->categorie }}"  >{{ $Produit->categorie }}</option>
+                            <option   value="Produit technologie">Produit technologie</option>
+                            <option   value="Produit Alimentaire">Produit Alimentaire</option>
+                            <option  value="Voiture">Voiture</option>
+                        </select>
 
-                    <div class="row">
-                        <button type="submit" class="btn btn-outline-primary btn-block">Confirm update</button>
+                        @error('categorie')<div class="text-danger">{{ $message }}</div> @enderror
                     </div>
                 </div>
-            </div>
+                <br>
+                <div class="row form-groupe">
 
+                    <label for="description">Description de produit</label>
+                    
+                    <textarea rows="4" cols="50" name="description"  value="{{ old('description')  ?? $Produit->description}}"  id="description" class="form-control">
+                    {{ old('description')  ?? $Produit->description}}
+
+                    </textarea>
+                    @error('description')<div class="text-danger">{{ $message }}</div> @enderror
+                </div>
+                <br>
+                <div class="row ">
+                    <label > Image   </label>
+                    <div class="form-groupe">
+                        <input type="file"  name="photo" value="{{ old('photo')  ?? $Produit->photo}}" >
+                    </div>
+                    @error('photo')<div class="text-danger">{{ $message }}</div> @enderror
+                </div>
+                <br>
+                <div class="row justify-content-center">
+                    <button type="submit" name="submit" class="btn btn-primary "> Confirm update</button>
+                </div>
+            </div>
         </form>
     </fieldset>
+</div>
 @endsection
