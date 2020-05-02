@@ -25,6 +25,9 @@ class PanierController extends Controller
         foreach($list_panier as $item){
             $total += ($item['price']*$item->quantity_prod);
         }
+        if($total == 0){
+            $list_panier = [];
+        }
         return view('panier/index',[
             'list_panier' => $list_panier,
             'total' => $total
@@ -51,10 +54,10 @@ class PanierController extends Controller
     {     
         $panier = new Panier();
         $panier->user_id = Auth::id();
-        $panier->prod_id = $request->prod_id;
+        $panier->prod_id = (int)$request->prod_id;
         $panier->quantity_prod = 1;
         $panier->save();
-        return redirect()->route('home')->with('AddPanier','Le produit a été ajouter avec succées');
+        return redirect()->route('panier.index')->with('addPanier','Le produit a été ajouté au panier avec succées');
     }
 
     /**
@@ -94,7 +97,7 @@ class PanierController extends Controller
     {
         $panier->quantity_prod=$request->quantity_prod;
         $panier->update();
-        return redirect()->route('panier.index')->with('AddPanier','Le produit a été modifié avec succées');
+        return redirect()->route('panier.index')->with('editPanier','Le produit a été modifié avec succées');
     }
 
     /**
@@ -106,6 +109,6 @@ class PanierController extends Controller
     public function destroy(panier $panier)
     {
         $panier->delete();
-        return redirect()->route('panier.index');
+        return redirect()->route('panier.index')->with('deletePanier','Le produit a été supprimé avec succées');
     }
 }

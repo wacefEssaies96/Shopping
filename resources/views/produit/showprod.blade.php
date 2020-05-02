@@ -96,15 +96,21 @@
                         <div class="short_overview my-5">
                           <p>{{ $Produit->description }}</p>
                         </div>
+                        
                         <div class="cart">
-                            <a href="#" data-toggle="tooltip" data-placement="left" title="Add to Cart">
+                        <form action="{{route('panier.store')}}" method="post">
+                            @csrf
+                            <input type="hidden" name="prod_id" id="prod_id" value="{{$Produit->id}}">
+                            <button type="submit">Add to cart</button>
+                        </form>
+                            <a href="{{route('panier.index')}}" data-toggle="tooltip" data-placement="left" title="Add to Cart">
                                 <img src="{{ asset('img/core-img/cart.png') }}" alt="">
                             </a>
                         </div>
 
                         <!-- Add to Cart Form -->
-                        <form class="cart clearfix" method="post">
-                            <!-- <div class="cart-btn d-flex mb-50">
+                        <!-- <form class="cart clearfix" method="post">
+                            <div class="cart-btn d-flex mb-50">
                                 <p>Qty</p>
                                 <div class="quantity">
                                     <span class="qty-minus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 1 ) effect.value--;return false;"><i class="fa fa-caret-down" aria-hidden="true"></i></span>

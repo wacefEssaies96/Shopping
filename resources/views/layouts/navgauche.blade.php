@@ -27,7 +27,7 @@
             <a href="{{ url('/') }}">Home</a></li>
             <li><a href="#">Shop</a></li><!-- shop.html-->
             <li><a href="{{ route('AllProd') }}">Product</a></li>
-            <li><a href="#">Cart</a></li><!--cart.html -->
+            <li><a href="{{ route('panier.index') }}">Cart</a></li><!--cart.html  -->
             <li><a href="#">Checkout</a></li><!--checkout.html-->
         </ul>
     </nav>

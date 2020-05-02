@@ -15,8 +15,8 @@ class CreateCommandesTable extends Migration
     {
         Schema::create('commandes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('prod_id')->unsigned();;
-            $table->bigInteger('user_id')->unsigned();;
+            $table->bigInteger('prod_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->integer('confirm');
             $table->integer('quantity_prod');
             $table->integer('livraison');
