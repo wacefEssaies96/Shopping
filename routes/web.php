@@ -23,6 +23,7 @@ Route::get('/home','HomeController@index')->name('home.index2');
 
 
 
+///  Route admin
 
 Route::group(['middleware' => ['auth','admin']],function(){
     Route::get('/admin/dashboard',function(){
@@ -30,6 +31,7 @@ Route::group(['middleware' => ['auth','admin']],function(){
        })->name('admin.dashboard');
 
     Route::resource('/admin/commandes', 'CommandeController'); 
+
     Route::get('/AllProduits', 'ProduitController@AllProd')->name('AllProd');
     Route::get('admin/Produit/ConsulterDetailleProduit/{prodid}/{userid}', 'ProduitController@ConsulterDetailleProduit')->name('ConsulterDetailleProduit');
     Route::get('/admin/Demandes/AccepterDemande/{id}/{prodid}/{userid}', 'DemendeController@AccepterDemande')->name('AccepterDemande');
@@ -42,10 +44,22 @@ Route::group(['middleware' => ['auth','admin']],function(){
     // ]
 );
 });
+
+///  Route client
+Route::group(['middleware' => ['auth','client']],function(){
+    Route::resource('/Produit', 'ProduitController', [
+        'only' => ['show']
+    ]);
+
+});
+
+///  Route visiteur
 Route::middleware('auth')->group(function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('/Produit', 'ProduitController');
+    Route::resource('/Produit', 'ProduitController', [
+        'except' => ['show']
+    ]);
     Route::resource('/panier','PanierController');
     Route::resource('/admin/Demandes', 'DemendeController', [
         'only' => ['store','destroy']
