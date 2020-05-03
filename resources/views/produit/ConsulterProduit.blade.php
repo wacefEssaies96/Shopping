@@ -99,13 +99,14 @@
 
                         <!-- Add to Cart Form -->
                         <form class="cart clearfix" method="post">
-                            @admin
+                            <!-- @admin -->
                                 <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a>
                                 <a href="#"  class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
-                            @elseadmin
-                                @if($Produit->confirm)
+                            <!-- @elseadmin -->
+                            {{$Produit->confirm}}
+                                <!-- @if($Produit->confirm) -->
                                     Votre Produit sur le site Vous ne pouvez ni modifier ni supprimer
-                                @else
+                                <!-- @else -->
                                     <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a>
                                     <a href="#" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
                                     <!-- Modal -->
@@ -134,8 +135,8 @@
                                         </div>
                                         </div>
                                     </div>
-                                @endif
-                            @endadmin
+                                <!-- @endif -->
+                            <!-- @endadmin -->
                         </form>
 
                     </div>
@@ -147,11 +148,8 @@
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
 
-
-
-
-
   
-  
-    @include('layouts.footer')   
+@include('layouts.footer')   
+
+    
 @endsection

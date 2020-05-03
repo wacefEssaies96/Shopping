@@ -26,18 +26,14 @@
             <li class="active">
                 <a href="{{ url('/') }}">Home Site</a>
             </li>
-            @admin
-                <li >
-                    <a href="/admin/dashboard" >Home Admin</a>
-                </li>
-            @endadmin
-            @client
+           
+  
                 <li>
                     <a href="{{ route('Produit.index') }}" >Mes Produits</a>
                 </li>
-                <li><a href="#">Cart</a></li>
+                <li><a href="{{route('panier.index')}}">Cart</a></li>
                 <li><a href="#">Checkout</a></li>
-            @endclient
+          
         </ul>
     </nav>
     <!-- Button Group ->

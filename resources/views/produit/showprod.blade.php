@@ -104,11 +104,13 @@
                                 
                             @else
                             
-                                <div class="cart btn amado-btn">
-                                    <a href="#" data-toggle="tooltip" data-placement="left" title="Add to Cart">
-                                        <img src="{{ asset('img/core-img/cart.png') }}" alt="">ADD TO CART
-                                    </a>
-                                </div>
+                               
+                                    <form action="{{route('panier.store')}}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="prod_id" id="prod_id" value="{{$Produit->id}}">
+                                        <button class="btn amado-btn" type="submit"><img src="{{ asset('img/core-img/cart.png') }}" alt="">Add to cart</button>
+                                    </form>
+                                
                                 <!-- <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a><--class="btn btn-outline-info"-->
                                 <!-- <a href="#" class="btn btn-outline-danger" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a> -->
                             @endif

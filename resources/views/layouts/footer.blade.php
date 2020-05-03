@@ -53,18 +53,14 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                     <li class="nav-item active">
                                         <a class="nav-link" href="{{ url('/') }}">Home</a>
                                     </li>
-                                    @admin
-                                        <li class="nav-item">
-                                            <a href="/admin/dashboard" class="nav-link" >Home Admin</a>
-                                        </li>
-                                    @endadmin
-                                    @client
+                               
+                                    <!-- @client -->
                                         <li class="nav-item">
                                             <a href="{{ route('Produit.index') }}" class="nav-link" >Mes Produits</a>
                                         </li>
-                                        <li class="nav-item" > <a href="#" class="nav-link">Cart</a></li>
+                                        <li class="nav-item" > <a href="{{route('panier.index')}}" class="nav-link">Cart</a></li>
                                         <li class="nav-item"><a href="#" class="nav-link">Checkout</a></li>
-                                    @endclient
+                                    <!-- @endclient -->
                                 </ul>
                             </div>
                         </nav>
