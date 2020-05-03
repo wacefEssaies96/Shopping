@@ -42,11 +42,12 @@ Route::group(['middleware' => ['auth','admin']],function(){
        Route::resource('/admin/Demandes', 'DemendeController');
 });
 Route::middleware('auth')->group(function () {
-
     Route::get('/home', 'HomeController@index')->name('home');
     Route::resource('/Produit', 'ProduitController');
     Route::resource('/panier','PanierController');
+    Route::resource('/commande','CommandeController');
     
+    Route::resource('/paiement','PaiementController');
 });
 
 //Commandes routes
