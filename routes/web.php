@@ -46,19 +46,17 @@ Route::group(['middleware' => ['auth','admin']],function(){
 });
 
 ///  Route client
-// Route::group(['middleware' => ['auth','client']],function(){
-//     Route::resource('/Produit', 'ProduitController', [
-//         'only' => ['show']
-//     ]);
-
-// });
+Route::group(['middleware' => ['auth','client']],function(){
+    Route::resource('/Produit', 'ProduitController');
+    Route::resource('/panier','PanierController');    
+    Route::resource('/commande','CommandeController');
+    
+});
 
 ///  Route visiteur
 Route::middleware('auth')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::resource('/Produit', 'ProduitController');
-    Route::resource('/commande','CommandeController');
-    Route::resource('/panier','PanierController');
+    //Route::resource('/Produit', 'ProduitController');
     Route::resource('/admin/Demandes', 'DemendeController', [
         'only' => ['store','destroy']
     ]);
