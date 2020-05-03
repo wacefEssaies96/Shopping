@@ -31,7 +31,8 @@ Route::group(['middleware' => ['auth','admin']],function(){
        })->name('admin.dashboard');
 
     Route::resource('/admin/commandes', 'CommandeController'); 
-
+    Route::get('/admin/user','Admin\DashboardController@registered')->name('admin.user');
+    Route::resource('/admin/commandes', 'CommandeController'); 
     Route::get('/AllProduits', 'ProduitController@AllProd')->name('AllProd');
     Route::get('admin/Produit/ConsulterDetailleProduit/{prodid}/{userid}', 'ProduitController@ConsulterDetailleProduit')->name('ConsulterDetailleProduit');
     Route::get('/admin/Demandes/AccepterDemande/{id}/{prodid}/{userid}', 'DemendeController@AccepterDemande')->name('AccepterDemande');
@@ -50,7 +51,7 @@ Route::group(['middleware' => ['auth','client']],function(){
     Route::resource('/Produit', 'ProduitController');
     Route::resource('/panier','PanierController');    
     Route::resource('/commande','CommandeController');
-    
+    Route::resource('/paiement','PaiementController');
 });
 
 ///  Route visiteur
@@ -64,9 +65,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/ConsulterProduit/{prodid}', 'ProduitController@ConsulterProduit')->name('ConsulterProduit');
     
     
-    Route::resource('/paiement','PaiementController');
+    
 });
 
 //Commandes routes
 Route::delete('/commande/delete/{id}', 'CommandeController@destroy')->name('commande.destroy');
 Route::get('/commande/approve/{id}', 'CommandeController@approve')->name('commande.approve');
+
+//Users routes
+Route::get('/admin/user/disable/{id}', 'Admin\UserController@disable')->name('admin.user.disable');
+Route::get('/admin/user/enable/{id}', 'Admin\UserController@enable')->name('admin.user.enable');

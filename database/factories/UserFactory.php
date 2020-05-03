@@ -24,9 +24,9 @@ $factory->define(User::class, function (Faker $faker) {
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'role' => $faker->sentence,
         'adresse' => $faker->streetAddress(),
-        'phone' => 000000,
+        'phone' => $faker->phoneNumber,
         'image'=>'http://lorempixel.com/640/480/food/'.$faker->randomDigitNotNull,
-        
+        'etat' => 1,
         'remember_token' => Str::random(10),
         'created_at' => now(),
         'updated_at' => now(),

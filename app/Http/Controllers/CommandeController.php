@@ -129,7 +129,8 @@ class CommandeController extends Controller
     {
         $commande = commande::find($id);
         $commande->delete();
-        return redirect('/admin/commandes')->with('message' , 'Commande supprimée avec succès !');
+        return redirect('/admin/commandes')->with('message' , 'Commande supprimée avec succès !')
+                                            ->with('alertType', 'success');
     }
 
     /**
@@ -143,6 +144,7 @@ class CommandeController extends Controller
         $commande = commande::find($id);
         $commande->confirm = 1;
         $commande->save();
-        return redirect('/admin/commandes')->with('message' , 'Commande approuvée avec succès !');
+        return redirect('/admin/commandes')->with('message' , 'Commande approuvée avec succès !')
+                                           ->with('alertType', 'success');
     }
 }

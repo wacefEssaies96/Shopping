@@ -60,7 +60,8 @@
     
 </head>
 <body>
-    <div id="app"  >
+    <div id="app">
+        @include('message.alert')
         @include('layouts.nav')
 
         <main class="py-4" >
