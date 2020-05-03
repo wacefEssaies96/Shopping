@@ -61,7 +61,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/admin/Demandes', 'DemendeController', [
         'only' => ['store','destroy']
     ]);
-    
+    //rr
     Route::get('/ConsulterProduit/{prodid}', 'ProduitController@ConsulterProduit')->name('ConsulterProduit');
     
     
