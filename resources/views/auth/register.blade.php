@@ -69,8 +69,8 @@
                         </div>
 
                         <div class="col-md-6">
-                            <input id="phone" type="text" placeholder="Your phone number"class="form-control form-control-user @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
-
+                            <input id="phone" type="tel" placeholder="Your phone number Format: 12345678 " pattern="[0-9]{8}" class="form-control form-control-user @error('phone') is-invalid @enderror" name="phone" value="{{ old('phone') }}" required autocomplete="phone" autofocus>
+                            
                             @error('phone')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

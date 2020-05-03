@@ -20,15 +20,30 @@ class DemendeController extends Controller
         if(Auth::user()->role == 'admin'){
             $attenteDemandes= demende::attenteDemandes()->get();
             $accepteeDemandes= demende::accepteeDemandes()->get();
+            return view('admin.Demande.Demandeindex',[
+                'attenteDemandes'=>$attenteDemandes,
+                'accepteeDemandes'=>$accepteeDemandes,
+            ]);
         }
         else{
-            $attenteDemandes = Auth::user()->demendes()->attenteDemandes()->get();
+            
+            $produits = Auth::user()->produits()->get();
+            return redirect()->route('Produit.index')->with('produits', $produits);
+            //return view('Produit/indexprod', ['produits' => $produits]);
+
+            /*$attenteDemandes = Auth::user()->demendes()->attenteDemandes()->get();
             $accepteeDemandes= Auth::user()->demendes()->accepteeDemandes()->get();
+
+            $demendes = Auth::user()->demendes()->get();
+            return view('client.Demande.Demandeindex',
+            //['demendes' => $demendes]
+            [
+                'attenteDemandes'=>$attenteDemandes,
+                'accepteeDemandes'=>$accepteeDemandes,
+            ]
+        );*/
+
         }
-        return view('admin.Demande.Demandeindex',[
-            'attenteDemandes'=>$attenteDemandes,
-            'accepteeDemandes'=>$accepteeDemandes,
-        ]);
     }
 
     /**
@@ -117,5 +132,26 @@ class DemendeController extends Controller
         $PD->save();
 
         return redirect()->route('Produit.index')->with('deleteDemande', 'Demande deleted successfully');
+    }
+    public function AccepterDemande($id,$prodid,$userid) 
+    {
+        $demende=demende::findOrFail($id);
+        $demende->status = 'Accepter';
+        $demende->save();
+        $Produit=Produit::findOrFail($prodid);
+        $Produit->confirm = 1;
+        $Produit->save();
+        return redirect()->route('Demandes.index')->with('AccepterDemande', 'Demande Accepter successfully');
+    }
+    public function AnnulerDemande($id,$prodid,$userid) 
+    {
+        $demende=demende::findOrFail($id);
+        $demende->status = 'Annuler';
+        $demende->save();
+        $Produit=Produit::findOrFail($prodid);
+        $Produit->confirm = 0;
+        $Produit->DemandeEnvoyer = 1;
+        $Produit->save();
+        return redirect()->route('Demandes.index')->with('AnnulerDemande', 'Demande Annuler successfully');
     }
 }

@@ -50,8 +50,6 @@
                                         {{$prod['name']}}
                                     </a>
                                 </h4>
-                                <!-- <input type="hidden" name="prod_id" id="prod_id" value="{{$prod->id}}">
-                                <button type="submit">ajouter au panier</button> -->
                             </div>
                         </a>
                     </div>
