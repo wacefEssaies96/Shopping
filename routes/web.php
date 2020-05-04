@@ -31,7 +31,11 @@ Route::group(['middleware' => ['auth','admin']],function(){
        })->name('admin.dashboard');
 
     Route::resource('/admin/commandes', 'CommandeController'); 
-    Route::get('/admin/user','Admin\DashboardController@registered')->name('admin.user');
+    Route::get('/admin/user','Admin\UserController@usered')->name('admin.user');
+    Route::get('/user-edit/{id}','Admin\UserController@useredit');
+    Route::put('/role-user-update/{id}','Admin\UserController@userupdate');
+    Route::delete('/user-delete/{id}','Admin\UserController@userdelete');   
+    
     Route::resource('/admin/commandes', 'CommandeController'); 
     Route::get('/AllProduits', 'ProduitController@AllProd')->name('AllProd');
     Route::get('admin/Produit/ConsulterDetailleProduit/{prodid}/{userid}', 'ProduitController@ConsulterDetailleProduit')->name('ConsulterDetailleProduit');
