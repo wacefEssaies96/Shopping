@@ -103,14 +103,11 @@
                                 <br> Vous ne pouvez ni le modifier ni le supprimer
                                 
                             @else
-                            
-                               
-                                    <form action="{{route('panier.store')}}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="prod_id" id="prod_id" value="{{$Produit->id}}">
-                                        <button class="btn amado-btn" type="submit"><img src="{{ asset('img/core-img/cart.png') }}" alt="">Add to cart</button>
-                                    </form>
-                                
+                                <form action="{{route('panier.store')}}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="prod_id" id="prod_id" value="{{$Produit->id}}">
+                                    <button class="btn amado-btn" type="submit"><img src="{{ asset('img/core-img/cart.png') }}" alt="">Add to cart</button>
+                                </form>
                                 <!-- <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a><--class="btn btn-outline-info"-->
                                 <!-- <a href="#" class="btn btn-outline-danger" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a> -->
                             @endif

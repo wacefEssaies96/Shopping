@@ -23,55 +23,71 @@
 <body class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="yellow"><!--Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"-->
-      <div class="logo">
-        <a class="fa fa-home fa-dark fa-lg " href="{{ url('/') }}">Home</a>
-      </div>
+      <!-- <div class="logo">
+          <li class="{{'admin/dashboard' == request()->path() ? 'active' : '' }}">
+            <a href="/admin/dashboard">
+              <i class="fa fa-home fa-dark fa-lg "></i>
+              <p>Home<</p>
+            </a>
+          </li> 
+      </div>-->
+
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
           <li class="{{'admin/dashboard' == request()->path() ? 'active' : '' }}">
             <a href="/admin/dashboard">
+              <i class="fa fa-home fa-dark fa-lg "></i>
+              <p>Home</p>
+            </a>
+          </li>
+          <li class="{{'admin/Demandes' == request()->path() ? 'active' : '' }}">
+            <a href="/admin/Demandes">
               <i class="now-ui-icons design_app"></i>
               <p>Demandes</p>
             </a>
           </li>
-          <li>
+          <li lass="{{'/AllProduits' == request()->path() ? 'active' : '' }}">
             <a href="/AllProduits">
             
               <i class="now-ui-icons design_app"></i>
               <p>Gerer les Produits</p>
             </a>
           </li>
-          <li class="{{'admin/commandes' == request()->path() ? 'active' : '' }}">
+          <li lass="{{'/admin/commandes' == request()->path() ? 'active' : '' }}">
             <a href="/admin/commandes">
               <i class="now-ui-icons education_atom"></i>
               <p>Commandes</p>
             </a>
           </li>
-          <li class="{{'#route' == request()->path() ? 'active' : '' }}">
+
+          <!-- <li>
             <a href="./map.html">
               <i class="now-ui-icons location_map-big"></i>
               <p>Maps</p>
             </a>
           </li>
-          <li class="{{'#route' == request()->path() ? 'active' : '' }}">
+          <li>
             <a href="./notifications.html">
               <i class="now-ui-icons ui-1_bell-53"></i>
               <p>Notifications</p>
             </a>
           </li>
+           -->
+          
           <li class="{{'admin/user' == request()->path() ? 'active' : '' }}">
             <a href="/admin/user">
               <i class="now-ui-icons users_single-02"></i>
               <p>User Profile</p>
             </a>
           </li>
-          <li class="{{'#route' == request()->path() ? 'active' : '' }}">
+
+          <!-- <li class="active ">
             <a href="./tables.html">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Table List</p>
             </a>
           </li>
-          <li class="{{'#route' == request()->path() ? 'active' : '' }}">
+          <li>
             <a href="./typography.html">
               <i class="now-ui-icons text_caps-small"></i>
               <p>Typography</p>

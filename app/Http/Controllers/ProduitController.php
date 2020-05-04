@@ -29,7 +29,12 @@ class ProduitController extends Controller
     public function index()
     {
         $produits = Auth::user()->produits()->get();
-        return view('Produit/indexprod', ['produits' => $produits]);
+        
+        $total = 0;
+        foreach($produits as $item){
+            $total += 1;
+        }
+        return view('Produit/indexprod', ['produits' => $produits,'total'=> $total]);
         //return view('Produit/Produitindex', ['produits' => $produits]);
     }
 
@@ -51,7 +56,9 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->validationRules());
+        $data=$request->validate($this->validationRules());
+
+        $data['photo']= $request->photo->store('upload','public');
 
         $Produit = new Produit;
 
@@ -98,7 +105,17 @@ class ProduitController extends Controller
     }
     public function ConsulterProduit($id) 
     {
-        return view('Produit.ConsulterProduit',['Produit' => Produit::findOrFail($id), 'user' => Auth::user() ]);
+        $user = Auth::user();
+        $Prod = Produit::findOrFail($id);
+        $produser = User::findOrFail($Prod->user_id);
+
+        if(($user->role == 'admin')or($user->role == 'client'and $Prod->user_id == $user->id )){
+            return view('Produit.ConsulterProduit',['Produit' => $Prod, 'user' => $user, 'produser' => $produser ]);
+        }elseif( ($user->role == 'client') and ($Prod->user_id != $user->id ) ){
+            return redirect()->route('Produit.index');
+        }else{
+            return redirect()->route('home');
+        }
 
     }
     public function ConsulterDetailleProduit($prodid,$userid) 
@@ -106,7 +123,6 @@ class ProduitController extends Controller
         return view('admin.Produit.ConsulterDetailleProduit',['Produit' => Produit::findOrFail($prodid), 'user' =>  User::findOrFail($userid) ]);
 
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -162,12 +178,12 @@ class ProduitController extends Controller
     private function validationRules()
     {
         return [
-            'name' => 'required',
-            'price' => 'required|min:1',
-            'quantity' => 'required|min:1|max:20',
-            'description' => 'required',
-            'categorie' => 'required',
-            'photo' => 'required'
+            'name' => 'required|string',
+            'price' => 'required|min:1|numeric',
+            'quantity' => 'required|min:1|max:20|numeric',
+            'description' => 'required|string',
+            'categorie' => 'required|string',
+            'photo' => 'required|file|image'
         ];
     }
     public function AllProd()

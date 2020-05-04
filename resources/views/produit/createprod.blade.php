@@ -6,7 +6,7 @@
 <div class="row justify-content-center" >
     <fieldset class="col-lg-6"> 
         <legend class="h4 text-gray-900 mb-4 text-warning ">Ajouter Produit</legend>
-        <form action="{{ route('Produit.store') }}" method="post">
+        <form action="{{ route('Produit.store') }}" method="post" enctype="multipart/form-data">
             @csrf
 
             <div class="jumbotron">

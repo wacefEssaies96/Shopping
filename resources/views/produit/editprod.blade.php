@@ -7,7 +7,7 @@
 <div class="row justify-content-center">
     <fieldset class="col-lg-6"> 
         <legend class="h4 text-gray-900 mb-4 text-warning ">Edit your Produit</legend>
-        <form action="{{ route('Produit.update', $Produit->id) }}" method="post">
+        <form action="{{ route('Produit.update', $Produit->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="jumbotron">
