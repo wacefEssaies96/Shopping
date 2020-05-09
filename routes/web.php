@@ -21,6 +21,10 @@ Route::get('/','HomeController@index')->name('home.index');
 
 Route::get('/home','HomeController@index')->name('home.index2');
 
+Route::get('/profil','UserProfileController@index')->name('user.profil.index');
+Route::put('/profil/update','UserProfileController@update')->name('user.profil.update');
+Route::get('/profil/disable','UserProfileController@disable')->name('user.profil.disable');
+
 
 
 ///  Route admin
