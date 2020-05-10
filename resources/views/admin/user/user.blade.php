@@ -24,6 +24,7 @@
               <th>role</th>
               <th>adresse</th>
               <th>phone</th>
+              <th>Actions</th>
               
             </thead>
             <tbody>
@@ -36,10 +37,16 @@
                 <td>{{$user->role}}</td>
                 <td>{{$user->adresse}}</td>
                 <td>{{$user->phone}}</td>
-                <td><a href="#{{$user->id}}" class="btn btn-success">Modifier</a></td>
-                <td><a href="/admin/user/{{$user->etat==1?'disable/' . $user->id : 'enable/' . $user->id}}" class="btn btn-{{$user->etat==1?'primary':'default'}}">{{$user->etat==1?'Désactiver':'Activer'}}</a></td>
-                <td><a href="#" class="btn btn-danger delete">Supprimer</a>
-                       
+                <td>
+                @if($user->role!='admin')
+                <a href="/user-edit/{{$user->id}}" class="btn btn-success">Modifier</a>
+                <a href="/admin/user/{{$user->etat==1?'disable/' . $user->id : 'enable/' . $user->id}}" class="btn btn-{{$user->etat==1?'primary':'default'}}">{{$user->etat==1?'Désactiver':'Activer'}}</a>
+                <form action="/user-delete/{{$user->id}}" method="post">
+                      {{csrf_field()}}
+                      {{method_field('DELETE')}}
+                      <button type="submit" class="btn btn-danger delete">Supprimer</button>
+                  </form>
+                @endif
                 </td>
               </tr>
             @endforeach

@@ -18,8 +18,8 @@ class CreateDemendesTable extends Migration
             $table->bigInteger('id_user')->unsigned();
             $table->bigInteger('id_prod')->unsigned();
             $table->string('status');
-            $table->foreign('id_user')->references('id')->on('users');
-            $table->foreign('id_prod')->references('id')->on('produits');
+            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_prod')->references('id')->on('produits')->onDelete('cascade');
             $table->timestamps();
            
         });

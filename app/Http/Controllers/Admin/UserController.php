@@ -8,6 +8,32 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    public function usered(){
+        $users=User::all();
+        return view('admin.user.user')->with('users',$users);
+    }
+    
+
+    public function useredit(Request $request,$id){
+
+        $users = User::findOrFail($id);
+        return view ('admin.user.user-edit')->with('users', $users) ; 
+    }
+    public function userupdate(Request $request,$id){
+        $users=User::find($id);
+        $users->name =$request->input('name');
+        $users->role =$request->input('role');
+        $users->update();
+        return redirect('/admin/user')->with('message','mise à jour effectué aves success')
+                                        ->with('alertType', 'success');
+    }
+    public function userdelete($id){
+        $users = User::findOrFail($id);
+        $users->delete();
+        return redirect('/admin/user')->with('message','user supprimée!')
+                                        ->with('alertType', 'success');
+    }
+
     /**
      * Disable spectific account
      */

@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Login - Register</title>
+  <title>Login</title>
 
   <!-- Custom fonts for this template-->
   <link href="{{ asset('tpauthad/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">

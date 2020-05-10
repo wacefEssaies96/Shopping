@@ -20,8 +20,8 @@ class CreateCommandesTable extends Migration
             $table->integer('confirm');
             $table->integer('quantity_prod');
             $table->integer('livraison');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('prod_id')->references('id')->on('produits');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('prod_id')->references('id')->on('produits')->onDelete('cascade');
             $table->timestamps();
             
         });

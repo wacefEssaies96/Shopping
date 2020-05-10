@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('adresse');
             $table->string('phone');
             $table->string('image')->nullable();
-            $table->bigInteger('etat');
+            $table->bigInteger('etat')->default(1);
             $table->rememberToken();
             $table->timestamps();
            
