@@ -40,16 +40,24 @@
                     <!-- Single Catagory -->
                     <div class="col-sm-4 "><!--class=""-->
                         <a href="#">
-                            <img src="{{ asset('img/image_projet/'.$prod['photo']) }}"  alt="check path " style="height:300px"/>
+                            <img src="{{ asset('storage/'.$prod['photo']) }}"  alt="check path " style="height:300px"/>
                             <!-- Hover Content -->
                             <div class="hover-content">
                                 <div class="line"></div>
                                 <p>${{$prod['price']}}</p>
+                                @auth
                                 <h4>
                                     <a href="{{ route('Produit.show', $prod->id) }}">
                                         {{$prod['name']}}
                                     </a>
                                 </h4>
+                                @else
+                                <h4>
+                                    <a href="{{ route('login') }}">
+                                        {{$prod['name']}}
+                                    </a>
+                                </h4>
+                                @endauth
                             </div>
                         </a>
                     </div>

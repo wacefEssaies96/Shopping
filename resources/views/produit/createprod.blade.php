@@ -1,15 +1,15 @@
 @extends('layouts.form')
 
-@section('title', 'New Booking')
+@section('title', 'Ajouter Produit')
 @section('content')
 
 <div class="row justify-content-center" >
-    <fieldset class="col-lg-6"> 
-        <legend class="h4 text-gray-900 mb-4 text-warning ">Ajouter Produit</legend>
-        <form action="{{ route('Produit.store') }}" method="post">
+    <fieldset class="col-lg-6" style="color: white;background-image: url({{ asset('img/bg-img/bgprimary1.jpg') }});background-repeat: no-repeat;size:100% 100%;background-size: 100% 100%;padding: 30px 30px;border-radius:30px;"> 
+        <div class="h4 text-gray-900 mb-4 text-warning ">Ajouter Produit</div>
+        <form action="{{ route('Produit.store') }}" method="post" enctype="multipart/form-data">
             @csrf
 
-            <div class="jumbotron">
+            <div >
                 <div class="row form-groupe">
                     <label for="name" >Nom de produit</label>
                     <input type="text" name="name" value="{{ old('name') }}"  id="name" class="form-control" placeholder="Entrer Le Nom de produit">
@@ -53,11 +53,10 @@
                     @error('description')<div class="text-danger">{{ $message }}</div> @enderror
                 </div>
                 <br>
-                <div class="row ">
+                <div class="row form-groupe">
                     <label > Image   </label>
-                    <div class="form-groupe">
-                        <input type="file"  name="photo"  placeholder="Entrer La Photo de produit">
-                    </div>
+                    <input type="file"  name="photo" class="form-control"  placeholder="Entrer La Photo de produit">
+                    
                     @error('photo')<div class="text-danger">{{ $message }}</div> @enderror
                 </div>
                 <br>

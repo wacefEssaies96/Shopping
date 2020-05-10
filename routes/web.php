@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth','admin']],function(){
     Route::delete('/user-delete/{id}','Admin\UserController@userdelete');   
     
     Route::resource('/admin/commandes', 'CommandeController'); 
-    Route::get('/AllProduits', 'ProduitController@AllProd')->name('AllProd');
+    Route::get('admin/Produit/AllProduits', 'ProduitController@AllProd')->name('AllProd');
     Route::get('admin/Produit/ConsulterDetailleProduit/{prodid}/{userid}', 'ProduitController@ConsulterDetailleProduit')->name('ConsulterDetailleProduit');
     Route::get('/admin/Demandes/AccepterDemande/{id}/{prodid}/{userid}', 'DemendeController@AccepterDemande')->name('AccepterDemande');
     Route::get('/admin/Demandes/AnnulerDemande/{id}/{prodid}/{userid}', 'DemendeController@AnnulerDemande')->name('AnnulerDemande');
@@ -57,6 +57,9 @@ Route::group(['middleware' => ['auth','admin']],function(){
 ///  Route client
 Route::group(['middleware' => ['auth','client']],function(){
     Route::resource('/Produit', 'ProduitController');
+    Route::resource('/admin/Demandes', 'DemendeController', [
+        'only' => ['store','destroy']
+    ]);
     Route::resource('/panier','PanierController');    
     Route::resource('/commande','CommandeController');
     Route::resource('/paiement','PaiementController');
@@ -65,11 +68,9 @@ Route::group(['middleware' => ['auth','client']],function(){
 ///  Route visiteur
 Route::middleware('auth')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
-    //Route::resource('/Produit', 'ProduitController');
-    Route::resource('/admin/Demandes', 'DemendeController', [
-        'only' => ['store','destroy']
+    Route::resource('/Produit', 'ProduitController', [
+        'only' => ['show']
     ]);
-    //rr
     Route::get('/ConsulterProduit/{prodid}', 'ProduitController@ConsulterProduit')->name('ConsulterProduit');
     
     

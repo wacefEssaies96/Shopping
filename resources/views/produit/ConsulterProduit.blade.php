@@ -32,34 +32,34 @@
                       <div class="single_product_thumb">
                           <div id="product_details_slider" class="carousel slide" data-ride="carousel">
                               <ol class="carousel-indicators">
-                                  <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url({{ asset('img/image_projet/'.$Produit['photo']) }});">
+                                  <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
                                   </li>
-                                  <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url({{ asset('img/image_projet/'.$Produit['photo']) }});">
+                                  <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
                                   </li>
-                                  <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url({{ asset('img/image_projet/'.$Produit['photo']) }});">
+                                  <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
                                   </li>
-                                  <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url({{ asset('img/image_projet/'.$Produit['photo']) }});">
+                                  <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
                                   </li>
                               </ol>
                               <div class="carousel-inner">
                                   <div class="carousel-item active">
-                                      <a class="gallery_img" href="{{ asset('img/image_projet/'.$Produit['photo']) }}">
-                                          <img class="d-block w-100" src="{{ asset('img/image_projet/'.$Produit['photo']) }}" alt="First slide">
+                                      <a class="gallery_img" href="{{ asset('storage/'.$Produit['photo']) }}">
+                                          <img class="d-block w-100" src="{{ asset('storage/'.$Produit['photo']) }}" alt="First slide">
                                       </a>
                                   </div>
                                   <div class="carousel-item">
-                                      <a class="gallery_img" href="{{ asset('img/image_projet/'.$Produit['photo']) }}">
-                                          <img class="d-block w-100" src="{{ asset('img/image_projet/'.$Produit['photo']) }}" alt="Second slide">
+                                      <a class="gallery_img" href="{{ asset('storage/'.$Produit['photo']) }}">
+                                          <img class="d-block w-100" src="{{ asset('storage/'.$Produit['photo']) }}" alt="Second slide">
                                       </a>
                                   </div>
                                   <div class="carousel-item">
-                                      <a class="gallery_img" href="{{ asset('img/image_projet/'.$Produit['photo']) }}">
-                                          <img class="d-block w-100" src="{{ asset('img/image_projet/'.$Produit['photo']) }}" alt="Third slide">
+                                      <a class="gallery_img" href="{{ asset('storage/'.$Produit['photo']) }}">
+                                          <img class="d-block w-100" src="{{ asset('storage/'.$Produit['photo']) }}" alt="Third slide">
                                       </a>
                                   </div>
                                   <div class="carousel-item">
-                                      <a class="gallery_img" href="{{ asset('img/image_projet/'.$Produit['photo']) }}">
-                                          <img class="d-block w-100" src="{{ asset('img/image_projet/'.$Produit['photo']) }}" alt="Fourth slide">
+                                      <a class="gallery_img" href="{{ asset('storage/'.$Produit['photo']) }}">
+                                          <img class="d-block w-100" src="{{ asset('storage/'.$Produit['photo']) }}" alt="Fourth slide">
                                       </a>
                                   </div>
                               </div>
@@ -100,42 +100,49 @@
                         <!-- Add to Cart Form -->
                         <form class="cart clearfix" method="post">
                             @admin
-                                <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a>
-                                <a href="#"  class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
-                            @elseadmin
-                                @if($Produit->confirm)
-                                    Votre Produit sur le site Vous ne pouvez ni modifier ni supprimer
-                                @else
+                                @if($produser->role=='admin')
                                     <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a>
-                                    <a href="#" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Delete Produit</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            </div>
-                                            <div class="modal-body">
-                                            Are you sure to delete your Produit ?
-                                            </div>
-                                            <div class="modal-footer">
-                                            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-outline-danger"
-                                                onclick="event.preventDefault();
-                                                document.querySelector('#delete-Produit-form').submit();">Confirm delete</button>
-                                            </div>
-                                            <form id="delete-Produit-form" action="{{ route('Produit.destroy', $Produit->id) }}" method="POST" style="display: none;">
-                                                @csrf
-                                                @method('DELETE')
-                                            </form>
-                                        </div>
-                                        </div>
-                                    </div>
+                                    <a href="#"  class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
+                                @else
+                                    C'est produit d'un client
+                                @endif
+                            @endadmin
+                            @client
+                                @if($Produit->user_id == $user->id )
+                                    @if($Produit->confirm)
+                                        Votre Produit sur le site Vous ne pouvez ni modifier ni supprimer
+                                    @else
+                                        <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a>
+                                        <a href="#" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
+                                        
+                                    @endif 
                                 @endif 
-                             @endadmin
+                            @endclient
+                             <!-- Modal -->
+                             <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Produit</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure to delete your Produit ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline-danger" onclick="event.preventDefault();document.querySelector('#delete-Produit-form').submit();">Confirm delete</button>
+        </div>
+        <form id="delete-Produit-form" action="{{ route('Produit.destroy', $Produit->id) }}" method="POST" style="display: none;">
+            @csrf
+            @method('DELETE')
+        </form>
+      </div>
+    </div>
+  </div>
+
                         </form>
 
                     </div>
@@ -147,6 +154,34 @@
 </div>
 <!-- ##### Main Content Wrapper End ##### -->
 
+
+  
+  <!-- Modal -->
+  <!-- <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Produit</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Are you sure to delete your Produit ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline-danger"
+            onclick="event.preventDefault();
+            document.querySelector('#delete-Produit-form').submit();">Confirm delete</button>
+        </div>
+        <form id="delete-Produit-form" action="{{ route('Produit.destroy', $Produit->id) }}" method="POST" style="display: none;">
+            @csrf
+            @method('DELETE')
+        </form>
+      </div>
+    </div>
+  </div> -->
   
 @include('layouts.footer')   
 

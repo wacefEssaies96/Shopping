@@ -28,8 +28,13 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        $produits = Auth::user()->produits()->get();
-        return view('Produit/indexprod', ['produits' => $produits]);
+        $produits = Auth::user()->produits()->paginate(5);
+        
+        $total = 0;
+        foreach($produits as $item){
+            $total += 1;
+        }
+        return view('Produit/indexprod', ['produits' => $produits,'total'=> $total]);
         //return view('Produit/Produitindex', ['produits' => $produits]);
     }
 
@@ -51,10 +56,18 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate($this->validationRules());
+        $data=$request->validate($this->validationRulesphoto());
 
+        $data['user_id'] = Auth::id();
+        $data['DemandeEnvoyer'] = 0;
+        $data['confirm'] = 0;
+        $data['photo']= $request->photo->store('uploads','public');
+        $Produit=Produit::create($data);
+        /*
+        debut store detaille
         $Produit = new Produit;
 
+        $request->validate($this->validationRules());
         $Produit->user_id = Auth::id();
         $Produit->name = $request->name;
         $Produit->price = $request->price;
@@ -65,6 +78,8 @@ class ProduitController extends Controller
         $Produit->confirm = 0;
         $Produit->photo = $request->photo;
 
+            fin store detaille
+        */
         /*if($request->hasFile('photo')){
             $file = $request->photo;
             $extension = $file->getClientOriginalExtension();
@@ -76,7 +91,7 @@ class ProduitController extends Controller
             $Produit->photo = '';
         }*/
 
-        $Produit->save();
+        //$Produit->save();
 
         return redirect()->route('Produit.index')->with('AddProduit', 'Vous avez ajouter un Produit');
     
@@ -91,14 +106,26 @@ class ProduitController extends Controller
      */
     public function show($id) 
     {
-        return view('Produit.showprod',['Produit' => Produit::findOrFail($id), 'user' => Auth::id() ]);
-
-        //Produit $produit
-        //return view('Produit.showprod')->with('Produit', $produit);
+        $Produit=Produit::findOrFail($id);
+        if($Produit->confirm){
+            return view('Produit.showprod',['Produit' => $Produit, 'user' => Auth::id() ]);
+        }else{
+            return redirect()->route('home');
+        }
     }
     public function ConsulterProduit($id) 
     {
-        return view('Produit.ConsulterProduit',['Produit' => Produit::findOrFail($id), 'user' => Auth::user() ]);
+        $user = Auth::user();
+        $Prod = Produit::findOrFail($id);
+        $produser = User::findOrFail($Prod->user_id);
+
+        if(($user->role == 'admin')or($user->role == 'client'and $Prod->user_id == $user->id )){
+            return view('Produit.ConsulterProduit',['Produit' => $Prod, 'user' => $user, 'produser' => $produser ]);
+        }elseif( ($user->role == 'client') and ($Prod->user_id != $user->id ) ){
+            return redirect()->route('Produit.index');
+        }else{
+            return redirect()->route('home');
+        }
 
     }
     public function ConsulterDetailleProduit($prodid,$userid) 
@@ -106,7 +133,6 @@ class ProduitController extends Controller
         return view('admin.Produit.ConsulterDetailleProduit',['Produit' => Produit::findOrFail($prodid), 'user' =>  User::findOrFail($userid) ]);
 
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -130,6 +156,15 @@ class ProduitController extends Controller
      */
     public function update(Request $request,$id)
     {
+        $data=$request->validate($this->validationRules());
+        if($request->photo == null){
+            $data['photo']= $request->anphoto;
+        }else{
+            $data['photo']= $request->photo->store('uploads','public');
+        }
+        
+        Produit::where('id', $id)->update($data);
+        /*
         $validatedData = $request->validate($this->validationRules());
         Produit::where('id', $id)->update([
                 'name' => $request->name,
@@ -139,6 +174,7 @@ class ProduitController extends Controller
                 'categorie' => $request->categorie,
                 'photo' => $request->photo
               ]);
+              */
         return redirect()->route('ConsulterProduit', $id)->with('updateProduit', 'Produit updated successfully');
 
     }
@@ -158,21 +194,31 @@ class ProduitController extends Controller
 
         return redirect()->route('Produit.index')->with('deleteProduit', 'Produit deleted successfully');
     }
-
+    
+    private function validationRulesphoto()
+    {
+        return [
+            'name' => 'required|string',
+            'price' => 'required|min:1|numeric',
+            'quantity' => 'required|min:1|max:20|numeric',
+            'description' => 'required|string',
+            'categorie' => 'required|string',
+            'photo' => 'required|file|image'
+        ];
+    }
     private function validationRules()
     {
         return [
-            'name' => 'required',
-            'price' => 'required|min:1',
-            'quantity' => 'required|min:1|max:20',
-            'description' => 'required',
-            'categorie' => 'required',
-            'photo' => 'required'
+            'name' => 'required|string',
+            'price' => 'required|min:1|numeric',
+            'quantity' => 'required|min:1|max:20|numeric',
+            'description' => 'required|string',
+            'categorie' => 'required|string',
         ];
     }
     public function AllProd()
     {
-        $produits = Produit::all();
-        return view('Produit/Produitindex', ['produits' => $produits]);
+        $produits = Produit::paginate(6);
+        return view('admin/produit/Produitindex', ['produits' => $produits]);
     }
 }
