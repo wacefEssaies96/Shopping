@@ -107,6 +107,11 @@
                                
                                     <form action="{{route('panier.store')}}" method="post">
                                         @csrf
+                                        <div class="form-group">
+                                            <label>Quantity : </label>
+                                            
+                                            <input class="form-control" value="1" min="1" max="{{$Produit->quantity}}" type="number"  type="number" name="qtt" id="qtt">
+                                        </div>
                                         <input type="hidden" name="prod_id" id="prod_id" value="{{$Produit->id}}">
                                         <button class="btn amado-btn" type="submit"><img src="{{ asset('img/core-img/cart.png') }}" alt="">Add to cart</button>
                                     </form>

@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Panier;
+use App\Produit;
 use App\commande;
 use App\Paiement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Facture;
 
 
 class CommandeController extends Controller
@@ -29,21 +32,7 @@ class CommandeController extends Controller
             'attenteCommandes'=>$attenteCommandes,
             'accepteeCommandes'=>$accepteeCommandes,
         ]);
-        // $list_commande = Auth::user()
-        //     ->commandes()
-        //     ->join('produits','commandes.prod_id','=','produits.id')
-        //     ->select('commandes.id','produits.price','commandes.quantity_prod','produits.name')
-        //     ->get();
-        //     $total = 0;
-        //     foreach($list_commande as $item){
-        //         $total += ($item['price']*$item->quantity_prod);
-        //     }
-        // // dump($total);
-        // // dump($list_commande);
-        // return view('commande.index',[
-        //     'list_commande'=>$list_commande,
-        //     'total' => $total
-        // ]);
+       
     }
 
     /**
@@ -66,23 +55,28 @@ class CommandeController extends Controller
         $panier = Auth::user()
             ->paniers()
             ->join('produits','paniers.prod_id','=','produits.id')
-            ->select('paniers.id','produits.price','paniers.quantity_prod','produits.name','produits.description','paniers.prod_id')
+            ->select('paniers.id','produits.price','produits.quantity','paniers.quantity_prod','produits.quantity','produits.name','produits.description','paniers.prod_id')
             ->get();
+        $total = 0;
         foreach($panier as $item){
             $commande = new Commande();
             $commande->user_id = Auth::id();
-            $commande->prod_id =$item->prod_id;
-            $commande->quantity_prod =$item->quantity_prod;
+            $commande->prod_id = $item->prod_id;
+            $commande->quantity_prod = $item->quantity_prod;
             $commande->livraison = $request->select;
             $commande->confirm = 0;
             $commande->save(); 
+            $total += $item->quantity_prod * $item->price;
+            $produit = Produit::find($item->prod_id);
+            $produit->quantity -= $item->quantity_prod;
+            $produit->update();
         }
+        Mail::to(Auth::user()->email)->send(new Facture($panier,$total));
         $panier = Auth::user()->paniers()->get();
-        
         foreach($panier as $item){
             $item->delete();
         }
-        return redirect()->route('panier.index');
+        return redirect()->route('panier.index');    
     }
 
     /**

@@ -19,7 +19,7 @@ class PanierController extends Controller
         $list_panier = Auth::user()
             ->paniers()
             ->join('produits','paniers.prod_id','=','produits.id')
-            ->select('paniers.id','produits.price','paniers.quantity_prod','produits.name')
+            ->select('paniers.id','produits.price','produits.photo','paniers.quantity_prod','produits.name','produits.description')
             ->get();
         $total = 0;
         foreach($list_panier as $item){
@@ -51,13 +51,20 @@ class PanierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {     
-        $panier = new Panier();
-        $panier->user_id = Auth::id();
-        $panier->prod_id = (int)$request->prod_id;
-        $panier->quantity_prod = 1;
-        $panier->save();
-        return redirect()->route('panier.index')->with('addPanier','Le produit a été ajouté au panier avec succées');
+    {
+        $id = (int)$request->prod_id;
+        $qtt = (int)$request->qtt;
+        $produit = Produit::find($id);
+       if($qtt > 0 && $qtt <= $produit->quantity){
+            $panier = new Panier();
+            $panier->user_id = Auth::id();
+            $panier->prod_id = $id;
+            $panier->quantity_prod = $qtt;
+            $panier->save();
+            return redirect()->route('panier.index')->with('addPanier','Le produit a été ajouté au panier avec succées');
+        }else{
+            return redirect()->route('panier.index')->with('errorPanier','Quantité Invalid !');
+        }
     }
 
     /**
@@ -80,9 +87,11 @@ class PanierController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(panier $panier)
-    {
+    { 
+        $produit = Produit::find($panier->prod_id);
         return view('panier.edit',[
-            'panier'=>$panier
+            'produit' => $produit,
+            'panier' => $panier
         ]);
     }
 
@@ -95,9 +104,14 @@ class PanierController extends Controller
      */
     public function update(Request $request, panier $panier)
     {
-        $panier->quantity_prod=$request->quantity_prod;
-        $panier->update();
-        return redirect()->route('panier.index')->with('editPanier','Le produit a été modifié avec succées');
+        $produit = Produit::find($panier->prod_id);
+        if($request->quantity_prod < 0 || $request->quantity_prod > $produit->quantity ){
+            return redirect()->route('panier.index')->with('editPanier','Invalid !');
+        }else{
+            $panier->quantity_prod = $request->quantity_prod;
+            $panier->update();
+            return redirect()->route('panier.index')->with('editPanier','Le produit a été modifié avec succées');
+        }
     }
 
     /**

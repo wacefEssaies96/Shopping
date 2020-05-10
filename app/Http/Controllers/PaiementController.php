@@ -46,11 +46,14 @@ class PaiementController extends Controller
         $panier =Auth::user()
             ->paniers()
             ->join('produits','paniers.prod_id','=','produits.id')
-            ->select('paniers.id','produits.price','paniers.quantity_prod','produits.name','produits.description','paniers.prod_id')
+            ->select('paniers.id','produits.price','produits.photo','paniers.quantity_prod','produits.name','produits.description','paniers.prod_id')
             ->get();
+        $total = $this->calculTotal($panier);
+      
         return view('commande.create',[
             'paiement' => $paiement,
             'list_commande' => $panier,
+            'total' => $total
         ]);
     }
 
@@ -97,5 +100,12 @@ class PaiementController extends Controller
     public function destroy($id)
     {
         //
+    }
+    private function calculTotal($list_panier){
+        $total = 0;
+        foreach($list_panier as $item){
+            $total += ($item['price']*$item->quantity_prod);
+        }
+        return $total." $";
     }
 }

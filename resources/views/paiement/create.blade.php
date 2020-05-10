@@ -3,23 +3,23 @@
 @section('content')
 <div class="main-content-wrapper d-flex clearfix">
     @include('layouts.navgauche')
-    <form action="{{route('paiement.store')}}" method="post" style="margin:100px;">
+    <form action="{{route('paiement.store')}}" method="post" style="margin:100px; width:30em;">
         @csrf
-        <div class="row">  
+        <div class="form-group">  
             <label>Type de la carte bancaire : </label>
             <select name="type_cb" id="type_cb" class="form-control">
-                <option value="test1">test1</option>
-                <option value="test2">test2</option>
-                <option value="test3">test3</option>
+                <option value="MasterCard">MasterCard</option>
+                <option value="Visa">Visa</option>
+                <option value="PayPal">PayPal</option>
             </select>
         </div>
-        <div class="row"> 
+        <div class="form-group"> 
             <label>Numero : </label>
-            <input class="form-control" type="text" name="num" id="name">  
+            <input class="form-control" type="text" name="num" id="name" pattern="[0-9]{16}" required>  
         </div>
-        <div class="row"> 
+        <div class="form-group"> 
             <label>Date d'éxpiration : </label>
-            <input class="form-control" type="date" name="date" id="date">
+            <input class="form-control" type="date" name="date" id="date" required>
         </div>
         <button class="btn btn-success" type="submit">Submit</button>
     </form>

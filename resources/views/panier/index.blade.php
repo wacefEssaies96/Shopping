@@ -3,15 +3,14 @@
 @section('content')
     <div class="main-content-wrapper d-flex clearflex ">
         @include('layouts.navgauche')
-        <!--  
-            @if (session('editPanier'))
-                <div style="height:50px; width:60%; float:left;" class="alert alert-success alert-dismissible fade show" role="alert">
+           <!-- @if (session('editPanier'))
+                <div style="height:50px; width:60%;" class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('editPanier') }}
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                @endif
+                @endif  
                 @if (session('addPanier'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('addPanier') }}
@@ -32,8 +31,9 @@
             @if($total == 0)
                 <h3 class="text-warning">Votre panier est vide ! </h3>
             @else
-                <table class="table table-striped" style=" width:700px;  ">
+                <table class="table table-striped" style="width:50%" >
                     <thead>
+                        <th></th>
                         <th>Name</th>
                         <th>Quantity</th>
                         <th>Price</th>
@@ -42,6 +42,7 @@
                     <tbody>
                         @foreach($list_panier as $panier)
                             <tr>
+                                <td><img class="card-img-top" style="width: 90px; height:90px;" src="{{asset('img/image_projet/'.$panier->photo)}}" alt="{{$panier['name']}}"></td>
                                 <td><a href="{{ route('panier.show',$panier->id) }}"> {{$panier['name']}}</a></td>
                                 <td>{{$panier['quantity_prod']}}</td>
                                 <td>{{$panier->price}}</td>
@@ -55,10 +56,13 @@
                                         @method('DELETE')
                                         <button class="btn btn-outline-danger" type="submit">Delete</button>
                                     </form>
+                                    
                                 </td>
                             </tr>
+                            
                         @endforeach
                         <tr>
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td>{{$total}}</td>
@@ -67,8 +71,10 @@
                     </tbody>
                 </table>
             @endif
-      
     </div>
+
+
+  
     @include('layouts.footer')  
  
 @endsection
