@@ -59,9 +59,11 @@
     
     
 </head>
-<body style="background-image: url({{ asset('img/bg-img/bgf.jpg') }});background-repeat: no-repeat;size:100% 100%;background-size: 100% 100%;">
+
+<!-- <body  style="background-image: url({{ asset('img/bg-img/bgnav.jpg') }});background-repeat: no-repeat;size:100% 100%;background-size: 100% 100%;"> -->
+<body  >
     <div id="form"  >
-        @include('layouts.nav')
+        @include('layouts.navformulaire')
 
         <main class="py-4" >
             @yield('content')

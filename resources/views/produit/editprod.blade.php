@@ -1,16 +1,15 @@
 @extends('layouts.form')
 
 @section('title', 'Edit Produit')
-
-
 @section('content')
-<div class="row justify-content-center">
-    <fieldset class="col-lg-6"> 
-        <legend class="h4 text-gray-900 mb-4 text-warning ">Edit your Produit</legend>
+
+<div class="row justify-content-center" >
+    <fieldset class="col-lg-6" style="color: white;background-image: url({{ asset('img/bg-img/bgprimary1.jpg') }});background-repeat: no-repeat;size:100% 100%;background-size: 100% 100%;padding: 30px 30px;border-radius:30px;"> 
+        <div  class="h4 text-gray-900 mb-4 text-warning ">Edit your Produit</div>
         <form action="{{ route('Produit.update', $Produit->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
-            <div class="jumbotron">
+            <div >
             
                 <div class="row form-groupe">
                     <label for="name" >Nom de produit</label>
@@ -57,11 +56,11 @@
                     @error('description')<div class="text-danger">{{ $message }}</div> @enderror
                 </div>
                 <br>
-                <div class="row ">
+                <div class="row form-groupe">
                     <label > Image   </label>
-                    <div class="form-groupe">
-                        <input type="file"  name="photo" value="{{ old('photo')  ?? $Produit->photo}}" >
-                    </div>
+                    <input type="file"  name="photo" class="form-control"  >
+                    <input type="text" name="anphoto"  value="{{ old('photo')  ?? $Produit->photo}}"  id="anphoto" class="form-control" >
+                        
                     @error('photo')<div class="text-danger">{{ $message }}</div> @enderror
                 </div>
                 <br>

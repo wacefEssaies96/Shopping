@@ -28,7 +28,7 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        $produits = Auth::user()->produits()->get();
+        $produits = Auth::user()->produits()->paginate(5);
         
         $total = 0;
         foreach($produits as $item){
@@ -56,12 +56,18 @@ class ProduitController extends Controller
      */
     public function store(Request $request)
     {
-        $data=$request->validate($this->validationRules());
+        $data=$request->validate($this->validationRulesphoto());
 
-        $data['photo']= $request->photo->store('upload','public');
-
+        $data['user_id'] = Auth::id();
+        $data['DemandeEnvoyer'] = 0;
+        $data['confirm'] = 0;
+        $data['photo']= $request->photo->store('uploads','public');
+        $Produit=Produit::create($data);
+        /*
+        debut store detaille
         $Produit = new Produit;
 
+        $request->validate($this->validationRules());
         $Produit->user_id = Auth::id();
         $Produit->name = $request->name;
         $Produit->price = $request->price;
@@ -72,6 +78,8 @@ class ProduitController extends Controller
         $Produit->confirm = 0;
         $Produit->photo = $request->photo;
 
+            fin store detaille
+        */
         /*if($request->hasFile('photo')){
             $file = $request->photo;
             $extension = $file->getClientOriginalExtension();
@@ -83,7 +91,7 @@ class ProduitController extends Controller
             $Produit->photo = '';
         }*/
 
-        $Produit->save();
+        //$Produit->save();
 
         return redirect()->route('Produit.index')->with('AddProduit', 'Vous avez ajouter un Produit');
     
@@ -98,10 +106,12 @@ class ProduitController extends Controller
      */
     public function show($id) 
     {
-        return view('Produit.showprod',['Produit' => Produit::findOrFail($id), 'user' => Auth::id() ]);
-
-        //Produit $produit
-        //return view('Produit.showprod')->with('Produit', $produit);
+        $Produit=Produit::findOrFail($id);
+        if($Produit->confirm){
+            return view('Produit.showprod',['Produit' => $Produit, 'user' => Auth::id() ]);
+        }else{
+            return redirect()->route('home');
+        }
     }
     public function ConsulterProduit($id) 
     {
@@ -146,6 +156,15 @@ class ProduitController extends Controller
      */
     public function update(Request $request,$id)
     {
+        $data=$request->validate($this->validationRules());
+        if($request->photo == null){
+            $data['photo']= $request->anphoto;
+        }else{
+            $data['photo']= $request->photo->store('uploads','public');
+        }
+        
+        Produit::where('id', $id)->update($data);
+        /*
         $validatedData = $request->validate($this->validationRules());
         Produit::where('id', $id)->update([
                 'name' => $request->name,
@@ -155,6 +174,7 @@ class ProduitController extends Controller
                 'categorie' => $request->categorie,
                 'photo' => $request->photo
               ]);
+              */
         return redirect()->route('ConsulterProduit', $id)->with('updateProduit', 'Produit updated successfully');
 
     }
@@ -174,8 +194,8 @@ class ProduitController extends Controller
 
         return redirect()->route('Produit.index')->with('deleteProduit', 'Produit deleted successfully');
     }
-
-    private function validationRules()
+    
+    private function validationRulesphoto()
     {
         return [
             'name' => 'required|string',
@@ -186,9 +206,19 @@ class ProduitController extends Controller
             'photo' => 'required|file|image'
         ];
     }
+    private function validationRules()
+    {
+        return [
+            'name' => 'required|string',
+            'price' => 'required|min:1|numeric',
+            'quantity' => 'required|min:1|max:20|numeric',
+            'description' => 'required|string',
+            'categorie' => 'required|string',
+        ];
+    }
     public function AllProd()
     {
-        $produits = Produit::all();
-        return view('Produit/Produitindex', ['produits' => $produits]);
+        $produits = Produit::paginate(6);
+        return view('admin/produit/Produitindex', ['produits' => $produits]);
     }
 }

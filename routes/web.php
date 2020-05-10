@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth','admin']],function(){
     Route::resource('/admin/commandes', 'CommandeController'); 
     Route::get('/admin/user','Admin\DashboardController@registered')->name('admin.user');
     
-    Route::get('/AllProduits', 'ProduitController@AllProd')->name('AllProd');
+    Route::get('admin/Produit/AllProduits', 'ProduitController@AllProd')->name('AllProd');
     Route::get('admin/Produit/ConsulterDetailleProduit/{prodid}/{userid}', 'ProduitController@ConsulterDetailleProduit')->name('ConsulterDetailleProduit');
     Route::get('/admin/Demandes/AccepterDemande/{id}/{prodid}/{userid}', 'DemendeController@AccepterDemande')->name('AccepterDemande');
     Route::get('/admin/Demandes/AnnulerDemande/{id}/{prodid}/{userid}', 'DemendeController@AnnulerDemande')->name('AnnulerDemande');

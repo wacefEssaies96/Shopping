@@ -12,10 +12,10 @@
     <div class="amado_product_area section-padding-100">
         <div class="container-fluid">
 
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-12">
                     <div class="product-topbar d-xl-flex align-items-end justify-content-between">
-                        <!-- Total Products -->
+                        <!-- Total Products ->
                         <div class="total-products">
                             <p>Showing 1-8 0f 25</p>
                             <div class="view d-flex">
@@ -23,7 +23,7 @@
                                 <a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
                             </div>
                         </div>
-                        <!-- Sorting -->
+                        <!-- Sorting ->
                         <div class="product-sorting d-flex">
                             <div class="sort-by-date d-flex align-items-center mr-15">
                                 <p>Sort by</p>
@@ -47,10 +47,10 @@
                                 </form>
                             </div>
                         </div>
+
                     </div>
                 </div>
-            </div>
-            <h1> Produit Sur le sites</h1>
+            </div> -->
 
             <div class="row">
                 @foreach($produits as $produit)
@@ -58,11 +58,12 @@
                         <!-- Single Product Area -->
                         <div class="col-12 col-sm-6 col-md-12 col-xl-6">
                             <div class="single-product-wrapper">
+                                <h6> Produit Sur le site</h6>
                                 <!-- Product Image -->
                                 <div class="product-img">
-                                    <img src="{{ asset('img/image_projet/'.$produit['photo']) }}" alt="">
+                                    <img src="{{ asset('storage/'.$produit['photo']) }}" alt="">
                                     <!-- Hover Thumb -->
-                                    <img class="hover-img" src="{{ asset('img/image_projet/'.$produit['photo']) }}" alt="">
+                                    <img class="hover-img" src="{{ asset('storage/'.$produit['photo']) }}" alt="">
                                 </div>
 
                                 <!-- Product Description -->
@@ -101,7 +102,6 @@
                     @endif
                 @endforeach
             </div>
-            <h1> Produit des Clients</h1>
             <div class="row">
                 @foreach($produits as $produit)
                 
@@ -109,11 +109,12 @@
                         <!-- Single Product Area -->
                         <div class="col-12 col-sm-6 col-md-12 col-xl-6">
                             <div class="single-product-wrapper">
+                                <h6> Produit d'un Client</h6>
                                 <!-- Product Image -->
                                 <div class="product-img">
-                                    <img src="{{ asset('img/image_projet/'.$produit['photo']) }}" alt="">
+                                    <img src="{{ asset('storage/'.$produit['photo']) }}" alt="">
                                     <!-- Hover Thumb -->
-                                    <img class="hover-img" src="{{ asset('img/image_projet/'.$produit['photo']) }}" alt="">
+                                    <img class="hover-img" src="{{ asset('storage/'.$produit['photo']) }}" alt="">
                                 </div>
 
                                 <!-- Product Description -->
@@ -152,9 +153,10 @@
                     @endif
                 @endforeach
             </div>
-            <div class="row">
+            {{ $produits->links()}}
+            <!-- <div class="row">
                 <div class="col-12">
-                    <!-- Pagination -->
+                    <!-- Pagination ->
                     <nav aria-label="navigation">
                         <ul class="pagination justify-content-end mt-50">
                             <li class="page-item active"><a class="page-link" href="#">01.</a></li>
@@ -164,7 +166,7 @@
                         </ul>
                     </nav>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <!-- ##### Main Content Wrapper End ##### -->

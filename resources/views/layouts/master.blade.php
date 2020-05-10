@@ -34,7 +34,7 @@
 
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
-          <li class="{{'admin/dashboard' == request()->path() ? 'active' : '' }}">
+        <li class="{{'admin/dashboard' == request()->path() ? 'active' : '' }}">
             <a href="/admin/dashboard">
               <i class="fa fa-home fa-dark fa-lg "></i>
               <p>Home</p>
@@ -46,14 +46,14 @@
               <p>Demandes</p>
             </a>
           </li>
-          <li lass="{{'/AllProduits' == request()->path() ? 'active' : '' }}">
-            <a href="/AllProduits">
+          <li lass="{{'admin/Produit/AllProduits' == request()->path() ? 'active' : '' }}">
+            <a href="/admin/Produit/AllProduits">
             
               <i class="now-ui-icons design_app"></i>
               <p>Gerer les Produits</p>
             </a>
           </li>
-          <li lass="{{'/admin/commandes' == request()->path() ? 'active' : '' }}">
+          <li lass="{{'admin/commandes' == request()->path() ? 'active' : '' }}">
             <a href="/admin/commandes">
               <i class="now-ui-icons education_atom"></i>
               <p>Commandes</p>
