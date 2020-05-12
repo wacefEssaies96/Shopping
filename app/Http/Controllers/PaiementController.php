@@ -28,6 +28,14 @@ class PaiementController extends Controller
      */
     public function create()
     {
+        // Stripe::setApiKey('sk_test_W4rmc6j0k6XCOg8cvVjD7g6a00yW882oW2');
+
+        // $intent = \Stripe\PaymentIntent::create([
+        // 'amount' => 1099,
+        // 'currency' => 'usd',
+        // // Verify your integration in this guide by including this parameter
+        // 'metadata' => ['integration_check' => 'accept_a_payment'],
+        // ]);
         return view('paiement.create');
     }
 

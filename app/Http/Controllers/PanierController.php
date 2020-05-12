@@ -19,7 +19,7 @@ class PanierController extends Controller
         $list_panier = Auth::user()
             ->paniers()
             ->join('produits','paniers.prod_id','=','produits.id')
-            ->select('paniers.id','produits.price','produits.photo','paniers.quantity_prod','produits.name','produits.description')
+            ->select('paniers.id','produits.price','produits.photo','paniers.quantity_prod','produits.name','produits.description','produits.quantity')
             ->get();
         $total = 0;
         foreach($list_panier as $item){
@@ -125,4 +125,25 @@ class PanierController extends Controller
         $panier->delete();
         return redirect()->route('panier.index')->with('deletePanier','Le produit a été supprimé avec succées');
     }
+
+  /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function u(Request  $request)
+    {
+        $tab = $request->all();
+        foreach($tab as $key => $value){
+            $panier = Panier::find($key);
+            if($panier){
+                $panier->quantity_prod = (int)$value;
+                $panier->update();
+            }  
+        }
+        return redirect()->route('paiement.create');
+    }
+
 }
