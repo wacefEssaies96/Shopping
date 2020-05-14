@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
 use App\Paiement;
 use App\Commande;
-use Illuminate\Support\Facades\Auth;
 use App\Panier;
 use App\Produit;
+
 
 class PaiementController extends Controller
 {
@@ -28,15 +32,22 @@ class PaiementController extends Controller
      */
     public function create()
     {
-        // Stripe::setApiKey('sk_test_W4rmc6j0k6XCOg8cvVjD7g6a00yW882oW2');
+        Stripe::setApiKey('sk_test_W4rmc6j0k6XCOg8cvVjD7g6a00yW882oW2');
 
-        // $intent = \Stripe\PaymentIntent::create([
-        // 'amount' => 1099,
-        // 'currency' => 'usd',
-        // // Verify your integration in this guide by including this parameter
-        // 'metadata' => ['integration_check' => 'accept_a_payment'],
-        // ]);
-        return view('paiement.create');
+        $intent = PaymentIntent::create([
+        'amount' => 1099,
+        'currency' => 'usd',
+        // Verify your integration in this guide by including this parameter
+        'metadata' => ['integration_check' => 'accept_a_payment'],
+        ]);
+        $clientSecret = Arr::get($intent,'client_secret');
+        $user = Auth::user();
+        $nameClient = $user->name;
+      
+        return view('paiement.create',[
+            'clientSecret' => $clientSecret,
+            'nameClient' => $nameClient
+        ]);
     }
 
     /**
