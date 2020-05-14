@@ -32,7 +32,7 @@
                                         @foreach($list_panier as $panier)
                                             <tr>
                                                 <td class="cart_product_img">
-                                                    <a href="#"><img src="{{asset('img/image_projet/'.$panier->photo)}}" alt="{{$panier['name']}}"></a>
+                                                    <a href="#"><img src="{{asset('storage/'.$panier->photo)}}" alt="{{$panier['name']}}"></a>
                                                 </td>
                                                 <td class="cart_product_desc">
                                                     <h5>{{$panier->name}}</h5>
