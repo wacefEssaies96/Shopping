@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Shopping') }}</title>
-
+    @yield('extra-script')
     <!-- Styles -->
     
     <link rel="stylesheet" href="{{ asset('css/core-style.css') }}">
@@ -28,12 +28,14 @@
 
 
     </div>
-     <!-- Scripts -->
+    <!-- Scripts -->
     <script src="{{ asset('js/jquery/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/plugins.js') }}"></script>
-     <!-- Active js -->
-     <script src="{{ asset('js/active.js') }}"></script>
+    <!-- Active js -->
+    <script src="{{ asset('js/active.js') }}"></script>
+
+    @yield('extra-js')
 </body>
 </html>
