@@ -14,7 +14,7 @@
                 @if($prod->confirm)
                 <!-- Single Catagory -->
                 <div class="single-products-catagory clearfix">
-                    <a href="shop.html">
+                    <a href="{{url('shop')}}">
                         <img style="height:350px;" src="{{ asset('storage/'.$prod['photo']) }}" alt="{{$prod['name']}}">
                         <!-- Hover Content -->
                         <div class="hover-content">

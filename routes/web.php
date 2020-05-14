@@ -60,8 +60,10 @@ Route::group(['middleware' => ['auth','client']],function(){
     Route::resource('/admin/Demandes', 'DemendeController', [
         'only' => ['store','destroy']
     ]);
+
     Route::resource('/panier','PanierController');
     Route::patch('/checkout','PanierController@u')->name('checkout');
+    Route::get('/shop','SearchController@index')->name('shop');
     
     Route::resource('/commande','CommandeController');
     Route::resource('/paiement','PaiementController');
