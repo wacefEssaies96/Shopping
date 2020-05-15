@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth','client']],function(){
     ]);
 
     Route::resource('/panier','PanierController');
+    Route::delete('/panier/d','PanierController@destroy')->name('d');
     Route::patch('/checkout','PanierController@u')->name('checkout');
     Route::get('/shop','SearchController@index')->name('shop');
     

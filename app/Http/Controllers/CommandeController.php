@@ -42,6 +42,20 @@ class CommandeController extends Controller
      */
     public function create()
     {
+        $list_panier = Auth::user()
+        ->paniers()
+        ->join('produits','paniers.prod_id','=','produits.id')
+        ->select('paniers.id','produits.price','produits.photo','paniers.quantity_prod','produits.name','produits.description','produits.quantity')
+        ->get();
+        $total = 0;
+        foreach($list_panier as $item){
+            $total += ($item['price']*$item->quantity_prod);
+        }
+        
+        return view('commande.create',[
+            'list_commande' => $list_panier,
+            'total' => $total
+        ]);  
     }
 
     /**
@@ -63,7 +77,7 @@ class CommandeController extends Controller
             $commande->user_id = Auth::id();
             $commande->prod_id = $item->prod_id;
             $commande->quantity_prod = $item->quantity_prod;
-            $commande->livraison = $request->select;
+            $commande->livraison = 0;
             $commande->confirm = 0;
             $commande->save(); 
             $total += $item->quantity_prod * $item->price;

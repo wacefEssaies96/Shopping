@@ -35,7 +35,7 @@ class PaiementController extends Controller
         Stripe::setApiKey('sk_test_W4rmc6j0k6XCOg8cvVjD7g6a00yW882oW2');
 
         $intent = PaymentIntent::create([
-        'amount' => 1099,
+        'amount' => $this->calculTotal(),
         'currency' => 'usd',
         // Verify your integration in this guide by including this parameter
         'metadata' => ['integration_check' => 'accept_a_payment'],
@@ -43,10 +43,11 @@ class PaiementController extends Controller
         $clientSecret = Arr::get($intent,'client_secret');
         $user = Auth::user();
         $nameClient = $user->name;
-      
+        $total = $this->calculTotal();
         return view('paiement.create',[
             'clientSecret' => $clientSecret,
-            'nameClient' => $nameClient
+            'nameClient' => $nameClient,
+            'total' => $total
         ]);
     }
 
@@ -67,8 +68,7 @@ class PaiementController extends Controller
             ->join('produits','paniers.prod_id','=','produits.id')
             ->select('paniers.id','produits.price','produits.photo','paniers.quantity_prod','produits.name','produits.description','paniers.prod_id')
             ->get();
-        $total = $this->calculTotal($panier);
-      
+        $total = $this->calculTotal();
         return view('commande.create',[
             'paiement' => $paiement,
             'list_commande' => $panier,
@@ -120,11 +120,16 @@ class PaiementController extends Controller
     {
         //
     }
-    private function calculTotal($list_panier){
+    private function calculTotal(){
+        $list_panier = Auth::user()
+            ->paniers()
+            ->join('produits','paniers.prod_id','=','produits.id')
+            ->select('paniers.id','produits.price','paniers.quantity_prod')
+            ->get();
         $total = 0;
         foreach($list_panier as $item){
             $total += ($item['price']*$item->quantity_prod);
         }
-        return $total." $";
+        return $total;
     }
 }

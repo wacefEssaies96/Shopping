@@ -26,6 +26,7 @@
                                                 <th>Name</th>
                                                 <th>Price</th>
                                                 <th>Quantity</th>
+                                                
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -64,8 +65,17 @@
                                                             ">
                                                             <i class="fa fa-plus" aria-hidden="true"></i></span>
                                                         </div>
+                                                        
+                                                        <button onClick="d('{{$panier->id}}');" type="button" class="close ml-3" data-dismiss="alert" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button> 
+                                                        
                                                     </div>
+                                                    
                                                 </td>
+                                                
+                                                    
+                                                
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -73,6 +83,10 @@
                                 </div>
                             </div>
                             <script>
+                                function d(id){
+                                    document.getElementById('input').value = id;
+                                    document.getElementById('destroy').click();
+                                }
                                 function updateTotal(qty,price,op){
                                     var total = document.getElementById("subTotal").innerText;
                                     var dolar = total.substring(1);
@@ -106,6 +120,12 @@
                 </div>
             </div>
         </div>
+        <form style="display:none;" action="{{route('d')}}" method="post">
+            @csrf
+            @method('DELETE')
+            <input type="hidden" id="input" name="id" value="" >
+            <button style="display:none;" id="destroy" class="btn btn-outline-danger" type="submit">Delete</button>
+        </form>
         <!-- ##### Main Content Wrapper End ##### -->
     @endif
     @include('layouts.footer')

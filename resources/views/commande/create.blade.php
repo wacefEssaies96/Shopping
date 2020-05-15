@@ -9,7 +9,7 @@
             <div class="" style="display:grid; grid-template-columns:1fr 1fr 1fr;">
                 @foreach($list_commande as $item)
                 <div class="card" style="width: 18rem; height:auto; ">
-                    <img style="width:250px; height:280px;" class="card-img-top" src="{{asset('img/image_projet/'.$item->photo)}}" alt="Card image cap">    
+                    <img style="width:250px; height:280px;" class="card-img-top" src="{{asset('storage/'.$item->photo)}}" alt="Card image cap">    
                     <div class="card-body">
                         <h5 class="card-title">Name : {{$item->name}}</h5>
                         <h6 class="card-subtitle mb-2 text-muted"><strong>Price : </strong><div class="text-success">{{$item->price}} $</div></h6>

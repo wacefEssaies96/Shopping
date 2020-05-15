@@ -24,7 +24,7 @@
     <nav class="amado-nav">
         <ul>
             <li class="active">
-                <a href="{{ url('/') }}">Home Site</a>
+                <a href="{{ url('/') }}">Acceuil</a>
             </li>
             @admin
                 <li >
@@ -32,11 +32,12 @@
                 </li>
             @endadmin
             @client
+                <li><a href="{{ route('shop') }}">Shop</a></li>
                 <li>
                     <a href="{{ route('Produit.index') }}" >Mes Produits</a>
                 </li>
-                <li><a href="{{route('panier.index')}}">Cart</a></li>
-                <li><a href="#">Checkout</a></li>
+                <li><a href="{{route('panier.index')}}">Panier</a></li>
+                
             @endclient
         </ul>
     </nav>
@@ -49,7 +50,7 @@
     <div class="cart-fav-search mb-100">
         <!-- <a href="#" class="cart-nav"><img src="{{ asset('img/core-img/cart.png') }}" alt=""> Cart <span>(0)</span></a>
         <a href="#" class="fav-nav"><img src="{{ asset('img/core-img/favorites.png') }}" alt=""> Favourite</a> -->
-        <a href="#" class="search-nav"><img src="{{ asset('img/core-img/search.png') }}" alt=""> Search</a>
+        <a href="#" class="search-nav"><img src="{{ asset('img/core-img/search.png') }}" alt=""> Recherche</a>
     </div>
     <!-- Social Button  -->
     <div class="social-info d-flex justify-content-between">
