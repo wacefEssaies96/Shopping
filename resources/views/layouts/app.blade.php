@@ -10,23 +10,16 @@
     <title>{{ config('app.name', 'Shopping') }}</title>
     @yield('extra-script')
     <!-- Styles -->
-    
     <link rel="stylesheet" href="{{ asset('css/core-style.css') }}">
-    
-    <!-- Fonts -->
-    
     
 </head>
 <body>
     <div id="app">
         @include('message.alert')
         @include('layouts.nav')
-
-        <main  >
+        <main>
             @yield('content')
         </main>
-
-
     </div>
     <!-- Scripts -->
     <script src="{{ asset('js/jquery/jquery-2.2.4.min.js') }}"></script>
@@ -35,7 +28,6 @@
     <script src="{{ asset('js/plugins.js') }}"></script>
     <!-- Active js -->
     <script src="{{ asset('js/active.js') }}"></script>
-
     @yield('extra-js')
 </body>
 </html>
