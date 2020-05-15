@@ -28,7 +28,7 @@
             @endforeach
             </div>
         </div>
-        <!-- Product Catagories Area End -->
+        <!-- Product Catagories Area End -->      
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
     @include('layouts.footer')   

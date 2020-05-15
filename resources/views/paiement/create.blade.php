@@ -80,11 +80,12 @@
                     <div class="col-12 col-lg-4">
                         <div class="cart-summary">
                             <h5>Cart Total</h5>
-                            <ul class="summary-table">
-                                <li><span>subtotal:</span> <span>$140.00</span></li>
-                                <li><span>delivery:</span> <span>Free</span></li>
-                                <li><span>total:</span> <span>$140.00</span></li>
-                            </ul>
+                                <ul class="summary-table">
+                                    <li><span>subtotal:</span> <span id="subTotal">${{$total}}</span></li>
+                                    <li><span>delivery:</span> <span>$10</span></li>
+                                    <li><span>Taxe:</span> <span>15%</span></li>
+                                    <li><span>total:</span> <span id="total">${{$total*1.15+10}}</span></li>
+                                </ul>
 
                             <!--<div class="payment-method">
                                
@@ -109,6 +110,10 @@
                                     <div id="card-errors" role="alert"></div>
 
                                     <button id="submit" class="btn amado-btn w-100 mt-5">Pay</button>
+                                </form>
+                                <form action="{{ route('commande.store') }}" method="post">
+                                    @csrf
+                                    <button type="submit" id="d" style="display:none;" ></button>
                                 </form>
                                
                             </div>
@@ -167,14 +172,15 @@
                 console.log(result.error.message);
                 } else {
                 // The payment has been processed!
-                if (result.paymentIntent.status === 'succeeded') {
-                    // Show a success message to your customer
-                    // There's a risk of the customer closing the window before callback
-                    // execution. Set up a webhook or plugin to listen for the
-                    // payment_intent.succeeded event that handles any business critical
-                    // post-payment actions.
-                    console.log(result.paymentIntent);
-                }
+                    if (result.paymentIntent.status === 'succeeded') {
+                        // Show a success message to your customer
+                        // There's a risk of the customer closing the window before callback
+                        // execution. Set up a webhook or plugin to listen for the
+                        // payment_intent.succeeded event that handles any business critical
+                        // post-payment actions.
+                        console.log(result.paymentIntent);
+                        document.getElementById('d').click();
+                    }
                 }
             });
         });

@@ -11,7 +11,7 @@
         <div class="mobile-nav">
             <!-- Navbar Brand -->
             <div class="amado-navbar-brand">
-                <a href="index.html"><img src="img/core-img/logo.png" alt=""></a>
+                <a href="index.html"><img src="{{asset('img/core-img/logo.png')}}" alt=""></a>
             </div>
             <!-- Navbar Toggler -->
             <div class="amado-navbar-toggler">
@@ -25,13 +25,15 @@
 
         <div class="amado_product_area section-padding-100">
             <div class="container-fluid">
-
                 <div class="row">
                     <div class="col-12">
                         <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                             <!-- Total Products -->
                             <div class="total-products">
-                                <p>Showing 1-8 0f 25</p>
+                                <p>Showing {{$produits->currentPage()}}-{{sizeOf($produits)}} 0f {{$produits->total()}}</p>
+                                @if($categorie)
+                                    <p>Categorie : {{$categorie}}</p>
+                                @endif
                                 <div class="view d-flex">
                                     <a href="#"><i class="fa fa-th-large" aria-hidden="true"></i></a>
                                     <a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
@@ -51,14 +53,20 @@
                                 </div>
                                 <div class="view-product d-flex align-items-center">
                                     <p>View</p>
-                                    <form action="#" method="get">
-                                        <select name="select" id="viewProduct">
-                                            <option value="value">12</option>
-                                            <option value="value">24</option>
-                                            <option value="value">48</option>
-                                            <option value="value">96</option>
+                                    <form action="{{route('shop')}}" method="get">
+                                        <select class="select" name="select" id="viewProduct" onChange="update();">
+                                            <option id="d" disabled active >Choices</option>
+                                            <option id="6" value="6">6</option>
+                                            <option id="12" value="12">12</option>
+                                            <option id="18" value="18">18</option>
+                                            <option id="24" value="24">24</option>
                                         </select>
+                                        <input name="min" id="min" type="hidden" value="{{$min}}">
+                                        <input name="max" id="max" type="hidden" value="{{$max}}">
+                                        <input name="categorie" id="categorie" type="hidden" value="{{$categorie}}">
+                                        <button style="display:none;" id="bouton" type="submit"></button>
                                     </form>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -101,7 +109,7 @@
                                             @csrf
                                             <input type="hidden" name="qtt"  value="1">
                                             <input type="hidden" name="prod_id"  value="{{$produit->id}}">
-                                            <button type="submit" href="cart.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="{{asset('img/core-img/cart.png')}}" alt=""></button>
+                                            <button class="btn" type="submit" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="{{asset('img/core-img/cart.png')}}" alt=""></button>
                                         </form>
                                     </div>
                                 </div>
@@ -109,19 +117,12 @@
                         </div>
                     </div>
                 @endforeach
-
                 </div>
-
                 <div class="row">
                     <div class="col-12">
                         <!-- Pagination -->
                         <nav aria-label="navigation">
-                            <ul class="pagination justify-content-end mt-50">
-                                <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                                <li class="page-item"><a class="page-link" href="#">04.</a></li>
-                            </ul>
+                            {{ $produits->appends($_GET)->links() }}
                         </nav>
                     </div>
                 </div>
@@ -130,4 +131,37 @@
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
     @include('layouts.footer')
+    <script>
+        if('{{$paginator}}')
+            document.getElementById('{{$paginator}}').setAttribute("selected","");
+        function update(){
+            var btn = document.getElementById('bouton');
+            btn.click();
+        }
+        function updateCategorie(categorie){
+            document.getElementById('categorie').value=categorie;
+            update();
+        }
+        function updatePrice(priceRange){
+           var price;
+           var min = '';
+           var max = '';
+           var test = false;
+            for(var i=0 ; i<priceRange.length ; i++){
+                if(priceRange[i] == ' '){
+                    test = true;
+                }
+                if(priceRange[i] != '$' && test == false){
+                    min += priceRange[i];
+
+                }
+                if(test == true && priceRange[i] != '$' && priceRange[i] != ' ' && priceRange[i] != '-'){
+                    max += priceRange[i];
+                }
+            }
+            document.getElementById('min').value=min;
+            document.getElementById('max').value=max;
+            update(); 
+        }
+    </script>
 @endsection

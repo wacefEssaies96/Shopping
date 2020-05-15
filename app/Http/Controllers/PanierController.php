@@ -120,8 +120,9 @@ class PanierController extends Controller
      * @param  \App\panier  $panier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(panier $panier)
+    public function destroy(Request $request)
     {
+        $panier = Panier::find((int)$request->id);
         $panier->delete();
         return redirect()->route('panier.index')->with('deletePanier','Le produit a été supprimé avec succées');
     }
@@ -145,5 +146,5 @@ class PanierController extends Controller
         }
         return redirect()->route('paiement.create');
     }
-
+   
 }
