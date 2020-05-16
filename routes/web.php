@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth','admin']],function(){
 ///  Route client
 Route::group(['middleware' => ['auth','client']],function(){
     Route::resource('/Produit', 'ProduitController');
+    
     Route::resource('/admin/Demandes', 'DemendeController', [
         'only' => ['store','destroy']
     ]);

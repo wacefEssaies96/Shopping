@@ -61,18 +61,17 @@
                                             <option id="18" value="18">18</option>
                                             <option id="24" value="24">24</option>
                                         </select>
+                                        <input name="search" id="search" type="hidden" value="{{$search}}">
                                         <input name="min" id="min" type="hidden" value="{{$min}}">
                                         <input name="max" id="max" type="hidden" value="{{$max}}">
                                         <input name="categorie" id="categorie" type="hidden" value="{{$categorie}}">
                                         <button style="display:none;" id="bouton" type="submit"></button>
                                     </form>
-                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                 @foreach($produits as $produit)
                     <!-- Single Product Area -->
@@ -91,7 +90,7 @@
                                 <div class="product-meta-data">
                                     <div class="line"></div>
                                     <p class="product-price">{{ $produit->price }}</p>
-                                    <a href="product-details.html">
+                                    <a href="{{route('Produit.show',$produit->id)}}">
                                         <h6>{{ $produit->name }}</h6>
                                     </a>
                                 </div>
@@ -134,6 +133,7 @@
     <script>
         if('{{$paginator}}')
             document.getElementById('{{$paginator}}').setAttribute("selected","");
+       
         function update(){
             var btn = document.getElementById('bouton');
             btn.click();

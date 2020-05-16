@@ -10,6 +10,10 @@ use App\Produit;
 class SearchController extends Controller{
     
     public function index(Request $request){
+        if($request->search)
+            $search = $request->search;
+        else 
+            $search = "";  
         
         $select = Arr::get($request,'select');
         $categorie = Arr::get($request,'categorie');
@@ -23,14 +27,13 @@ class SearchController extends Controller{
             $min = $request->min;
             $max = $request->max;
         }
-        
         if($categorie != null && $select != null ){
-            
             $produits = Produit::
             where([
                 ['categorie',$categorie],
                 ['price','<',(int)$max],
-                ['price','>',(int)$min]
+                ['price','>',(int)$min],
+                ['name','like',"%$search%"]
             ])->paginate((int)$select);
         }
         if($categorie == null && $select != null){
@@ -38,7 +41,8 @@ class SearchController extends Controller{
             $produits = Produit::
             where([
                 ['price','<',(int)$max],
-                ['price','>',(int)$min]
+                ['price','>',(int)$min],
+                ['name','like',"%$search%"]
             ])
             ->paginate((int)$select);
         }
@@ -48,25 +52,26 @@ class SearchController extends Controller{
             where([
                     ['categorie','=',$categorie],
                     ['price','<',(int)$max],
-                    ['price','>',(int)$min]
+                    ['price','>',(int)$min],
+                    ['name','like',"%$search%"]
             ])->paginate(6);
         }
         if($categorie == null && $select == null){
-            
             $produits = Produit::
             where([
                 ['price','<',(int)$max],
-                ['price','>',(int)$min]
+                ['price','>',(int)$min],
+                ['name','like',"%$search%"]
             ])->paginate(6);
         }
-     
         return view('shop',[
             'produits' => $produits,
             'categorie' =>$categorie,
             'paginator' => $select,
             'price' => $price,
             'min' => $min,
-            'max' => $max 
+            'max' => $max,
+            'search' => $search
         ]);
     }
 }
