@@ -27,8 +27,8 @@
         <div class="slider-range">
             <div data-min="10" data-max="5000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="{{$min}}" data-value-max="{{$max}}" data-label-result="">
                 <div class="ui-slider-range ui-widget-header ui-corner-all" ></div>
-                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" onClick="var priceRange = document.getElementById('price').innerText; updatePrice(priceRange);"></span>
-                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" onClick="var priceRange = document.getElementById('price').innerText; updatePrice(priceRange);"></span>
+                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" onclick="var priceRange = document.getElementById('price').innerText; updatePrice(priceRange);"></span>
+                <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" onclick="var priceRange = document.getElementById('price').innerText; updatePrice(priceRange);"></span>
             </div>
             <div id="price" class="range-price">{{ $price }}</div>
         </div>

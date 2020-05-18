@@ -40,6 +40,10 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Commande');
     }
+    public function ratings()
+    {
+        return $this->hasMany('App\Rating');
+    }
     public function comments()
     {
         return $this->hasMany('App\Comment');

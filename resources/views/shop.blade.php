@@ -27,6 +27,22 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+                        @if (session('addPanier'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('addPanier') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
+                            @if (session('errorPanier'))
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                {{ session('errorPanier') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                         <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                             <!-- Total Products -->
                             <div class="total-products">
@@ -97,11 +113,7 @@
                                 <!-- Ratings & Cart -->
                                 <div class="ratings-cart text-right">
                                     <div class="ratings">
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <input id="input-2" name="input-2" class="rating" data-min="0" data-max="5" data-step="1" value="{{$produit->rating}}" data-size="md" onchange="r(this.value,{{$produit->id}});">
                                     </div>
                                     <div class="cart">
                                         <form action="{{route('panier.store')}}" method="post">
@@ -128,9 +140,20 @@
             </div>
         </div>
     </div>
+    <form action="{{route('rating.store')}}" method="post">
+        @csrf
+        <input id="inputRR" name="prodId" type="hidden">
+        <input id="inputR" name="rating" type="hidden">
+        <button style="display:none;" type="sumbit" id="r"></button>
+    </form>
     <!-- ##### Main Content Wrapper End ##### -->
     @include('layouts.footer')
     <script>
+        function r(value,prodId){
+            document.getElementById('inputRR').value=prodId;
+            document.getElementById('inputR').value=value;
+            document.getElementById('r').click();
+        }
         if('{{$paginator}}')
             document.getElementById('{{$paginator}}').setAttribute("selected","");
        
@@ -153,7 +176,6 @@
                 }
                 if(priceRange[i] != '$' && test == false){
                     min += priceRange[i];
-
                 }
                 if(test == true && priceRange[i] != '$' && priceRange[i] != ' ' && priceRange[i] != '-'){
                     max += priceRange[i];

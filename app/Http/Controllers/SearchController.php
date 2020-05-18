@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Produit;
+use App\Rating;
 
 class SearchController extends Controller{
     
@@ -29,12 +30,15 @@ class SearchController extends Controller{
         }
         if($categorie != null && $select != null ){
             $produits = Produit::
+            
             where([
                 ['categorie',$categorie],
                 ['price','<',(int)$max],
                 ['price','>',(int)$min],
                 ['name','like',"%$search%"]
-            ])->paginate((int)$select);
+            ])
+            
+            ->paginate((int)$select);
         }
         if($categorie == null && $select != null){
           
@@ -62,7 +66,24 @@ class SearchController extends Controller{
                 ['price','<',(int)$max],
                 ['price','>',(int)$min],
                 ['name','like',"%$search%"]
-            ])->paginate(6);
+            ])
+            ->paginate(6);
+        }
+        $arrProduits = $produits->items();
+        $ratings = [];
+        foreach ($arrProduits as $value) {
+            $rating = Rating::where([
+                ['user_id','=',Auth::id()], 
+                ['prod_id','=',$value->id]
+            ])->get();
+            
+            if($rating->all() != null){
+                $arrRating = Arr::get($rating[0],'rating');
+            }
+            else{
+                $arrRating = 0;
+            }
+            $value->offsetSet('rating', $arrRating); 
         }
         return view('shop',[
             'produits' => $produits,
