@@ -71,12 +71,14 @@ Route::group(['middleware' => ['auth','client']],function(){
     
 
     Route::resource('/Produit', 'ProduitController');
+    
     Route::resource('/admin/Demandes', 'DemendeController', [
         'only' => ['store']
     ]);
     Route::delete('/admin/demande','DemendeController@deleted')->name('deleted');
 
     Route::resource('/panier','PanierController');
+    Route::resource('/rating','RatingController');
     Route::delete('/panier/d','PanierController@destroy')->name('d');
     Route::patch('/checkout','PanierController@u')->name('checkout');
     Route::get('/shop','SearchController@index')->name('shop');

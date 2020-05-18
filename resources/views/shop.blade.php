@@ -27,6 +27,22 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+                        @if (session('addPanier'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('addPanier') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
+                            @if (session('errorPanier'))
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                {{ session('errorPanier') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                         <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                             <!-- Total Products -->
                             <div class="total-products">
@@ -61,18 +77,17 @@
                                             <option id="18" value="18">18</option>
                                             <option id="24" value="24">24</option>
                                         </select>
+                                        <input name="search" id="search" type="hidden" value="{{$search}}">
                                         <input name="min" id="min" type="hidden" value="{{$min}}">
                                         <input name="max" id="max" type="hidden" value="{{$max}}">
                                         <input name="categorie" id="categorie" type="hidden" value="{{$categorie}}">
                                         <button style="display:none;" id="bouton" type="submit"></button>
                                     </form>
-                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                 @foreach($produits as $produit)
                     @if($produit->confirm)
@@ -131,11 +146,23 @@
             </div>
         </div>
     </div>
+    <form action="{{route('rating.store')}}" method="post">
+        @csrf
+        <input id="inputRR" name="prodId" type="hidden">
+        <input id="inputR" name="rating" type="hidden">
+        <button style="display:none;" type="sumbit" id="r"></button>
+    </form>
     <!-- ##### Main Content Wrapper End ##### -->
     @include('layouts.footer')
     <script>
+        function r(value,prodId){
+            document.getElementById('inputRR').value=prodId;
+            document.getElementById('inputR').value=value;
+            document.getElementById('r').click();
+        }
         if('{{$paginator}}')
             document.getElementById('{{$paginator}}').setAttribute("selected","");
+       
         function update(){
             var btn = document.getElementById('bouton');
             btn.click();
@@ -155,7 +182,6 @@
                 }
                 if(priceRange[i] != '$' && test == false){
                     min += priceRange[i];
-
                 }
                 if(test == true && priceRange[i] != '$' && priceRange[i] != ' ' && priceRange[i] != '-'){
                     max += priceRange[i];

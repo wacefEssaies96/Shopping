@@ -9,6 +9,14 @@
             <h3 class="text-warning">Votre panier est vide ! </h3>
         @else
             <div class="cart-table-area section-padding-100">
+            @if (session('deletePanier'))
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ session('deletePanier') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
                 <div class="container-fluid">
                     <form action="{{ route('checkout') }}" method="post">
                         @csrf
@@ -26,7 +34,6 @@
                                                 <th>Name</th>
                                                 <th>Price</th>
                                                 <th>Quantity</th>
-                                                
                                             </tr>
                                         </thead>
                                         <tbody>
