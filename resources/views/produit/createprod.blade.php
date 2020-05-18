@@ -33,9 +33,13 @@
 
                         <select id="categorie" name="categorie" class="form-control">
                             <option   value="{{ old('categorie') }}"  >Aucun categorie</option>
-                            <option   value="Produit technologie">Produit technologie</option>
-                            <option   value="Produit Alimentaire">Produit Alimentaire</option>
-                            <option  value="Voiture">Voiture</option>
+                            <option   value="Informatique">Informatique</option>
+                            <option   value="Alimentaire">Alimentaire</option>
+                            <option   value="Bureatique">Bureatique</option>
+                            <option  value="Vehicule">Vehicule</option>
+                            <option   value="Electroménager">Electroménager</option>
+                            <option   value="Maison">Maison</option>
+                            <option   value="Bricolage">Bricolage</option>
                         </select>
                        
                         @error('categorie')<div class="text-danger">{{ $message }}</div> @enderror

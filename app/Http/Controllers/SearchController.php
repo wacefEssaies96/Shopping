@@ -28,6 +28,7 @@ class SearchController extends Controller{
             
             $produits = Produit::
             where([
+                ['confirm','=',1],
                 ['categorie',$categorie],
                 ['price','<',(int)$max],
                 ['price','>',(int)$min]
@@ -37,6 +38,7 @@ class SearchController extends Controller{
           
             $produits = Produit::
             where([
+                ['confirm','=',1],
                 ['price','<',(int)$max],
                 ['price','>',(int)$min]
             ])
@@ -46,6 +48,7 @@ class SearchController extends Controller{
          
             $produits = Produit::
             where([
+                    ['confirm','=',1],
                     ['categorie','=',$categorie],
                     ['price','<',(int)$max],
                     ['price','>',(int)$min]
@@ -55,6 +58,7 @@ class SearchController extends Controller{
             
             $produits = Produit::
             where([
+                ['confirm','=',1],
                 ['price','<',(int)$max],
                 ['price','>',(int)$min]
             ])->paginate(6);

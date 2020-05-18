@@ -75,47 +75,49 @@
 
                 <div class="row">
                 @foreach($produits as $produit)
-                    <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-                            <div class="product-img">
-                                <img style="height:300px;" src="{{asset('storage/'.$produit->photo)}}" alt="{{$produit->name}}">
-                                <!-- Hover Thumb -->
-                                <!-- <img class="hover-img" src="img/product-img/product2.jpg" alt=""> -->
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product-description d-flex align-items-center justify-content-between">
-                                <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                    <div class="line"></div>
-                                    <p class="product-price">{{ $produit->price }}</p>
-                                    <a href="product-details.html">
-                                        <h6>{{ $produit->name }}</h6>
-                                    </a>
+                    @if($produit->confirm)
+                        <!-- Single Product Area -->
+                        <div class="col-12 col-sm-6 col-md-12 col-xl-6">
+                            <div class="single-product-wrapper">
+                                <!-- Product Image -->
+                                <div class="product-img">
+                                    <img style="height:300px;" src="{{asset('storage/'.$produit->photo)}}" alt="{{$produit->name}}">
+                                    <!-- Hover Thumb -->
+                                    <!-- <img class="hover-img" src="img/product-img/product2.jpg" alt=""> -->
                                 </div>
-                                <!-- Ratings & Cart -->
-                                <div class="ratings-cart text-right">
-                                    <div class="ratings">
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                                <!-- Product Description -->
+                                <div class="product-description d-flex align-items-center justify-content-between">
+                                    <!-- Product Meta Data -->
+                                    <div class="product-meta-data">
+                                        <div class="line"></div>
+                                        <p class="product-price">{{ $produit->price }}</p>
+                                        <a href="{{ route('Produit.show', $produit->id) }}">
+                                            <h6>{{ $produit->name }}</h6>
+                                        </a>
                                     </div>
-                                    <div class="cart">
-                                        <form action="{{route('panier.store')}}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="qtt"  value="1">
-                                            <input type="hidden" name="prod_id"  value="{{$produit->id}}">
-                                            <button class="btn" type="submit" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="{{asset('img/core-img/cart.png')}}" alt=""></button>
-                                        </form>
+                                    <!-- Ratings & Cart -->
+                                    <div class="ratings-cart text-right">
+                                        <div class="ratings">
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        </div>
+                                        <div class="cart">
+                                            <form action="{{route('panier.store')}}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="qtt"  value="1">
+                                                <input type="hidden" name="prod_id"  value="{{$produit->id}}">
+                                                <button class="btn" type="submit" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="{{asset('img/core-img/cart.png')}}" alt=""></button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 @endforeach
                 </div>
                 <div class="row">

@@ -23,36 +23,34 @@
                       <div class="single_product_thumb">
                           <div id="product_details_slider" class="carousel slide" data-ride="carousel">
                               <ol class="carousel-indicators">
-                                  <li class="active" data-target="#product_details_slider" data-slide-to="0" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
-                                  </li>
-                                  <li data-target="#product_details_slider" data-slide-to="1" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
-                                  </li>
-                                  <li data-target="#product_details_slider" data-slide-to="2" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
-                                  </li>
-                                  <li data-target="#product_details_slider" data-slide-to="3" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
-                                  </li>
+                               
+                                    @if($total != 0)
+                                        {{$counter = 0}} 
+                                        <li class="active" data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
+                                        </li>
+                                        @foreach ($ImageProduit as $imgprod)       
+                                            {{$counter++}}
+                                            <li data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$imgprod['image']) }});">
+                                            </li>
+                                        @endforeach
+                                    @endif
                               </ol>
                               <div class="carousel-inner">
                                   <div class="carousel-item active">
                                       <a class="gallery_img" href="{{ asset('storage/'.$Produit['photo']) }}">
-                                          <img class="d-block w-100" src="{{ asset('storage/'.$Produit['photo']) }}" alt="First slide">
+                                          <img class="d-block w-100" src="{{ asset('storage/'.$Produit['photo']) }}" alt="ID img prod  {{$Produit['id']}}">
                                       </a>
                                   </div>
-                                  <div class="carousel-item">
-                                      <a class="gallery_img" href="{{ asset('storage/'.$Produit['photo']) }}">
-                                          <img class="d-block w-100" src="{{ asset('storage/'.$Produit['photo']) }}" alt="Second slide">
-                                      </a>
-                                  </div>
-                                  <div class="carousel-item">
-                                      <a class="gallery_img" href="{{ asset('storage/'.$Produit['photo']) }}">
-                                          <img class="d-block w-100" src="{{ asset('storage/'.$Produit['photo']) }}" alt="Third slide">
-                                      </a>
-                                  </div>
-                                  <div class="carousel-item">
-                                      <a class="gallery_img" href="{{ asset('storage/'.$Produit['photo']) }}">
-                                          <img class="d-block w-100" src="{{ asset('storage/'.$Produit['photo']) }}" alt="Fourth slide">
-                                      </a>
-                                  </div>
+                                  
+                                  @if($total != 0)
+                                        @foreach ($ImageProduit as $imgprod)
+                                            <div class="carousel-item">
+                                                <a class="gallery_img" href="{{ asset('storage/'.$imgprod['image']) }}">
+                                                    <img class="d-block w-100" src="{{ asset('storage/'.$imgprod['image']) }}" alt="ID img prod {{$imgprod['id']}}">
+                                                </a>
+                                            </div>
+                                        @endforeach
+                                    @endif
                               </div>
                           </div>
                       </div>

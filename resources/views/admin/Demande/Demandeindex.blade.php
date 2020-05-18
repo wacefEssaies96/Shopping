@@ -10,10 +10,14 @@
 <div class="row">
   <div class="col-md-12">
     <div class="card">
+
       <div class="card-header">
         <h4 class="card-title">Demandes en attentes</h4>
       </div>
       <div class="card-body">
+        @if($TDEA==0)
+          <h3 class="text-warning">Il n'y a aucune demande </h3>
+        @else
         <div class="table-responsive">
         <?php $counter = 1?>
           <table class="table">
@@ -43,12 +47,24 @@
                         Accepter
                       </a>
                   </td>
-                  <td><a href="#" class="btn btn-danger">Refuser</a></td>
+                  <td>
+                    <a href="#" class="btn btn-danger">Refuser</a>
+                  
+                    <!-- <a id="d" onClick="d('{{$demande->id}}');" href="#" class="btn btn-outline-danger" >
+                    <!-- data-toggle="modal" data-target="#confirmDeleteModal"> ->
+                      Refuser
+                    </a> -->
+                  <!-- <a href="{{ route('Demandes.destroy',['demandeid' =>  $demande->id ]) }}" class="btn btn-danger">Refuser</a> -->
+                  
+                  <!-- <a href="{{ route('Demandes.destroy',['demandeid' =>  $demande->id ]) }}" class="btn btn-danger">Refuser</a> -->
+                  </td>
                 </tr>
             @endforeach
             </tbody>
           </table>
         </div>
+        @endif
+        {{ $attenteDemandes->links()}}
       </div>
     </div>
   </div>
@@ -59,6 +75,9 @@
         <h4 class="card-title">Demandes acceptées</h4>
       </div>
       <div class="card-body">
+        @if($TDAC==0)
+          <h3 class="text-warning">Il n'y a aucune Accepter </h3>
+        @else
         <div class="table-responsive">
         <?php $counter = 1?>
           <table class="table">
@@ -94,6 +113,8 @@
             </tbody>
           </table>
         </div>
+        @endif
+        {{ $accepteeDemandes->links()}}
       </div>
     </div>
   </div>
