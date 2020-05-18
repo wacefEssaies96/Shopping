@@ -114,11 +114,7 @@
                                     <!-- Ratings & Cart -->
                                     <div class="ratings-cart text-right">
                                         <div class="ratings">
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
-                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        <input id="input-2" name="input-2" class="rating" data-min="0" data-max="5" data-step="1" value="{{$produit->rating}}" data-size="md" onchange="r(this.value,{{$produit->id}});">
                                         </div>
                                         <div class="cart">
                                             <form action="{{route('panier.store')}}" method="post">

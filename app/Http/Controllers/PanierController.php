@@ -52,6 +52,7 @@ class PanierController extends Controller
      */
     public function store(Request $request)
     {
+        
         $exist = Panier::where([
             ['paniers.user_id','=',Auth::id()],
             ['paniers.prod_id','=',(int)$request->prod_id],
