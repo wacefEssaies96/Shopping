@@ -27,6 +27,22 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
+                        @if (session('addPanier'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                {{ session('addPanier') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            @endif
+                            @if (session('errorPanier'))
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                {{ session('errorPanier') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                         <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                             <!-- Total Products -->
                             <div class="total-products">
@@ -61,61 +77,58 @@
                                             <option id="18" value="18">18</option>
                                             <option id="24" value="24">24</option>
                                         </select>
+                                        <input name="search" id="search" type="hidden" value="{{$search}}">
                                         <input name="min" id="min" type="hidden" value="{{$min}}">
                                         <input name="max" id="max" type="hidden" value="{{$max}}">
                                         <input name="categorie" id="categorie" type="hidden" value="{{$categorie}}">
                                         <button style="display:none;" id="bouton" type="submit"></button>
                                     </form>
-                                    
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                 @foreach($produits as $produit)
-                    <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-                            <div class="product-img">
-                                <img style="height:300px;" src="{{asset('storage/'.$produit->photo)}}" alt="{{$produit->name}}">
-                                <!-- Hover Thumb -->
-                                <!-- <img class="hover-img" src="img/product-img/product2.jpg" alt=""> -->
-                            </div>
-
-                            <!-- Product Description -->
-                            <div class="product-description d-flex align-items-center justify-content-between">
-                                <!-- Product Meta Data -->
-                                <div class="product-meta-data">
-                                    <div class="line"></div>
-                                    <p class="product-price">{{ $produit->price }}</p>
-                                    <a href="product-details.html">
-                                        <h6>{{ $produit->name }}</h6>
-                                    </a>
+                    @if($produit->confirm)
+                        <!-- Single Product Area -->
+                        <div class="col-12 col-sm-6 col-md-12 col-xl-6">
+                            <div class="single-product-wrapper">
+                                <!-- Product Image -->
+                                <div class="product-img">
+                                    <img style="height:300px;" src="{{asset('storage/'.$produit->photo)}}" alt="{{$produit->name}}">
+                                    <!-- Hover Thumb -->
+                                    <!-- <img class="hover-img" src="img/product-img/product2.jpg" alt=""> -->
                                 </div>
-                                <!-- Ratings & Cart -->
-                                <div class="ratings-cart text-right">
-                                    <div class="ratings">
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
-                                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                                <!-- Product Description -->
+                                <div class="product-description d-flex align-items-center justify-content-between">
+                                    <!-- Product Meta Data -->
+                                    <div class="product-meta-data">
+                                        <div class="line"></div>
+                                        <p class="product-price">{{ $produit->price }}</p>
+                                        <a href="{{ route('Produit.show', $produit->id) }}">
+                                            <h6>{{ $produit->name }}</h6>
+                                        </a>
                                     </div>
-                                    <div class="cart">
-                                        <form action="{{route('panier.store')}}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="qtt"  value="1">
-                                            <input type="hidden" name="prod_id"  value="{{$produit->id}}">
-                                            <button class="btn" type="submit" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="{{asset('img/core-img/cart.png')}}" alt=""></button>
-                                        </form>
+                                    <!-- Ratings & Cart -->
+                                    <div class="ratings-cart text-right">
+                                        <div class="ratings">
+                                        <input id="input-2" name="input-2" class="rating" data-min="0" data-max="5" data-step="1" value="{{$produit->rating}}" data-size="md" onchange="r(this.value,{{$produit->id}});">
+                                        </div>
+                                        <div class="cart">
+                                            <form action="{{route('panier.store')}}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="qtt"  value="1">
+                                                <input type="hidden" name="prod_id"  value="{{$produit->id}}">
+                                                <button class="btn" type="submit" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="{{asset('img/core-img/cart.png')}}" alt=""></button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 @endforeach
                 </div>
                 <div class="row">
@@ -129,11 +142,23 @@
             </div>
         </div>
     </div>
+    <form action="{{route('rating.store')}}" method="post">
+        @csrf
+        <input id="inputRR" name="prodId" type="hidden">
+        <input id="inputR" name="rating" type="hidden">
+        <button style="display:none;" type="sumbit" id="r"></button>
+    </form>
     <!-- ##### Main Content Wrapper End ##### -->
     @include('layouts.footer')
     <script>
+        function r(value,prodId){
+            document.getElementById('inputRR').value=prodId;
+            document.getElementById('inputR').value=value;
+            document.getElementById('r').click();
+        }
         if('{{$paginator}}')
             document.getElementById('{{$paginator}}').setAttribute("selected","");
+       
         function update(){
             var btn = document.getElementById('bouton');
             btn.click();
@@ -153,7 +178,6 @@
                 }
                 if(priceRange[i] != '$' && test == false){
                     min += priceRange[i];
-
                 }
                 if(test == true && priceRange[i] != '$' && priceRange[i] != ' ' && priceRange[i] != '-'){
                     max += priceRange[i];

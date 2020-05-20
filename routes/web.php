@@ -40,11 +40,12 @@ Route::group(['middleware' => ['auth','admin']],function(){
     Route::put('/role-user-update/{id}','Admin\UserController@userupdate');
     Route::delete('/user-delete/{id}','Admin\UserController@userdelete');   
     
-    Route::resource('/admin/commandes', 'CommandeController'); 
+    
     Route::get('admin/Produit/AllProduits', 'ProduitController@AllProd')->name('AllProd');
     Route::get('admin/Produit/ConsulterDetailleProduit/{prodid}/{userid}', 'ProduitController@ConsulterDetailleProduit')->name('ConsulterDetailleProduit');
     Route::get('/admin/Demandes/AccepterDemande/{id}/{prodid}/{userid}', 'DemendeController@AccepterDemande')->name('AccepterDemande');
     Route::get('/admin/Demandes/AnnulerDemande/{id}/{prodid}/{userid}', 'DemendeController@AnnulerDemande')->name('AnnulerDemande');
+    Route::delete('/admin/Demandes/deleteDemande','DemendeController@deleteDemande')->name('deleteDemande');
                         
     Route::resource('/admin/Demandes', 'DemendeController'
     // , [
@@ -56,12 +57,28 @@ Route::group(['middleware' => ['auth','admin']],function(){
 
 ///  Route client
 Route::group(['middleware' => ['auth','client']],function(){
+
+    Route::get('/ImageProduit/{id}', 'ImageProduitController@ImgProduit')->name('ImgProduit');
+    Route::resource('/ImageProduit', 'ImageProduitController'
+        , [
+            'except' => ['create','edit']
+        ]
+    );
+    Route::get('/ImageProduit/create/{id}', 'ImageProduitController@create')->name('createimgProduit');
+    Route::get('/ImageProduit/edit/{imgid}/{prodid}', 'ImageProduitController@editeimg')->name('editeimgProduit');
+    Route::delete('/ImageProduit/delete','ImageProduitController@deleteimg')->name('deleteimg');
+    Route::get('/ImageProduit/change/{imgid}/{prodid}', 'ImageProduitController@ChangeimgPrincipale')->name('ChangeimgPrincipale');
+    
+
     Route::resource('/Produit', 'ProduitController');
+    
     Route::resource('/admin/Demandes', 'DemendeController', [
-        'only' => ['store','destroy']
+        'only' => ['store']
     ]);
+    Route::delete('/admin/demande','DemendeController@deleted')->name('deleted');
 
     Route::resource('/panier','PanierController');
+    Route::resource('/rating','RatingController');
     Route::delete('/panier/d','PanierController@destroy')->name('d');
     Route::patch('/checkout','PanierController@u')->name('checkout');
     Route::get('/shop','SearchController@index')->name('shop');

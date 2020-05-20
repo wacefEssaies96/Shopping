@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Produit;
+use App\ImageProduit;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,35 +64,7 @@ class ProduitController extends Controller
         $data['confirm'] = 0;
         $data['photo']= $request->photo->store('uploads','public');
         $Produit=Produit::create($data);
-        /*
-        debut store detaille
-        $Produit = new Produit;
-
-        $request->validate($this->validationRules());
-        $Produit->user_id = Auth::id();
-        $Produit->name = $request->name;
-        $Produit->price = $request->price;
-        $Produit->quantity = $request->quantity;
-        $Produit->description = $request->description;
-        $Produit->categorie = $request->categorie;
-        $Produit->DemandeEnvoyer = 0;
-        $Produit->confirm = 0;
-        $Produit->photo = $request->photo;
-
-            fin store detaille
-        */
-        /*if($request->hasFile('photo')){
-            $file = $request->photo;
-            $extension = $file->getClientOriginalExtension();
-            $filename = time().'.'.$extension;
-            $file->move('img/image_projet',$filename);
-            $Produit->photo = $filename;
-        } else {
-            return $request;
-            $Produit->photo = '';
-        }*/
-
-        //$Produit->save();
+        
 
         return redirect()->route('Produit.index')->with('AddProduit', 'Vous avez ajouter un Produit');
     
@@ -106,21 +79,32 @@ class ProduitController extends Controller
      */
     public function show($id) 
     {
+        $ImageProduit = ImageProduit::where('prod_id', $id)->get();
+        $total = 0;
+        foreach($ImageProduit as $item){
+            $total += 1;
+        }
         $Produit=Produit::findOrFail($id);
         if($Produit->confirm){
-            return view('Produit.showprod',['Produit' => $Produit, 'user' => Auth::id() ]);
+            return view('Produit.showprod',['Produit' => $Produit,'ImageProduit' => $ImageProduit, 'user' => Auth::id(),'total'=> $total ]);
         }else{
             return redirect()->route('home');
         }
     }
     public function ConsulterProduit($id) 
     {
+        $ImageProduit = ImageProduit::where('prod_id', $id)->get();
+        $total = 0;
+        foreach($ImageProduit as $item){
+            $total += 1;
+        }
+        
         $user = Auth::user();
         $Prod = Produit::findOrFail($id);
         $produser = User::findOrFail($Prod->user_id);
 
         if(($user->role == 'admin')or($user->role == 'client'and $Prod->user_id == $user->id )){
-            return view('Produit.ConsulterProduit',['Produit' => $Prod, 'user' => $user, 'produser' => $produser ]);
+            return view('Produit.ConsulterProduit',['Produit' => $Prod,'ImageProduit' => $ImageProduit, 'user' => $user, 'produser' => $produser,'total'=> $total ]);
         }elseif( ($user->role == 'client') and ($Prod->user_id != $user->id ) ){
             return redirect()->route('Produit.index');
         }else{
@@ -156,25 +140,18 @@ class ProduitController extends Controller
      */
     public function update(Request $request,$id)
     {
-        $data=$request->validate($this->validationRules());
+
         if($request->photo == null){
+            $data=$request->validate($this->validationRules());
             $data['photo']= $request->anphoto;
+            Produit::where('id', $id)->update($data);
         }else{
+            $data=$request->validate($this->validationRulesphoto());
             $data['photo']= $request->photo->store('uploads','public');
+            Produit::where('id', $id)->update($data);
         }
         
-        Produit::where('id', $id)->update($data);
-        /*
-        $validatedData = $request->validate($this->validationRules());
-        Produit::where('id', $id)->update([
-                'name' => $request->name,
-                'price' => $request->price,
-                'quantity' => $request->quantity,
-                'description' => $request->description,
-                'categorie' => $request->categorie,
-                'photo' => $request->photo
-              ]);
-              */
+        
         return redirect()->route('ConsulterProduit', $id)->with('updateProduit', 'Produit updated successfully');
 
     }

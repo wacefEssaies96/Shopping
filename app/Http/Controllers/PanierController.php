@@ -52,18 +52,27 @@ class PanierController extends Controller
      */
     public function store(Request $request)
     {
-        $id = (int)$request->prod_id;
-        $qtt = (int)$request->qtt;
-        $produit = Produit::find($id);
-       if($qtt > 0 && $qtt <= $produit->quantity){
-            $panier = new Panier();
-            $panier->user_id = Auth::id();
-            $panier->prod_id = $id;
-            $panier->quantity_prod = $qtt;
-            $panier->save();
-            return redirect()->route('panier.index')->with('addPanier','Le produit a été ajouté au panier avec succées');
+        
+        $exist = Panier::where([
+            ['paniers.user_id','=',Auth::id()],
+            ['paniers.prod_id','=',(int)$request->prod_id],
+        ])->get();
+        if($exist->all() == null){
+            $id = (int)$request->prod_id;
+            $qtt = (int)$request->qtt;
+            $produit = Produit::find($id);
+            if($qtt > 0 && $qtt <= $produit->quantity){
+                $panier = new Panier();
+                $panier->user_id = Auth::id();
+                $panier->prod_id = $id;
+                $panier->quantity_prod = $qtt;
+                $panier->save();
+                return redirect()->route('shop')->with('addPanier','Product has been added to your cart.');
+            }else{
+                return redirect()->route('shop')->with('errorPanier','Invalid quantity.');
+            }
         }else{
-            return redirect()->route('panier.index')->with('errorPanier','Quantité Invalid !');
+            return redirect()->route('shop')->with('errorPanier','Product already exist in your cart.');
         }
     }
 
@@ -106,11 +115,11 @@ class PanierController extends Controller
     {
         $produit = Produit::find($panier->prod_id);
         if($request->quantity_prod < 0 || $request->quantity_prod > $produit->quantity ){
-            return redirect()->route('panier.index')->with('editPanier','Invalid !');
+            return redirect()->route('panier.index')->with('editPanier','Invalid quantity.');
         }else{
             $panier->quantity_prod = $request->quantity_prod;
             $panier->update();
-            return redirect()->route('panier.index')->with('editPanier','Le produit a été modifié avec succées');
+            return redirect()->route('panier.index')->with('editPanier','Product has been modified.');
         }
     }
 
@@ -124,7 +133,7 @@ class PanierController extends Controller
     {
         $panier = Panier::find((int)$request->id);
         $panier->delete();
-        return redirect()->route('panier.index')->with('deletePanier','Le produit a été supprimé avec succées');
+        return redirect()->route('panier.index')->with('deletePanier','Product has been deleted.');
     }
 
   /**

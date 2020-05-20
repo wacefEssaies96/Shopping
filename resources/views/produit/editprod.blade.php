@@ -35,10 +35,14 @@
                         <label for="categorie">Categorie de produit</label>
 
                         <select id="categorie" name="categorie" class="form-control">
-                            <option   value="{{ old('categorie') ?? $Produit->categorie }}"  >{{ $Produit->categorie }}</option>
-                            <option   value="Produit technologie">Produit technologie</option>
-                            <option   value="Produit Alimentaire">Produit Alimentaire</option>
-                            <option  value="Voiture">Voiture</option>
+                            <option   value="{{ old('categorie') }}"  >Aucun categorie</option>
+                            <option   value="Informatique">Informatique</option>
+                            <option   value="Alimentaire">Alimentaire</option>
+                            <option   value="Bureatique">Bureatique</option>
+                            <option  value="Vehicule">Vehicule</option>
+                            <option   value="Electroménager">Electroménager</option>
+                            <option   value="Maison">Maison</option>
+                            <option   value="Bricolage">Bricolage</option>
                         </select>
 
                         @error('categorie')<div class="text-danger">{{ $message }}</div> @enderror
@@ -59,7 +63,7 @@
                 <div class="row form-groupe">
                     <label > Image   </label>
                     <input type="file"  name="photo" class="form-control"  >
-                    <input type="text" name="anphoto"  value="{{ old('photo')  ?? $Produit->photo}}"  id="anphoto" class="form-control" >
+                    <input type="hidden" name="anphoto"  value="{{ old('photo')  ?? $Produit->photo}}"  id="anphoto" class="form-control" >
                         
                     @error('photo')<div class="text-danger">{{ $message }}</div> @enderror
                 </div>

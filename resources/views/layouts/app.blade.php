@@ -11,7 +11,8 @@
     @yield('extra-script')
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/core-style.css') }}">
-    
+	<link href="{{asset('css/rating.css')}}" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="{{asset('tpauthad/vendor/fontawesome-free/css/all.min.css')}}">
 </head>
 <body>
     <div id="app">
@@ -22,12 +23,15 @@
         </main>
     </div>
     <!-- Scripts -->
+    
     <script src="{{ asset('js/jquery/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/plugins.js') }}"></script>
+    <script src="{{asset('js/rating.js')}}" type="text/javascript"></script>
     <!-- Active js -->
     <script src="{{ asset('js/active.js') }}"></script>
     @yield('extra-js')
 </body>
+
 </html>

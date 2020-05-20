@@ -22,24 +22,25 @@
     </div>
     <!-- Amado Nav -->
     <nav class="amado-nav">
-        <ul>
-            <li class="active">
-                <a href="{{ url('/') }}">Acceuil</a>
+        <ul >
+            <li >
+                <a id="home" href="{{ url('/') }}">Home</a>
             </li>
             @admin
-                <li >
-                    <a href="/admin/dashboard" >Home Admin</a>
+                <li>
+                    <a id="home_admin" href="/admin/dashboard" >Home Admin</a>
                 </li>
             @endadmin
             @client
-                <li><a href="{{ route('shop') }}">Shop</a></li>
+                <li><a id="shop" href="{{ route('shop') }}">Shop</a></li>
                 <li>
-                    <a href="{{ route('Produit.index') }}" >Mes Produits</a>
+                    <a id="products" href="{{ route('Produit.index') }}" >My Products</a>
                 </li>
-                <li><a href="{{route('panier.index')}}">Panier</a></li>
+                <li><a id="cart" href="{{route('panier.index')}}">Cart</a></li>
                 
             @endclient
         </ul>
+        
     </nav>
     <!-- Button Group ->
     <div class="amado-btn-group mt-30 mb-100">
@@ -50,14 +51,14 @@
     <div class="cart-fav-search mb-100">
         <!-- <a href="#" class="cart-nav"><img src="{{ asset('img/core-img/cart.png') }}" alt=""> Cart <span>(0)</span></a>
         <a href="#" class="fav-nav"><img src="{{ asset('img/core-img/favorites.png') }}" alt=""> Favourite</a> -->
-        <a href="#" class="search-nav"><img src="{{ asset('img/core-img/search.png') }}" alt=""> Recherche</a>
+        <a href="#" class="search-nav"><img src="{{ asset('img/core-img/search.png') }}" alt=""> Search</a>
     </div>
     <!-- Social Button  -->
-    <div class="social-info d-flex justify-content-between">
+    <!-- <div class="social-info d-flex justify-content-between">
         <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
         <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
         <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
         <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-    </div> 
+    </div>  -->
 </header>
 <!-- Header Area End -->
