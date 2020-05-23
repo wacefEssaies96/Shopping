@@ -67,17 +67,18 @@
                             </a>
                             <!-- Ratings & Review -->
                             <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
-                                <div class="ratings">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                 <input id="input-2" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="{{$Produit->rating}}"  data-size="md" onchange="r(this.value,{{$Produit->id}});">
+                                
+                                   
+                                    <form action="{{route('rating.store')}}" method="post">
+                                        @csrf
+                                        <input id="inputRR" name="prodId" type="hidden">
+                                        <input id="inputR" name="rating" type="hidden">
+                                        <button style="display:none;" type="sumbit" id="r"></button>
+                                    </form>
                                 </div>
-                                <div class="review">
-                                    <a href="#">Write A Review</a>
-                                </div>
-                            </div>
+                                
+                            
                             <!-- Avaiable -->
                             <p class="avaibility"><i class="fa fa-circle"></i> In Stock</p>
                         </div>
@@ -107,7 +108,6 @@
                                         @csrf
                                         <div class="form-group">
                                             <label>Quantity : </label>
-                                            
                                             <input class="form-control" value="1" min="1" max="{{$Produit->quantity}}" type="number"  type="number" name="qtt" id="qtt">
                                         </div>
                                         <input type="hidden" name="prod_id" id="prod_id" value="{{$Produit->id}}">
@@ -118,7 +118,11 @@
                                 <!-- <a href="#" class="btn btn-outline-danger" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a> -->
                             @endif
                         </form>
-
+                        <div class="review mt-3">
+                            <label>Average rate overview</label>
+                            <input data-showcaption=false disabled id="{{$Produit->id}}" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="{{$Produit->average_rating}}"  data-size="md">
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -128,7 +132,15 @@
 </div>
 
 
+<script>
 
+
+function r(value,prodId){
+            document.getElementById('inputRR').value=prodId;
+            document.getElementById('inputR').value=value;
+            document.getElementById('r').click();
+        }
+</script>
 
     @include('layouts.footer')   
 @endsection

@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Produit;
 use App\ImageProduit;
 use App\User;
+use App\Rating;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 
 class ProduitController extends Controller
 {
@@ -85,6 +87,18 @@ class ProduitController extends Controller
             $total += 1;
         }
         $Produit=Produit::findOrFail($id);
+        $rating = Rating::where([
+            ['user_id','=',Auth::id()], 
+            ['prod_id','=',$Produit->id]
+        ])->get();
+        
+        if($rating->all() != null){
+            $arrRating = Arr::get($rating[0],'rating');
+        }
+        else{
+            $arrRating = 0;
+        }
+        $Produit->offsetSet('rating', $arrRating); 
         if($Produit->confirm){
             return view('Produit.showprod',['Produit' => $Produit,'ImageProduit' => $ImageProduit, 'user' => Auth::id(),'total'=> $total ]);
         }else{

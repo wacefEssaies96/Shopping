@@ -16,6 +16,7 @@ $factory->define(Produit::class, function (Faker $faker) {
         'description' =>$faker->sentence,
         'categorie' => $faker->sentence,
         'DemandeEnvoyer' => 0,
+        
         'confirm' => 1,
         'DtEvoyerDm' => null,
         'created_at' => now(),

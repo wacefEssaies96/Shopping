@@ -7,18 +7,6 @@
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 
-        <!-- Mobile Nav (max width 767px)-->
-        <div class="mobile-nav">
-            <!-- Navbar Brand -->
-            <div class="amado-navbar-brand">
-                <a href="index.html"><img src="{{asset('img/core-img/logo.png')}}" alt=""></a>
-            </div>
-            <!-- Navbar Toggler -->
-            <div class="amado-navbar-toggler">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
-
         @include('layouts.navgauche')
 
         @include('layouts.sideBar')
@@ -97,6 +85,7 @@
                                 <!-- Product Image -->
                                 <div class="product-img">
                                     <img style="height:300px;" src="{{asset('storage/'.$produit->photo)}}" alt="{{$produit->name}}">
+                                    <div class="review">Average rate overview</div><input data-showcaption=false disabled id="{{$produit->id}}" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="0.1" value="{{$produit->average_rating}}"  data-size="s">
                                     <!-- Hover Thumb -->
                                     <!-- <img class="hover-img" src="img/product-img/product2.jpg" alt=""> -->
                                 </div>
@@ -106,7 +95,7 @@
                                     <!-- Product Meta Data -->
                                     <div class="product-meta-data">
                                         <div class="line"></div>
-                                        <p class="product-price">{{ $produit->price }}</p>
+                                        <p class="product-price">${{ $produit->price }}</p>
                                         <a href="{{ route('Produit.show', $produit->id) }}">
                                             <h6>{{ $produit->name }}</h6>
                                         </a>
@@ -114,7 +103,7 @@
                                     <!-- Ratings & Cart -->
                                     <div class="ratings-cart text-right">
                                         <div class="ratings">
-                                        <input id="input-2" name="input-2" class="rating" data-min="0" data-max="5" data-step="1" value="{{$produit->rating}}" data-size="md" onchange="r(this.value,{{$produit->id}});">
+                                        
                                         </div>
                                         <div class="cart">
                                             <form action="{{route('panier.store')}}" method="post">
@@ -142,20 +131,11 @@
             </div>
         </div>
     </div>
-    <form action="{{route('rating.store')}}" method="post">
-        @csrf
-        <input id="inputRR" name="prodId" type="hidden">
-        <input id="inputR" name="rating" type="hidden">
-        <button style="display:none;" type="sumbit" id="r"></button>
-    </form>
+    
     <!-- ##### Main Content Wrapper End ##### -->
     @include('layouts.footer')
     <script>
-        function r(value,prodId){
-            document.getElementById('inputRR').value=prodId;
-            document.getElementById('inputR').value=value;
-            document.getElementById('r').click();
-        }
+        
         if('{{$paginator}}')
             document.getElementById('{{$paginator}}').setAttribute("selected","");
        
