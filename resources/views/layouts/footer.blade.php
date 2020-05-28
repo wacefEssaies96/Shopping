@@ -25,9 +25,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
                                 <div class="collapse navbar-collapse" id="footerNavContent">
                                     <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item active">
+                                    <!-- <li class="nav-item active">
                                         <a class="nav-link" href="{{ url('/') }}">Home</a>
-                                    </li>
+                                    </li> -->
                                     @admin
                                         <li class="nav-item">
                                             <a href="/admin/dashboard" class="nav-link" >Home Admin</a>

@@ -1,21 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-
-@if (session('updateProduit'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ session('updateProduit') }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif
 <div class="main-content-wrapper d-flex clearfix">
     @include('layouts.navgauche')
 
     <!-- Product Details Area Start  -->
         <div class="single-product-area section-padding-100 clearfix">
             <div class="container-fluid">
+
+                @if (session('updateProduit'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('updateProduit') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
                 <div class="row">
                   <div class="col-12">
                       <nav aria-label="breadcrumb">
@@ -35,11 +35,11 @@
                                 
                                   
                                     @if($total != 0)
-                                        {{$counter = 0}} 
+                                        {{$counter = 1}} 
                                         <li class="active" data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
                                         </li>
                                         @foreach ($ImageProduit as $imgprod)       
-                                            {{$counter++}}
+                                            {{$counter+=1}}
                                             <li data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$imgprod['image']) }});">
                                             </li>
                                         @endforeach
@@ -109,7 +109,7 @@
                             @client
                                 @if($Produit->user_id == $user->id )
                                     @if($Produit->confirm)
-                                        Votre Produit sur le site Vous ne pouvez ni modifier ni supprimer
+                                      Your Product on the site You cannot modify or delete it
                                     @else
                                         <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a>
                                         <a href="#" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
@@ -117,71 +117,39 @@
                                     @endif 
                                 @endif 
                             @endclient
-                             <!-- Modal -->
-                             <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" >
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Delete Produit</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Are you sure to delete your Produit ?
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-outline-danger" onclick="event.preventDefault();document.querySelector('#delete-Produit-form').submit();">Confirm delete</button>
-        </div>
-        <form id="delete-Produit-form" action="{{ route('Produit.destroy', $Produit->id) }}" method="POST" style="display: none;">
-            @csrf
-            @method('DELETE')
-        </form>
-      </div>
-    </div>
-  </div>
-
                         </form>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Product Details Area End -->
 </div>
-<!-- ##### Main Content Wrapper End ##### -->
-
-
-  
-  <!-- Modal -->
-  <!-- <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
+    <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Delete Produit</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Product </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
+        </button>
         </div>
         <div class="modal-body">
-          Are you sure to delete your Produit ?
+        Are you sure to delete your Product ?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-outline-danger"
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-danger"
             onclick="event.preventDefault();
-            document.querySelector('#delete-Produit-form').submit();">Confirm delete</button>
+            document.querySelector('#delete-Product-form').submit();">Confirm </button>
         </div>
-        <form id="delete-Produit-form" action="{{ route('Produit.destroy', $Produit->id) }}" method="POST" style="display: none;">
+        <form id="delete-Product-form" action="{{ route('Produit.destroy', $Produit->id) }}" method="POST" style="display: none;">
             @csrf
             @method('DELETE')
         </form>
-      </div>
     </div>
-  </div> -->
-  
+    </div>
+</div>
 @include('layouts.footer')   
 
     

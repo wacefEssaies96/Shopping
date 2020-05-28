@@ -5,12 +5,19 @@ namespace App\Http\Controllers\Admin;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Notification;
 
 class UserController extends Controller
 {
     public function usered(){
+        $Notification= new Notification;
+        $NCD = $Notification->notification();
         $users=User::all();
-        return view('admin.user.user')->with('users',$users);
+        return view('admin.user.user',[
+            'users'=>$users,
+            'NCD'=>$NCD
+        ]);
     }
     
 
@@ -57,5 +64,4 @@ class UserController extends Controller
         return redirect('/admin/user')->with('message' , 'Compte activé avec succès !')
                                         ->with('alertType', 'success');
     }
-
 }

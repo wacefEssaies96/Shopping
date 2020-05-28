@@ -8,16 +8,17 @@
 
 <div class="row justify-content-center">
 
-    <div class="col-xl-10 col-lg-12 col-md-9">
+    <div class="col-xl-8 col-lg-12 col-md-6">
 
-      <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card o-hidden border-0 shadow-lg my-5 ">
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-                <div class="col-lg-6 d-none d-lg-block "><!--bg-login-image-->
-                    <img src="{{ asset('login_register/logi.png') }}"  alt="check path " style="height:100%;width:100%;"/>
-                </div>
-                <div class="col-lg-6">
+                <!-- <div class="col-lg-6 d-none d-lg-block ">
+                <!--bg-login-image->
+                    <img style="height:100%;width:100%;"  class="img-profile rounded-circle" src="{{ asset('login_register/logi.png') }}"  alt="check path " >
+                </div> -->
+                <div class="col-lg-12">
                     <div class="p-5">
                         <div class="text-center">
                             <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>

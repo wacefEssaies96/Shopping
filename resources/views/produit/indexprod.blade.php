@@ -42,11 +42,12 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            @endif
-            <a href="{{ route('Produit.create') }}" class="btn btn-primary  float-right" role="button" aria-pressed="true">Ajouter un Produit</a>
-            <h1>List des Produits</h1>
+            @endif       
+            <a href="{{ route('Produit.create') }}" class="btn amado-btn btn-primary  float-right" >Add Product</a>
+            
+            <h1>List of Products</h1>
             @if($total == 0)
-                <h3 class="text-warning">Votre N'avez ajouter aucun Produit ! </h3>
+                <h3 class="text-warning"> Your did not add any product ! </h3>
             @else
                 <div class="row">
                     <div class="col-12 lg-6">
@@ -54,11 +55,10 @@
                             <table class="table table-responsive  table-striped text-center">
                                 <thead>
                                     <tr>
-                                        <th>Image</th>
+                                        <th>Picture</th>
                                         <th>Name</th>
-                                        <!-- <th>Detaille</th> -->
-                                        <th>Demande</th>
-                                        <th >Images</th>
+                                        <th>Demand</th>
+                                        <th >Pictures</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -68,9 +68,6 @@
                                                 <a href="#"><img src="{{asset('storage/'.$prod->photo)}}" alt="{{$prod['name']}}"></a>
                                                 
                                             </td>
-                                            <!-- <td>
-                                                
-                                            </td> -->
                                             <td class="cart_product_desc">
                                                 <a href="{{ route('ConsulterProduit',['prodid' =>  $prod->id ]) }}" >
                                                     <h6>{{$prod->name}}</h6><!-- Consulter -->
@@ -78,27 +75,25 @@
                                             </td>
                                             <td >
                                                 @if($prod->confirm)
-                                                    Votre Produit sur le site
+                                                    Your Product on the site
                                                 @else
                                                     @if($prod->DemandeEnvoyer)
-                                                    <a id="d" onClick="d('{{$prod['id']}}');" href="#" class="btn btn-outline-danger" >
-                                                    <!-- data-toggle="modal" data-target="#confirmDeleteModal"> -->
-                                                        Anuuler cette Demande
-                                                    </a>
+                                                        <a href="#" id="d" onClick="d('{{$prod['id']}}');" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDeleteModal"> Cancel this Request </a>
+                                                        
                                                     @else
                                                         <form action="{{ route('Demandes.store') }}" method="post">
                                                             @csrf
                                                             
                                                             <input type="hidden" name="prod" value="{{$prod['id']}}"  id="prod" class="form-control" >
                                                                 
-                                                            <button type="submit" name="submit" class="btn btn-primary">Envoyer une Demande </button>
+                                                            <button type="submit" name="submit" class="btn btn-warning"> Add Demands </button>
                                                         </form>
                                                     @endif
                                                 @endif
                                             </td>
                                             <td>
                                                 <a href="{{ route('ImgProduit',['prodid' =>  $prod->id ]) }}" class="btn btn-success">
-                                                    Gerer les images
+                                                    Manage images
                                                 </a>
                                             </td>
                                         </tr>
@@ -115,10 +110,9 @@
 </div>
 
 <script>
+
     function d(id){
-        
         document.getElementById('input').value = id;
-        document.getElementById('button').click();
     }
 </script>
 <!-- Modal -->
@@ -126,21 +120,21 @@
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Produit from demande</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Delete Product from Demand</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
         </div>
         <div class="modal-body">
-        Are you sure to delete your demande to add this Produit to the site ?
+        Are you sure to delete your request to add this Product to the site ?
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-outline-danger"
             onclick="event.preventDefault();
-            document.querySelector('#delete-Produit-form').submit();">Confirm delete</button>
+            document.querySelector('#delete-Demande-form').submit();">Confirm </button>
         </div>
-        <form id="delete-Produit-form" action="{{ route('deleted') }}" method="POST" style="display: none;">
+        <form id="delete-Demande-form" action="{{ route('deleted') }}" method="POST" style="display: none;">
             @csrf
             @method('DELETE')
             <input name="id" id="input" type="hidden" value="">

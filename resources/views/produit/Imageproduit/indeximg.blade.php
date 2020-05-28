@@ -2,9 +2,6 @@
 
 @section('content')
 
-
-
-    <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
 
         @include('layouts.navgauche')
@@ -35,50 +32,82 @@
                 </button>
             </div>
             @endif
-            <a href="{{ route('createimgProduit',['prodid' =>  $Produit->id ]) }}" class="btn btn-primary  float-right" role="button" aria-pressed="true">
-               
-                Ajouter une Image
-            </a>
+            <div class="container-fluid">
+            @if (session('ChangeImage'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('ChangeImage') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @endif
+            @if($Produit->confirm==0)
+                <a href="{{ route('createimgProduit',['prodid' =>  $Produit->id ]) }}" class="btn btn-primary  float-right" role="button" aria-pressed="true">
+                    ADD Image
+                </a>
+            @else
+                <div class="float-right text-danger" >
+                    You can not ADD Image.
+                    <br>
+                    Your product on the site.
+                </div>
+            @endif
             <hr>
-                
-            <div class="row"> Image Principale </div>
+            <div class="row text-center">   <h3>Main Image </h3> </div>
+            <hr>
             <a href="#"><img src="{{ asset('storage/'.$Produit->photo) }}" alt="{{ $Produit['name'] }}"></a>
     
-        <div class="row">
-            @if($total == 0)
-                <h3 class="text-warning">Votre N'avez ajouter autre Image a ce Produit ! </h3>
-            @else
-                <div class="row"> Autre Image </div>
-                @foreach($ImageProduit as $imgprod)
-                    <!-- Single Product Area -->
-                    <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                        <div class="single-product-wrapper">
-                            <!-- Product Image -->
-                            <div class="product-img">
-                                <img style="height:300px;" src="{{asset('storage/'.$imgprod->image)}}" alt="{{$imgprod->id}}{{$imgprod->price}}">
-                               
-                            </div>
+            
+            <div class="row">
+                <div class="col">
+                    @if($total == 0)
+                        <h3 class="text-warning"> Your did not add another image to this product ! </h3>
+                    @else
+                    <hr>
+                    <div class="row text-center">   <h3>Others Images </h3> </div>
+                    <hr>
 
-                            @if($Produit->confirm==0)
-                                <a href="{{ route('ChangeimgPrincipale',['imgid' =>  $imgprod->id,'prodid' =>  $Produit->id ] ) }}" class="btn amado-btn">Change</a>
-                                
-                                <a href="{{ route('editeimgProduit',['imgid' =>  $imgprod->id,'prodid' =>  $Produit->id ] ) }}" class="btn amado-btn">Edit</a>
-                                <a id="d" onClick="d('{{$imgprod->id}}','{{$Produit->id}}');" href="#" class="btn btn-outline-danger" >
-                                <!-- data-toggle="modal" data-target="#confirmDeleteModal"> -->
-                                    Supprimer
-                                </a>
-                                
-                            @endif 
-                        </div>
+                    <div class="products_container grid">
+                        
+                        @foreach($ImageProduit as $imgprod)
+                            <!-- Product -->
+                            <div class="product grid-item hot">
+                                <div class="product_inner">
+                                    <div class="product_image">
+                                        <img src="{{asset('storage/'.$imgprod->image)}}" style="width:100%;height:100%;" alt="">
+                                        <a href="{{ route('ChangeimgPrincipale',['imgid' =>  $imgprod->id,'prodid' =>  $Produit->id ] ) }}" >
+                                            <div class="product_tag">Change</div>
+                                        </a>
+                                    </div>
+                                    <div class="product_content text-center">
+                                        
+                                        @if($Produit->confirm==0 )
+                                            <div class="product_button ml-auto mr-auto trans_200">
+                                                <a href="{{ route('editeimgProduit',['imgid' =>  $imgprod->id,'prodid' =>  $Produit->id ] ) }}" class="btn btn-warning" >Edit</a>
+                                            </div>
+                                            <div class="product_button ml-auto mr-auto trans_200">
+                                                <a id="d" onClick="d('{{$imgprod->id}}','{{$Produit->id}}');" class="btn btn-danger" href="#"  >
+                                            
+                                                <!-- data-toggle="modal" data-target="#confirmDeleteModal"> -->
+                                                    DELETE
+                                                </a>
+                                            </div>
+                                            
+                                        @endif 
+                                        <!-- <div class="product_title"><a href="product.html">long red shirt</a></div>
+                                        <div class="product_price">$39.90</div>
+                                        <div class="product_button ml-auto mr-auto trans_200"><a href="#">add to cart</a></div> -->
+                                    </div>
+                                </div>	
+                            </div>
+                        @endforeach
                     </div>
-                @endforeach
-                @endif
                 </div>
             </div>
+            @endif
         </div>
     </div>
-    <!-- ##### Main Content Wrapper End ##### -->
-    @include('layouts.footer')
+    
   
 <script>
     function d(imgid,prodid){

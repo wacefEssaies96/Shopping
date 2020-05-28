@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Produit;
 use App\ImageProduit;
 use App\User;
+use App\Http\Resources\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,7 +36,12 @@ class ProduitController extends Controller
         foreach($produits as $item){
             $total += 1;
         }
-        return view('Produit/indexprod', ['produits' => $produits,'total'=> $total]);
+        if(Auth::user()->role=="admin"){
+            return redirect()->route('OurProdacts');
+        }else{
+            return view('Produit/indexprod', ['produits' => $produits,'total'=> $total]);
+        }
+        
         //return view('Produit/Produitindex', ['produits' => $produits]);
     }
 
@@ -66,7 +72,12 @@ class ProduitController extends Controller
         $Produit=Produit::create($data);
         
 
-        return redirect()->route('Produit.index')->with('AddProduit', 'Vous avez ajouter un Produit');
+        if(Auth::user()->role=="admin"){
+            return redirect()->route('OurProdacts')->with('AddProduit', 'Product successfully add');
+        }else{
+            return redirect()->route('Produit.index')->with('AddProduit', 'Product successfully add');
+        }
+        
     
     
     }
@@ -112,9 +123,38 @@ class ProduitController extends Controller
         }
 
     }
+    //Admin
     public function ConsulterDetailleProduit($prodid,$userid) 
     {
-        return view('admin.Produit.ConsulterDetailleProduit',['Produit' => Produit::findOrFail($prodid), 'user' =>  User::findOrFail($userid) ]);
+        $ImageProduit = ImageProduit::where('prod_id', $prodid)->get();
+        $total = 0;
+        foreach($ImageProduit as $item){
+            $total += 1;
+        }
+
+        $user = Auth::user();
+        $Produit = Produit::findOrFail($prodid);
+        $produser = User::findOrFail($Produit->user_id);
+
+        $Notification= new Notification;
+        $NCD = $Notification->notification();
+
+        if($user->role== 'admin'){
+            if($Produit->user_id == $userid){
+                return view('admin.Produit.ConsulterDetailleProduit',[
+                    'Produit' => Produit::findOrFail($prodid),
+                    'user' =>  User::findOrFail($userid) ,
+                    'NCD'=>$NCD,
+                    'total'=> $total ,
+                    'ImageProduit' => $ImageProduit,
+                    'produser' => $produser
+                ]);
+            }else{
+                return redirect()->route('indexadmin');
+            }
+        }else{
+            return redirect()->route('home');
+        }
 
     }
     /**
@@ -152,8 +192,10 @@ class ProduitController extends Controller
         }
         
         
-        return redirect()->route('ConsulterProduit', $id)->with('updateProduit', 'Produit updated successfully');
-
+        
+        return redirect()->route('ConsulterProduit', $id)->with('updateProduit', 'Product has been successfully updated');
+        
+        
     }
 
     /**
@@ -169,7 +211,12 @@ class ProduitController extends Controller
         $produit = Produit::findOrFail($id);
         $produit->delete();
 
-        return redirect()->route('Produit.index')->with('deleteProduit', 'Produit deleted successfully');
+        if(Auth::user()->role=="admin"){
+            return redirect()->route('OurProdacts')->with('deleteProduit', 'Product successfully deleted');
+        }else{
+        
+            return redirect()->route('Produit.index')->with('deleteProduit', 'Product successfully deleted');
+        }
     }
     
     private function validationRulesphoto()
@@ -193,9 +240,32 @@ class ProduitController extends Controller
             'categorie' => 'required|string',
         ];
     }
+    /// Admin
     public function AllProd()
     {
         $produits = Produit::paginate(6);
         return view('admin/produit/Produitindex', ['produits' => $produits]);
+    }
+    public function OurProdacts()
+    {
+        
+        $user = Auth::user();
+
+        $Notification= new Notification;
+        $NCD = $Notification->notification();
+
+        $produits = Produit::paginate(6);
+        $total = 0;
+        foreach($produits as $item){
+            $total += 1;
+        }
+
+
+        return view('/admin/Produit/OurProdacts', [
+            'produits' => $produits,
+            'NCD' => $NCD,
+            'total' => $total,
+            'user' =>$user
+        ]);
     }
 }

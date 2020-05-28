@@ -109,7 +109,7 @@
                         <!-- Single Product Area -->
                         <div class="col-12 col-sm-6 col-md-12 col-xl-6">
                             <div class="single-product-wrapper">
-                                <h6> Produit d'un Client</h6>
+                                <h6> Produit d'un Client ou Entreprise</h6>
                                 <!-- Product Image -->
                                 <div class="product-img">
                                     <img src="{{ asset('storage/'.$produit['photo']) }}" alt="">
@@ -139,6 +139,11 @@
                                         <div class="col-lg-2">
                                             <a href="{{ route('ConsulterDetailleProduit',['prodid' =>  $produit->id,'userid' =>  $produit->user_id ]) }}" class="btn btn-primary">
                                                 Consulter
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a href="{{ route('ImgProduit',['prodid' =>  $produit->id ]) }}" class="btn btn-success">
+                                                Gerer les images
                                             </a>
                                         </div>
                                         <!-- <div class="cart">
