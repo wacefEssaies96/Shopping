@@ -48,6 +48,17 @@ class UserProfileController extends Controller
                         ->with('alertType', 'danger');
             }
         }
+        if($request->hasFile('image')){
+            if(!$request->file('image')->isValid()){
+                return redirect('/profil')->with('message', "Veuillez selectionner la bonne extension d'\image")
+                            ->with('alertType', 'danger');
+            }else{
+                $directory = 'images/users';
+                $name = str_replace('-','', date('d-m-Y-H-i-s-u')) . '.' .$request->file('image')->getClientOriginalExtension();
+                $request->file('image')->move(public_path($directory), $name);
+                $user->image = $directory . '/' . $name;
+            }
+        }
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->adresse = $request->input('adresse');
@@ -64,7 +75,6 @@ class UserProfileController extends Controller
         $user = Auth::user();
         $user->etat = 0;
         $user->update();
-        
         Auth::logout();
         return redirect('/')->with('message', 'Votre compte a été désactivé, contactez l\'administrateur pour le réactiver !')
         ->with('alertType', 'success');
