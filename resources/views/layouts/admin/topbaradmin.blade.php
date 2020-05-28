@@ -1,4 +1,7 @@
-
+<input type="hidden" value=" {{$conND=0}}"> 
+@foreach ($NCD['Demnotifications'] as $ND)
+<input type="hidden" value=" {{$conND+=1}}"> 
+@endforeach
         <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -51,28 +54,46 @@
               </a>
               <!-- Dropdown - Alerts -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown"  style="height:200px; overflow-y:scroll" wirdth="20px">
+                
+              
                 <h6 class="dropdown-header">
-                  Demands
+                  Demands ( {{$conND}} )
                 </h6>
-                @if($NCD['TDEA']==0)
+                @if($conND==0)
                   <h6 class="text-warning">There are no demands </h6>
                 @else
-                @foreach ($NCD['attenteDemandes'] as $ND)
+                @foreach ($NCD['Demnotifications'] as $ND)
                 <a class="dropdown-item d-flex align-items-center" href="{{ route('ConsulterDetailleProduit',['prodid' =>  $ND->id_prod,'userid' => $ND->id_user ]) }}">
+                  
                   <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
+                    @foreach ($NCD['usernotification'] as $NU)
+                      @if($ND->id_user==$NU->id)
+                        <img  class="img-profile icon-circle" src="{{asset('storage/'.$NU->image)}}"  onerror="this.style.display='none'">
+                      @endif
+                    @endforeach
                   </div>
                   <div>
                     <div class="small text-gray-500">{{date('d-m-Y h:i', strtotime($ND->created_at))}}</div>
-                    <span class="font-weight-bold">Prod id :{{$ND->id_prod}} User id :{{$ND->id_user}}</span>
+                    <span class="font-weight-bold"> 
+                    @foreach ($NCD['usernotification'] as $NU)
+                      @if($ND->id_user==$NU->id)
+                        "{{$NU->name}}"
+                      @endif
+                    @endforeach
+                    want to add his product 
+                    @foreach ($NCD['produitnotification'] as $NP)
+                      @if($ND->id_prod==$NP->id)
+                        "{{$NP->name}}"
+                        <img  class="img-profile icon-circle" src="{{asset('storage/'.$NP->image)}}"  onerror="this.style.display='none'">
+                      @endif
+                    @endforeach
+                    </span>
                   </div>
                 </a>
                 @endforeach 
                 @endif 
                 <h6 class="dropdown-header">
-                  Order
+                  Order ( {{$NCD['TCEA']}} )
                 </h6>
                 @if($NCD['TCEA']==0)
                   <h6 class="text-warning">There are no orders </h6>
@@ -80,13 +101,22 @@
                 @foreach ($NCD['Comnotifications'] as $NC)
                 <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
+                    @foreach ($NCD['usernotification'] as $NU)
+                      @if($NC->user_id==$NU->id)
+                        <img  class="img-profile icon-circle" src="{{asset('storage/'.$NU->image)}}"    onerror="this.style.display='none'">
+                      @endif
+                    @endforeach
                     </div>
-                  </div>
                   <div>
                     <div class="small text-gray-500">{{date('d-m-Y h:i', strtotime($NC->created_at))}}</div>
-                    <span class="font-weight-bold">Prod id :{{$NC->id_prod}} User id :{{$NC->id_user}}</span>
+                    <span class="font-weight-bold"> 
+                    "
+                    @foreach ($NCD['usernotification'] as $NU)
+                      @if($NC->user_id==$NU->id)
+                        {{$NU->name}}
+                      @endif
+                    @endforeach
+                    "  send this Order </span>
                   </div>
                 </a>
                 @endforeach 
@@ -182,8 +212,8 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="{{asset('storage/'.$user->image)}}" alt="{{ asset('login_register/logi.png') }}">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$user->name}}</span>
+                <img class="img-profile rounded-circle" src="{{asset('storage/'.$user->image)}}"  onerror="this.style.display='none'">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

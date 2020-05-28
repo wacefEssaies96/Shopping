@@ -50,25 +50,25 @@
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
         <i class="fas fa-fw fa-wrench"></i>
-        <span>Prodact</span>
+        <span>Product</span>
       </a>
       <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <h6 class="collapse-header">Manage Prodact :</h6>
-          <a class="collapse-item" href="/admin/Produit/SiteProduits">Prodact on the Site</a>
-          <a class="collapse-item" href="/admin/Produit/OurProdacts">Our Prodact</a>
-          <a class="collapse-item" href="/admin/Produit/OtherProdacts">Other Prodact</a>
-          <a class="collapse-item" href="/admin/Produit/AllProdacts">All Prodact</a>
+          <h6 class="collapse-header">Manage Product :</h6>
+          <a class="collapse-item" href="#">Product on the Site</a><!-- /admin/Produit/SiteProduits -->
+          <a class="collapse-item" href="/admin/Produit/OurProducts">Our Product</a>
+          <a class="collapse-item" href="#">Other Product</a><!-- /admin/Produit/OtherProducts -->
+          <a class="collapse-item" href="/admin/Produit/AllProduits">All Product</a>
         </div>
       </div>
     </li>
 
     <!-- Nav Item - Commandes -->
-    
+     
     <li class="nav-item {{'admin/user' == request()->path() ? 'active' : '' }}">
       <a class="nav-link" href="/admin/user">
         <i >
-            <img class="img-profile rounded-circle" src="{{ asset('login_register/logi.png') }}">
+            <img  class="img-profile rounded-circle" src="{{ asset('storage/uploads/alt.png') }}"   onerror="this.style.display='none'">
         </i>
         <!-- class="now-ui-icons users_single-02" -->
         <span>User Profile</span></a>

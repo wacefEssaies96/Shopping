@@ -9,7 +9,7 @@ use Faker\Generator as Faker;
 $factory->define(ImageProduit::class, function (Faker $faker) {
     return [
         'prod_id' =>  Produit::get('id')->random(),
-        'image' => 'http://lorempixel.com/640/480/food/'.$faker->randomDigitNotNull,
+        'image' => 'uploads/'.$faker->biasedNumberBetween(1,10).'.jpg',
         'created_at' => now(),
         'updated_at' => now(),
     ];

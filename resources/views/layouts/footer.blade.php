@@ -28,7 +28,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                     <!-- <li class="nav-item active">
                                         <a class="nav-link" href="{{ url('/') }}">Home</a>
                                     </li> -->
-                                    @admin
+                                    @admin 
                                         <li class="nav-item">
                                             <a href="/admin/dashboard" class="nav-link" >Home Admin</a>
                                         </li>

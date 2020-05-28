@@ -20,7 +20,7 @@ class Demende extends Model
     }
     public function scopeaccepteeDemandes($query){
        return $query->where('status', '=', 'Accepted')->orderBy('created_at', 'desc');
-    }
+    } 
     public function scopeDemandesnotifications($query){
        return $query->where('status', '=', 'New')->orderBy('created_at', 'desc');
     }

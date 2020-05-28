@@ -5,7 +5,7 @@
     <div class="main-content-wrapper d-flex clearfix">
 
         @include('layouts.navgauche')
-
+ 
         <div class="amado_product_area section-padding-100">
             <div class="container-fluid">
             @if (session('Addimg'))

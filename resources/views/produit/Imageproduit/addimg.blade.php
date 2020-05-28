@@ -33,7 +33,7 @@
                                 } -->
                             @error('image')<div class="text-danger">{{ $message }}</div> @enderror
                             </div>
-                        </div>
+                        </div> 
 
                         
                         <div class="row justify-content-center">

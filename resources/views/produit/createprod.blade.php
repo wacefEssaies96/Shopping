@@ -6,7 +6,7 @@
 @section('content')
 
 
-    <!-- ##### Main Content Wrapper Start ##### -->
+
     <div class="main-content-wrapper d-flex clearfix">
         @include('layouts.navgauche')
         <div class="cart-table-area section-padding-100">

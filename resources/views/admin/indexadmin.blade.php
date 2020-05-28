@@ -3,7 +3,7 @@
 @section('title')
   Notification
 @endsection
-
+ 
 @section('content')
 <!-- Begin Page Content -->
 <div class="container-fluid">

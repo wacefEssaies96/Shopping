@@ -22,19 +22,18 @@
                   <div class="col-12 col-lg-7">
                       <div class="single_product_thumb">
                           <div id="product_details_slider" class="carousel slide" data-ride="carousel">
-                              <ol class="carousel-indicators">
-                               
-                                    @if($total != 0)
-                                        {{$counter = 0}} 
-                                        <li class="active" data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
+                            @if($total != 0)
+                                <ol class="carousel-indicators">
+                                    {{$counter = 0}} 
+                                    <li class="active" data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
+                                    </li>
+                                    @foreach ($ImageProduit as $imgprod)       
+                                        {{$counter++}}
+                                        <li data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$imgprod['image']) }});">
                                         </li>
-                                        @foreach ($ImageProduit as $imgprod)       
-                                            {{$counter++}}
-                                            <li data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$imgprod['image']) }});">
-                                            </li>
-                                        @endforeach
-                                    @endif
-                              </ol>
+                                    @endforeach
+                                </ol>
+                            @endif
                               <div class="carousel-inner">
                                   <div class="carousel-item active">
                                       <a class="gallery_img" href="{{ asset('storage/'.$Produit['photo']) }}">

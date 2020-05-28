@@ -39,7 +39,7 @@
     <script src="{{asset('js/rating.js')}}" type="text/javascript"></script>
     <!-- Active js -->
     <script src="{{ asset('js/active.js') }}"></script>
-    <!--Image-->
+    <!--Image--> 
     <script src="{{asset('aStar/js/jquery-3.2.1.min.js') }}"></script>
     <script src="{{asset('aStar/styles/bootstrap-4.1.3/popper.js') }}"></script>
     <!-- <script src="{{asset('aStar/styles/bootstrap-4.1.3/bootstrap.min.js') }}"></script> -->
@@ -56,7 +56,6 @@
     <script src="{{asset('aStar/js/categories.js') }}"></script>
     
     <script>
-
         $('#myModal').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')
         })

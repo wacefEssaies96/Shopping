@@ -101,7 +101,7 @@ class DemendeController extends Controller
         $demende->id_prod = $request->prod;
         $demende->status = "New";
         $demende->save();
-
+ 
         $PD = Produit::findOrFail($request->prod);
         $PD->DemandeEnvoyer = 1;
         $PD->DtEvoyerDm = $demende->created_at;

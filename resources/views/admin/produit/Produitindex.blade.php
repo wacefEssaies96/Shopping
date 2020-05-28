@@ -141,7 +141,7 @@
                                                 Consulter
                                             </a>
                                         </div>
-                                        <div>
+                                        <div> 
                                             <a href="{{ route('ImgProduit',['prodid' =>  $produit->id ]) }}" class="btn btn-success">
                                                 Gerer les images
                                             </a>

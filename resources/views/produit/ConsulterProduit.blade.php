@@ -31,20 +31,18 @@
               <div class="col-12 col-lg-7">
                       <div class="single_product_thumb">
                           <div id="product_details_slider" class="carousel slide" data-ride="carousel">
-                              <ol class="carousel-indicators">
-                                
-                                  
-                                    @if($total != 0)
-                                        {{$counter = 1}} 
-                                        <li class="active" data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
+                            @if($total != 0)       
+                                <ol class="carousel-indicators">
+                                    {{$counter = 1}} 
+                                    <li class="active" data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
+                                    </li>
+                                    @foreach ($ImageProduit as $imgprod)       
+                                        {{$counter+=1}}
+                                        <li data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$imgprod['image']) }});">
                                         </li>
-                                        @foreach ($ImageProduit as $imgprod)       
-                                            {{$counter+=1}}
-                                            <li data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$imgprod['image']) }});">
-                                            </li>
-                                        @endforeach
-                                    @endif
-                              </ol>
+                                    @endforeach
+                                </ol>
+                            @endif
                               <div class="carousel-inner">
                                   <div class="carousel-item active">
                                       <a class="gallery_img" href="{{ asset('storage/'.$Produit['photo']) }}">
@@ -65,7 +63,7 @@
                           </div>
                       </div>
                   </div>
-
+ 
                 <div class="col-12 col-lg-5">
                     <div class="single_product_desc">
                         <!-- Product Meta Data -->
@@ -75,21 +73,6 @@
                             <a href="#"><!--product-details.html-->
                                 <h6>{{ $Produit->name }}</h6>
                             </a>
-                            <!-- Ratings & Review -->
-                            <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
-                                <div class="ratings">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                </div>
-                                <div class="review">
-                                    <a href="#">Write A Review</a>
-                                </div>
-                            </div>
-                            <!-- Avaiable -->
-                            <p class="avaibility"><i class="fa fa-circle"></i> In Stock</p>
                         </div>
 
                         <div class="short_overview my-5">

@@ -13,7 +13,7 @@ class DashboardController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        
+         
         $Notification= new Notification;
         $NCD = $Notification->notification();
 
