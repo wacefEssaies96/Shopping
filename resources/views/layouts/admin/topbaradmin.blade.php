@@ -54,10 +54,14 @@
                 <h6 class="dropdown-header">
                   Demands
                 </h6>
-                @if($NCD['TDEA']==0)
+                {{$con=0}}
+                @foreach ($NCD['Demnotifications'] as $ND)
+                  {{$con+=1}}
+                @endforeach 
+                @if($con==0)
                   <h6 class="text-warning">There are no demands </h6>
                 @else
-                @foreach ($NCD['attenteDemandes'] as $ND)
+                @foreach ($NCD['Demnotifications'] as $ND)
                 <a class="dropdown-item d-flex align-items-center" href="{{ route('ConsulterDetailleProduit',['prodid' =>  $ND->id_prod,'userid' => $ND->id_user ]) }}">
                   <div class="mr-3">
                     <div class="icon-circle bg-primary">

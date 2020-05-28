@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@include('layouts.searchWrapper')
 <div class="main-content-wrapper d-flex clearfix">
     @include('layouts.navgauche')
 
@@ -75,21 +76,7 @@
                             <a href="#"><!--product-details.html-->
                                 <h6>{{ $Produit->name }}</h6>
                             </a>
-                            <!-- Ratings & Review -->
-                            <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
-                                <div class="ratings">
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                    <i class="fa fa-star" aria-hidden="true"></i>
-                                </div>
-                                <div class="review">
-                                    <a href="#">Write A Review</a>
-                                </div>
-                            </div>
-                            <!-- Avaiable -->
-                            <p class="avaibility"><i class="fa fa-circle"></i> In Stock</p>
+                            
                         </div>
 
                         <div class="short_overview my-5">

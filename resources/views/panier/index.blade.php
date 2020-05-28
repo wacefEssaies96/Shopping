@@ -135,5 +135,5 @@
         </form>
         <!-- ##### Main Content Wrapper End ##### -->
     @endif
-    @include('layouts.footer')
+    
 @endsection

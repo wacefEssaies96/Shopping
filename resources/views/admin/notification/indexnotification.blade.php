@@ -6,6 +6,10 @@
 @endsection
 
 @section('content')
+{{$con=0}}
+@foreach ($NCD['Demnotifications'] as $item)
+  {{$con+=1}}
+@endforeach 
 
 <div class="card-header">
   <h3 class="card-title">All Notifications ( {{$NCD['notification']}} )</h3>
@@ -17,10 +21,10 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Pending Demands ( {{$NCD['TDEA']}} )</h4>
+        <h4 class="card-title">Pending Demands ( {{$con}}} )</h4>
       </div>
       <div class="card-body">
-        @if($NCD['TDEA']==0)
+        @if($con==0)
           <h3 class="text-warning">There are no demands </h3>
         @else
         <div class="table-responsive">
@@ -35,7 +39,7 @@
               <th>Actions</th>
             </thead>
             <tbody>
-            @foreach ($NCD['attenteDemandes'] as $demande)
+            @foreach ($NCD['Demnotifications'] as $demande)
                 <tr>
                   <th scope="row"><?=$counter++;?></th>
                   <td>{{$demande->id_prod}}</td>
