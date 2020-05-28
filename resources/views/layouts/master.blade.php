@@ -23,14 +23,14 @@
 <body class="">
   <div class="wrapper ">
     <div class="sidebar" data-color="yellow"><!--Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"-->
-      <!-- <div class="logo">
+      <div class="logo">
           <li class="{{'admin/dashboard' == request()->path() ? 'active' : '' }}">
             <a href="/admin/dashboard">
               <i class="fa fa-home fa-dark fa-lg "></i>
               <p>Home<</p>
             </a>
           </li> 
-      </div>-->
+      </div>
 
       <div class="sidebar-wrapper" id="sidebar-wrapper">
         <ul class="nav">
@@ -60,7 +60,7 @@
             </a>
           </li>
 
-          <!-- <li>
+          <li>
             <a href="./map.html">
               <i class="now-ui-icons location_map-big"></i>
               <p>Maps</p>
@@ -72,7 +72,7 @@
               <p>Notifications</p>
             </a>
           </li>
-           -->
+          
           
           <li class="{{'admin/user' == request()->path() ? 'active' : '' }}">
             <a href="/admin/user">
@@ -81,7 +81,7 @@
             </a>
           </li>
 
-          <!-- <li class="active ">
+          <li class="active ">
             <a href="./tables.html">
               <i class="now-ui-icons design_bullet-list-67"></i>
               <p>Table List</p>
@@ -98,7 +98,7 @@
               <i class="now-ui-icons arrows-1_cloud-download-93"></i>
               <p>Upgrade to PRO</p>
             </a>
-          </li> -->
+          </li>
 
         </ul>
       </div>

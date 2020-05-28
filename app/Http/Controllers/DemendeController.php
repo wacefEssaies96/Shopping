@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Produit;
 use App\demende;
+use App\Http\Resources\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,28 +15,57 @@ class DemendeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    /// all demendes
     public function index()
     {
         
         if(Auth::user()->role == 'admin'){
-            $attenteDemandes= demende::attenteDemandes()->paginate(5);
-            $accepteeDemandes= demende::accepteeDemandes()->paginate(5);
-            
-            $TDAC = 0;
-            $TDEA = 0;
-            foreach($accepteeDemandes as $item){
-                $TDAC  += 1;
-            }
-            foreach($attenteDemandes as $item){
-                $TDEA  += 1;
-            }
-
-
+            $user = Auth::user();
+            $Notification= new Notification;
+            $NCD = $Notification->notification();
             return view('admin.Demande.Demandeindex',[
-                'attenteDemandes'=>$attenteDemandes,
+                'NCD'=>$NCD,
+                'user'=>$user
+            ]);
+        }
+        else{  
+            $produits = Auth::user()->produits()->get();
+            return redirect()->route('Produit.index')->with('produits', $produits);
+        }
+    }
+    ///  demendes accepte
+    public function indexTDAC()
+    {
+        
+        if(Auth::user()->role == 'admin'){
+            $accepteeDemandes= demende::accepteeDemandes()->paginate(5);
+            $user = Auth::user();
+            $Notification= new Notification;
+            $NCD = $Notification->notification();
+            return view('admin.Demande.DemandeindexTDAC',[
                 'accepteeDemandes'=>$accepteeDemandes,
-                'TDAC'=>$TDAC,
-                'TDEA'=>$TDEA 
+                'NCD'=>$NCD,
+                'user'=>$user
+            ]);
+        }
+        else{
+            $produits = Auth::user()->produits()->get();
+            return redirect()->route('Produit.index')->with('produits', $produits);
+        }
+    }
+    ///  demendes en attente
+    public function indexTDEA()
+    {
+        
+        if(Auth::user()->role == 'admin'){
+            $attenteDemandes= demende::attenteDemandes()->paginate(5);
+            $user = Auth::user();
+            $Notification= new Notification;
+            $NCD = $Notification->notification();
+            return view('admin.Demande.DemandeindexTDEA',[
+                'attenteDemandes'=>$attenteDemandes,
+                'NCD'=>$NCD,
+                'user'=>$user
             ]);
         }
         else{
@@ -62,6 +92,7 @@ class DemendeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    /// client add demande
     public function store(Request $request)
     {
         $demende = new demende;
@@ -76,7 +107,7 @@ class DemendeController extends Controller
         $PD->DtEvoyerDm = $demende->created_at;
         
         $PD->save();
-        return redirect()->route('Produit.index')->with('AddDemande', 'Demande Envoyer successfully');
+        return redirect()->route('Produit.index')->with('AddDemande', 'Demand Send successfully');
     
     }
 
@@ -120,49 +151,62 @@ class DemendeController extends Controller
      * @param  \App\demende  $demende
      * @return \Illuminate\Http\Response
      */
+    /// admin deleteDemande
     public function destroy($id)
     {
         //
     }
+    /// admin deleteDemande
     public function deleteDemande(Request $request)
     {
-        $demende = demende::findOrFail((int)$request->iddemende)->delete();
+        $demende = demende::findOrFail((int)$request->id);
+        $PD = Produit::findOrFail($demende->id_prod);
+        $PD->DemandeEnvoyer = 0;
+        $PD->confirm = 0;
+        $PD->DtEvoyerDm = null;
+        $PD->save();
+        $demende->delete();
         
-        return redirect()->route('Demandes.index')->with('deleteDemande', 'Demande deleted successfully');
+        return redirect()->route('Demandes.index')->with('deleteDemande', 'Demand deleted successfully');
+    
     }
+    /// admin AnnulerDemande
+    public function AnnulerDemande($id,$prodid,$userid) 
+    {
+        $demende=demende::findOrFail($id);
+        $demende->status = 'Canceled';
+        $demende->save();
+        $Produit=Produit::findOrFail($prodid);
+        $Produit->confirm = 0;
+        $Produit->DemandeEnvoyer = 1;
+        $Produit->save();
+        return redirect()->route('Demandes.index')->with('AnnulerDemande', 'Demand canceled successfully');
+    }
+    /// admin AccepterDemande
+    public function AccepterDemande($id,$prodid,$userid) 
+    {
+        $demende=demende::findOrFail($id);
+        $demende->status = 'Accepted';
+        $demende->save();
+        $Produit=Produit::findOrFail($prodid);
+        $Produit->confirm = 1;
+        $Produit->save();
+        return redirect()->route('Demandes.index')->with('AccepterDemande', 'Demande Accepted successfully');
+    }
+    //client delete demande
     public function deleted(Request $request)
     {
-        
         
         $PD = Produit::findOrFail((int)$request->id);
 
         demende::where('id_prod', (int)$request->id)->where('created_at',$PD->DtEvoyerDm)->delete();
 
         $PD->DemandeEnvoyer = 0;
+        $PD->confirm = 0;
         $PD->DtEvoyerDm = null;
         $PD->save();
 
-        return redirect()->route('Produit.index')->with('deleteDemande', 'Demande annuler successfully');
+        return redirect()->route('Produit.index')->with('deleteDemande', 'Demande canceled successfully');
     }
-    public function AccepterDemande($id,$prodid,$userid) 
-    {
-        $demende=demende::findOrFail($id);
-        $demende->status = 'Accepter';
-        $demende->save();
-        $Produit=Produit::findOrFail($prodid);
-        $Produit->confirm = 1;
-        $Produit->save();
-        return redirect()->route('Demandes.index')->with('AccepterDemande', 'Demande Accepter successfully');
-    }
-    public function AnnulerDemande($id,$prodid,$userid) 
-    {
-        $demende=demende::findOrFail($id);
-        $demende->status = 'Annuler';
-        $demende->save();
-        $Produit=Produit::findOrFail($prodid);
-        $Produit->confirm = 0;
-        $Produit->DemandeEnvoyer = 1;
-        $Produit->save();
-        return redirect()->route('Demandes.index')->with('AnnulerDemande', 'Demande Annuler successfully');
-    }
+
 }

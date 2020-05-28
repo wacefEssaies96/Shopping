@@ -58,7 +58,7 @@
                                             <input type="number" class="form-control" id="phone_number" min="0" placeholder="Phone No" value="">
                                         </div>
                                         <div class="col-12 mb-3">
-                                            <textarea name="comment" class="form-control w-100" id="comment" cols="30" rows="10" placeholder="Leave a comment about your order"></textarea>
+                                            <textarea name="comment" class="form-control w-100"  cols="30" rows="10" placeholder="Leave a comment about your order"></textarea>
                                         </div>
 
                                         <div class="col-12">

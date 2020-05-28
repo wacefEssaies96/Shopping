@@ -1,30 +1,50 @@
-@extends('layouts.form')
+@extends('layouts.app')
 
 @section('title', 'Edit Image Produit')
 @section('content')
 
-<div class="row justify-content-center" >
-    <fieldset class="col-lg-6" style="color: white;background-image: url({{ asset('img/bg-img/bgprimary1.jpg') }});background-repeat: no-repeat;size:100% 100%;background-size: 100% 100%;padding: 30px 30px;border-radius:30px;"> 
-        <div  class="h4 text-gray-900 mb-4 text-warning ">Edit Image</div>
-        <form action="{{ route('ImageProduit.update', $imgprod->id) }}" method="post" enctype="multipart/form-data">
-            @csrf
-            @method('PATCH')
-            <div >
-            
-                <input type="hidden"  name="prodid" value="{{$prodid}}">
-                <div class="row form-groupe">
-                    <label > Image   </label>
-                    <input type="file"  name="image" class="form-control"  >
-                    <input type="hidden" name="animage"  value="{{ old('image')  ?? $imgprod->image}}"  id="animage" class="form-control" >
+<!-- ##### Main Content Wrapper Start ##### -->
+<div class="main-content-wrapper d-flex clearfix">
+    @include('layouts.navgauche')
+    <div class="cart-table-area section-padding-100">
+        <div class="container-fluid">
+            <div class="col-12 col-lg-10">
+                <div class="checkout_details_area mt-50 clearfix">
+                    <div  class="h4 text-gray-900 mb-4 text-warning ">
+                        Edit Image
+                    </div>
+                    <form action="{{ route('ImageProduit.update', $imgprod->id) }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        @method('PATCH')
                         
-                    @error('image')<div class="text-danger">{{ $message }}</div> @enderror
-                </div>
-                <br>
-                <div class="row justify-content-center">
-                    <button type="submit" name="submit" class="btn btn-primary "> Confirm update</button>
+                        <input type="hidden"  name="prodid" value="{{$prodid}}">
+                        <div class="row ">
+                            <div class="col-6 mb-3">
+                                <label > Image   </label>
+                                <input id="image" type="file"  name="image" class="form-control"  >
+
+                                <input type="hidden" name="animage"  value="{{ old('image')  ?? $imgprod->image}}"  id="animage" class="form-control" >
+                                    
+                                <!-- if( image not null){
+                                    <label > You change your image to    </label>
+                                    <img style="float:right; width:300px; height:200px;" src="image name" alt="Path not correct">
+                                }else{
+                                    You don't change the image
+                                } -->
+                            @error('image')<div class="text-danger">{{ $message }}</div> @enderror
+                            </div>
+                            <div class="col-6 mb-3 ">
+                                <img  src="{{asset('storage/'.$imgprod->image)}}" alt="Path not correct">
+                            
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <button type="submit" name="submit" class="btn amado-btn "> Confirm update</button>
+                        </div>
+                    </form>
                 </div>
             </div>
-        </form>
-    </fieldset>
-</div>
+        </div>
+    </div>
+</div>        
 @endsection

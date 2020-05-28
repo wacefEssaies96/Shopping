@@ -4,22 +4,41 @@ namespace App\Http\Controllers;
 
 use App\ImageProduit;
 use App\Produit;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ImageProduitController extends Controller
 {
     public function ImgProduit($id)
     {
-        
-        $ImageProduit = ImageProduit::where('prod_id', $id)->get();
+        $user = Auth::user();
         $Produit = Produit::findOrFail($id);
+        $produser = User::findOrFail($Produit->user_id);
+        $ImageProduit = ImageProduit::where('prod_id', $id)->get();
         $total = 0;
         foreach($ImageProduit as $item){
             $total += 1;
         }
-        return view('Produit/ImageProduit/indeximg', ['Produit' => $Produit,'ImageProduit' => $ImageProduit,'total'=> $total]);
-        
+
+        if($user->role== 'admin'){
+            if($produser->role== 'admin'){
+                return view('Produit/ImageProduit/indeximg', ['Produit' => $Produit,'ImageProduit' => $ImageProduit, 'user' => $user, 'produser' => $produser,'total'=> $total]);
+            }else{
+                $produits = Produit::paginate(6);
+                return view('admin/produit/Produitindex', ['produits' => $produits]);
+            }
+        }elseif($user->role == 'client'){
+            if($produser== $user){
+                return view('Produit/ImageProduit/indeximg', ['Produit' => $Produit,'ImageProduit' => $ImageProduit, 'user' => $user, 'produser' => $produser,'total'=> $total]);
+            }else{
+                return redirect()->route('Produit.index');
+            }
+        }else{
+            return redirect()->route('home');
+        }
     }
+    
     /**
      * Display a listing of the resource.
      *
@@ -27,15 +46,7 @@ class ImageProduitController extends Controller
      */
     public function index($id)
     {
-        
-        // $ImageProduit = ImageProduit::where('prod_id', $id)->get();
-        // $Produit = Produit::findOrFail($id);
-        // $total = 0;
-        // foreach($ImageProduit as $item){
-        //     $total += 1;
-        // }
-        // return view('Produit/ImageProduit/index', ['Produit' => $Produit,'ImageProduit' => $ImageProduit,'total'=> $total]);
-        
+        //
     }
 
     /**
@@ -45,8 +56,27 @@ class ImageProduitController extends Controller
      */
     public function create($prod_id)
     {
-        // return view('Produit/ImageProduit/addimg')->with('prod_id',$prod_id);
-        return view('Produit/ImageProduit/addimg')->with('prod_id',$prod_id);
+        $user = Auth::user();
+        $Produit = Produit::findOrFail($prod_id);
+        $produser = User::findOrFail($Produit->user_id);
+        
+
+        if($user->role== 'admin'){
+            if($produser->role== 'admin'){
+                return view('Produit/ImageProduit/addimg')->with('prod_id',$prod_id);
+            }else{
+                return redirect()->route('ImgProduit',['prod_id'=>$prod_id]);
+            }
+        }elseif($user->role == 'client'){
+            if($produser== $user){
+                return view('Produit/ImageProduit/addimg')->with('prod_id',$prod_id);
+            }else{
+                return redirect()->route('ImgProduit',['prod_id'=>$prod_id]);
+            }
+        }else{
+            return redirect()->route('home');
+        }
+        
     }
 
     /**
@@ -68,7 +98,7 @@ class ImageProduitController extends Controller
         $ImageProduit=ImageProduit::create($data);
         
         
-        return redirect()->route('ImgProduit',['prod_id'=>$request->prod_id])->with('Addimg', 'Image ajouter successfully');
+        return redirect()->route('ImgProduit',['prod_id'=>$request->prod_id])->with('Addimg', 'Image successfully add');
     
 
     }
@@ -98,7 +128,35 @@ class ImageProduitController extends Controller
     }
     public function editeimg($imgid,$prodid)
     {
-        return view('Produit/ImageProduit/editimg',['imgprod' => ImageProduit::findOrFail($imgid),'prodid' => $prodid]);
+        $user = Auth::user();
+
+        $Produit = Produit::findOrFail($prodid);
+        $produser = User::findOrFail($Produit->user_id);
+        
+        $ImageProduit = ImageProduit::findOrFail($imgid);
+
+        $prodimg=$ImageProduit->prod_id;
+
+        if($prodimg== $prodid){
+            if($user->role== 'admin'){
+                if($produser->role== 'admin'){
+                    return view('Produit/ImageProduit/editimg',['imgprod' => ImageProduit::findOrFail($imgid),'prodid' => $prodid]);
+                }else{
+                    return redirect()->route('ImgProduit',['prod_id'=>$prodid]);
+                }
+            }elseif($user->role == 'client'){
+                if($produser== $user){
+                    return view('Produit/ImageProduit/editimg',['imgprod' => ImageProduit::findOrFail($imgid),'prodid' => $prodid]);
+                }else{
+                    return redirect()->route('ImgProduit',['prod_id'=>$prodid]);
+                }
+            }else{
+                return redirect()->route('home');
+            }
+        }else{
+            return redirect()->route('home');
+        }
+        
     }
     public function ChangeimgPrincipale($imgid,$prodid)
     {
@@ -113,7 +171,7 @@ class ImageProduitController extends Controller
         $Produit->save();
 
 
-        return redirect()->route('ImgProduit',['prod_id'=>$prodid])->with('ChangeImage', 'Image Principale de ce Produit change successfully');
+        return redirect()->route('ImgProduit',['prod_id'=>$prodid])->with('ChangeImage', 'Main Image of this Product was successfully changed');
         
     }
 
@@ -131,13 +189,13 @@ class ImageProduitController extends Controller
         if($request->image == null){
             $data['image']= $request->animage;
             ImageProduit::where('id', $id)->update($data);
-            return redirect()->route('ImgProduit',['prod_id'=>$request->prodid])->with('updateImage', 'No changes');
+            return redirect()->route('ImgProduit',['prod_id'=>$request->prodid])->with('updateImage', 'Nothing has changed');
 
         }else{
             $data=$request->validate($this->validation());
             $data['image']= $request->image->store('uploads','public');
             ImageProduit::where('id', $id)->update($data);
-            return redirect()->route('ImgProduit',['prod_id'=>$request->prodid])->with('updateImage', 'Image Produit updated successfully');
+            return redirect()->route('ImgProduit',['prod_id'=>$request->prodid])->with('updateImage', 'Image has been successfully updated');
 
         }
         
@@ -163,7 +221,7 @@ class ImageProduitController extends Controller
         
         $ImageProduit = ImageProduit::findOrFail((int)$request->idimgprod)->delete();
         
-        return redirect()->route('ImgProduit',['prod_id'=>$request->idprod])->with('deleteimg', 'Image deleted successfully');
+        return redirect()->route('ImgProduit',['prod_id'=>$request->idprod])->with('deleteimg', 'Image successfully deleted');
     }
     
     private function validation()

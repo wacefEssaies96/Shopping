@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 use App\Panier;
+use App\Paiement;
+
 use App\Produit;
 use App\commande;
-use App\Paiement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Facture;
+use App\Http\Resources\Notification;
 
 
 class CommandeController extends Controller
@@ -20,6 +22,7 @@ class CommandeController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         if(Auth::user()->role == 'admin'){
             $attenteCommandes= commande::attenteCommandes()->get();
             $accepteeCommandes= commande::accepteeCommandes()->get();
@@ -28,9 +31,13 @@ class CommandeController extends Controller
             $attenteCommandes = Auth::user()->commandes()->attenteCommandes()->get();
             $accepteeCommandes= Auth::user()->commandes()->accepteeCommandes()->get();
         }
+        $Notification= new Notification;
+        $NCD = $Notification->notification();
         return view('admin.commande.index',[
             'attenteCommandes'=>$attenteCommandes,
             'accepteeCommandes'=>$accepteeCommandes,
+            'user'=>$user,
+            'NCD'=>$NCD
         ]);
        
     }

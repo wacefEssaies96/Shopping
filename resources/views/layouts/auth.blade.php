@@ -17,17 +17,50 @@
 
   <!-- Custom styles for this template-->
   <link href="{{ asset('tpauthad/css/sb-admin-2.min.css') }}" rel="stylesheet"> 
+    <link rel="stylesheet" href="{{ asset('css/core-style.css') }}">
 </head>
+@auth
 
-<body class="bg-gradient-primary">
-    
+<body id="page-top">
 
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+  
+    @include('layouts.admin.sidebaradmin')
     
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+          @include('layouts.admin.topbaradmin')
+        
+          @yield('content')
+      </div>
+       <!-- End Content  -->
+    </div>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+  </div>
+  <!-- End Page Wrapper -->
+
+
+@else
+<body >
   <div class="container">
     @yield('content')
   </div>
+@endauth
 
 
+    
+<script src="{{ asset('js/jquery/jquery-2.2.4.min.js') }}"></script>
+    <script src="{{ asset('js/plugins2.js') }}"></script>
+    <!-- Active js -->
+    <script src="{{ asset('js/active.js') }}"></script>
   <!-- Bootstrap core JavaScript-->
   <script src="{{ asset('tpauthad/vendor/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('tpauthad/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -39,6 +72,11 @@
   <script src="{{ asset('tpauthad/js/sb-admin-2.min.js') }}"></script>
 
 
+  <!-- Page level plugins -->
+  <script src="{{ asset('tpauthad/vendor/chart.js/Chart.min.js') }}"></script>
+  <!-- Page level custom scripts -->
+  <!-- <script src="{{ asset('tpauthad/js/demo/chart-area-demo.js') }}"></script>
+  <script src="{{ asset('tpauthad/js/demo/chart-pie-demo.js') }}"></script> -->
 </body>
 
 </html>

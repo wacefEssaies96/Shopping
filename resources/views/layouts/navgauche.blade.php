@@ -23,12 +23,12 @@
     <!-- Amado Nav -->
     <nav class="amado-nav">
         <ul >
-            <li >
+            <!-- <li >
                 <a id="home" href="{{ url('/') }}">Home</a>
-            </li>
+            </li> -->
             @admin
                 <li>
-                    <a id="home_admin" href="/admin/dashboard" >Home Admin</a>
+                    <a id="home_admin" href="/admin/indexadmin" >Home Admin</a>
                 </li>
             @endadmin
             @client

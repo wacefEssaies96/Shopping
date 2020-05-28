@@ -1,36 +1,59 @@
-@extends('layouts.master')
+@extends('layouts.auth')
 
 @section('title')
-   Admin
+   All Demands
 @endsection
 
 @section('content')
-
 
 <div class="row">
   <div class="col-md-12">
     <div class="card">
 
+      @if (session('AccepterDemande'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('AccepterDemande') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      @endif
+      @if (session('deleteDemande'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('deleteDemande') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      @endif
+      @if (session('AnnulerDemande'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('AnnulerDemande') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+      @endif
       <div class="card-header">
-        <h4 class="card-title">Demandes en attentes</h4>
+        <h4 class="card-title">Pending Demands ( {{$NCD['TDEA']}} )</h4>
       </div>
       <div class="card-body">
-        @if($TDEA==0)
-          <h3 class="text-warning">Il n'y a aucune demande </h3>
+        @if($NCD['TDEA']==0)
+          <h3 class="text-warning">There are no demands </h3>
         @else
         <div class="table-responsive">
         <?php $counter = 1?>
-          <table class="table">
+          <table class="table text-center">
             <thead class=" text-primary">
               <th>#</th>
-              <th>id produit</th>
+              <th>Product ID</th>
               <th>User ID</th>
               <th>Status</th>
               <th>Date</th>
-              <th>Actions</th>
+              <th colspan="3" >Actions</th>
             </thead>
             <tbody>
-            @foreach ($attenteDemandes as $demande)
+            @foreach ($NCD['attenteDemandes'] as $demande)
                 <tr>
                   <th scope="row"><?=$counter++;?></th>
                   <td>{{$demande->id_prod}}</td>
@@ -39,24 +62,19 @@
                   <td>{{date('d-m-Y h:i', strtotime($demande->created_at))}}</td>
                   <td>
                       <a href="{{ route('ConsulterDetailleProduit',['prodid' =>  $demande->id_prod,'userid' => $demande->id_user ]) }}" class="btn btn-primary">
-                          Consulter
+                        Show
                       </a>
                   </td>
                   <td>
                       <a href="{{ route('AccepterDemande',['id' =>  $demande->id,'prodid' =>  $demande->id_prod,'userid' => $demande->id_user ]) }}" class="btn btn-success">
-                        Accepter
+                        Accept
                       </a>
                   </td>
                   <td>
-                    <a href="#" class="btn btn-danger">Refuser</a>
                   
-                    <!-- <a id="d" onClick="d('{{$demande->id}}');" href="#" class="btn btn-outline-danger" >
-                    <!-- data-toggle="modal" data-target="#confirmDeleteModal"> ->
-                      Refuser
-                    </a> -->
-                  <!-- <a href="{{ route('Demandes.destroy',['demandeid' =>  $demande->id ]) }}" class="btn btn-danger">Refuser</a> -->
-                  
-                  <!-- <a href="{{ route('Demandes.destroy',['demandeid' =>  $demande->id ]) }}" class="btn btn-danger">Refuser</a> -->
+                    <a href="#" id="d" onClick="d('{{$demande['id']}}');" class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal">
+                      Refuse
+                    </a>
                   </td>
                 </tr>
             @endforeach
@@ -64,7 +82,6 @@
           </table>
         </div>
         @endif
-        {{ $attenteDemandes->links()}}
       </div>
     </div>
   </div>
@@ -72,25 +89,25 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Demandes acceptées</h4>
+        <h4 class="card-title">Accepted Demands ( {{$NCD['TDAC']}} )</h4>
       </div>
       <div class="card-body">
-        @if($TDAC==0)
-          <h3 class="text-warning">Il n'y a aucune Accepter </h3>
+        @if($NCD['TDAC']==0)
+          <h3 class="text-warning">There are no demands</h3>
         @else
         <div class="table-responsive">
         <?php $counter = 1?>
-          <table class="table">
+          <table class="table text-center">
             <thead class=" text-primary">
               <th>#</th>
-              <th>id produit</th>
+              <th>Product ID</th>
               <th>User ID</th>
               <th>Status</th>
               <th>Date</th>
-              <th>Actions</th>
+              <th colspan="3">Actions</th>
             </thead>
             <tbody>
-            @foreach ($accepteeDemandes as $demande)
+            @foreach ($NCD['accepteeDemandes'] as $demande)
                 <tr>
                   <th scope="row"><?=$counter++;?></th>
                   <td>{{$demande->id_prod}}</td>
@@ -100,12 +117,12 @@
                   <td>
                   <td>
                       <a href="{{ route('ConsulterDetailleProduit',['prodid' =>  $demande->id_prod,'userid' => $demande->id_user ]) }}" class="btn btn-primary">
-                          Consulter
+                        Show
                       </a>
                   </td>
                   <td>
                       <a href="{{ route('AnnulerDemande',['id' =>  $demande->id,'prodid' =>  $demande->id_prod,'userid' => $demande->id_user ]) }}" class="btn btn-danger">
-                        Annuler
+                        Cancel
                       </a>
                   </td>
                 </tr>
@@ -114,9 +131,43 @@
           </table>
         </div>
         @endif
-        {{ $accepteeDemandes->links()}}
       </div>
     </div>
   </div>
+</div>
+
+<script>
+
+    function d(id){
+        document.getElementById('input').value = id;
+    }
+</script>                                       
+<!-- Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Demand </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+        Are you sure to delete this Demand ?
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-danger"
+            onclick="event.preventDefault();
+            document.querySelector('#delete-Demand-form').submit();">Confirm </button>
+        </div>
+        <form id="delete-Demand-form" action="{{ route('deleteDemande') }}" method="POST" style="display: none;">
+            @csrf
+            @method('DELETE')
+            <input name="id" id="input" type="hidden" value="">
+            <button style="display:none;" id="button" type="submit"></button>
+        </form>
+    </div>
+    </div>
 </div>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Produit;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -29,4 +30,20 @@ class HomeController extends Controller
             'produit'=>$produit,
         ]);
     }
+    
+    public function Home()
+    {
+
+        $user = Auth::user();
+
+        if($user->role== 'admin'){
+            return redirect()->route('home.index');
+        }elseif($user->role == 'client'){
+            return redirect()->route('shop');
+        }else{
+            return redirect()->route('indexadmin');
+        }
+        
+    }
+    
 }
