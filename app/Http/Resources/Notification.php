@@ -4,6 +4,8 @@ namespace App\Http\Resources;
 
 use App\demende;
 use App\commande;
+use App\User;
+use App\Produit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +29,7 @@ class Notification
             $accepteeDemandes= demende::accepteeDemandes()->get();
 
             $Comnotifications= commande::Attentecommandes()->get();
-            $Demnotifications=demende::Demandesnotifications()->get();
+            $Demnotifications=demende::Demandesnotifications()->get(); 
             
             $notification = 0;
             $user = Auth::user();
@@ -58,6 +60,7 @@ class Notification
             foreach($Demnotifications as $item){
                 $notification   += 1;
             }
+
             $NCD['Demnotifications']=$Demnotifications;
             $NCD['Comnotifications']=$Comnotifications;
             $NCD['notification']=$notification;
@@ -71,6 +74,10 @@ class Notification
             $NCD['TDEA']=$TDEA;
             $NCD['TCEA']=$TCEA;
 
+            $produitnotification=Produit::all();
+            $usernotification=User::all();
+            $NCD['produitnotification']=$produitnotification;
+            $NCD['usernotification']=$usernotification;
             return $NCD;
         }
     }

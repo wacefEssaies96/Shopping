@@ -53,7 +53,8 @@ Route::group(['middleware' => ['auth','admin']],function(){
             'except' => ['index']
         ]
     );
-    Route::get('/admin/Produit/OurProdacts', 'ProduitController@OurProdacts')->name('OurProdacts');
+
+    Route::get('/admin/Produit/OurProducts', 'ProduitController@OurProducts')->name('OurProducts');
     Route::get('admin/Produit/AllProduits', 'ProduitController@AllProd')->name('AllProd');
     Route::get('admin/Produit/ConsulterDetailleProduit/{prodid}/{userid}', 'ProduitController@ConsulterDetailleProduit')->name('ConsulterDetailleProduit');
 
@@ -86,7 +87,7 @@ Route::group(['middleware' => ['auth','client']],function(){
     /// Produit
     Route::resource('/Produit', 'ProduitController'
     , [
-        'except' => ['ConsulterDetailleProduit','AllProd','OurProdacts']
+        'except' => ['ConsulterDetailleProduit','AllProd','OurProducts']
     ]
 );
     
@@ -112,7 +113,7 @@ Route::middleware('auth')->group(function () {
     /// Produit page
     Route::resource('/Produit', 'ProduitController'
         , [
-            'except' => ['ConsulterDetailleProduit','AllProd','OurProdacts','index']
+            'except' => ['ConsulterDetailleProduit','AllProd','OurProducts','index']
         ]
     );
     

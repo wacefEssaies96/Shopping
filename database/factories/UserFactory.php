@@ -25,7 +25,7 @@ $factory->define(User::class, function (Faker $faker) {
         'role' => 'client',
         'adresse' => $faker->streetAddress(),
         'phone' => $faker->phoneNumber,
-        'image'=>'uploads/esm.jpg',
+        'image'=>'uploads/sem.jpg',
         'etat' => 1,
         'remember_token' => Str::random(10),
         'created_at' => now(),

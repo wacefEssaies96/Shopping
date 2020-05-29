@@ -22,7 +22,7 @@
                         <th>ProdID</th>
                         <th>Name</th>
                         <th>Price</th>
-                        <th>quantity</th>
+                        <th>Quantity</th>
                     </thead>
                     <tbody>
                         <tr>
@@ -35,7 +35,7 @@
                 </table>
                 <table class="table text-center">
                     <thead class=" text-primary">
-                        <th>categorie</th>
+                        <th>Categorie</th>
                         <th>Description </th>
                     </thead>
                     <tbody>
@@ -46,9 +46,9 @@
                 </table>
                 <table class="table text-center">
                     <thead class=" text-primary">
-                        <th>created at</th>
-                        <th>updated at</th>
-                        <th>date d envoi</th>
+                        <th>Created at</th>
+                        <th>Updated at</th>
+                        <th>Date Demand</th>
                     </thead>
                     <tbody>
                         <tr>
@@ -70,18 +70,19 @@
                     <div class="single_product_thumb">
                         <div id="product_details_slider" class="carousel slide" data-ride="carousel" >
                         
+                        @if($total != 0)
                             <ol class="carousel-indicators scoller"  >
-                                @if($total != 0)
-                                    * {{$counter = 1}} *
-                                    <li class="active" data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
+                                * {{$counter = 1}} *
+                                <li class="active" data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
+                                </li>
+                                @foreach ($ImageProduit as $imgprod)  
+                                    *{{$counter+=1}}*
+                                    <li data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$imgprod['image']) }});">
                                     </li>
-                                    @foreach ($ImageProduit as $imgprod)  
-                                        *{{$counter+=1}}*
-                                        <li data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$imgprod['image']) }});">
-                                        </li>
-                                    @endforeach  
-                                @endif
+                                @endforeach  
                             </ol>
+                        @endif
+
                             <div class="carousel-inner" >
                                 <div class="carousel-item active" >
                                     <a class="gallery_img" href="{{ asset('storage/'.$Produit['photo']) }}">
@@ -135,7 +136,7 @@
                 </table>
                 <table class="table text-center">
                     <thead class=" text-primary">
-                        <th>Adress</th>
+                        <th>Adresse</th>
                         <th>Phone</th>
                         <th>Account</th>
                     </thead>

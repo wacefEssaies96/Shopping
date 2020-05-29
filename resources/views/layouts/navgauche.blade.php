@@ -26,7 +26,7 @@
             <!-- <li >
                 <a id="home" href="{{ url('/') }}">Home</a>
             </li> -->
-            @admin
+            @admin 
                 <li>
                     <a id="home_admin" href="/admin/indexadmin" >Home Admin</a>
                 </li>

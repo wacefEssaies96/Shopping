@@ -73,7 +73,6 @@
             </a>
           </li>
           
-          
           <li class="{{'admin/user' == request()->path() ? 'active' : '' }}">
             <a href="/admin/user">
               <i class="now-ui-icons users_single-02"></i>

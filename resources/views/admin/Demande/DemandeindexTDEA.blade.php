@@ -9,7 +9,7 @@
 
 <div class="row">
   <div class="col-md-12">
-    <div class="card">
+    <div class="card"> 
 
       @if (session('AccepterDemande'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">

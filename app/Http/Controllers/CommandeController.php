@@ -26,7 +26,7 @@ class CommandeController extends Controller
         if(Auth::user()->role == 'admin'){
             $attenteCommandes= commande::attenteCommandes()->get();
             $accepteeCommandes= commande::accepteeCommandes()->get();
-        }
+        } 
         else{
             $attenteCommandes = Auth::user()->commandes()->attenteCommandes()->get();
             $accepteeCommandes= Auth::user()->commandes()->accepteeCommandes()->get();

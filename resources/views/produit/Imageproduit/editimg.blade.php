@@ -16,7 +16,7 @@
                     <form action="{{ route('ImageProduit.update', $imgprod->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
-                        
+                         
                         <input type="hidden"  name="prodid" value="{{$prodid}}">
                         <div class="row ">
                             <div class="col-6 mb-3">

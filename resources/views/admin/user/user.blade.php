@@ -1,5 +1,5 @@
 @extends('layouts.auth')
-
+ 
 @section('title')
   Admin
 @endsection

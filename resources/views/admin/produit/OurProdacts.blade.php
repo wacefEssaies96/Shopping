@@ -35,7 +35,7 @@
                 @if($total == 0)
                     <h3 class="text-warning"> The admistration did not add any product ! </h3>
                 @else
-            
+             
         <div class="table-responsive">
           <table class="table text-center">
             <thead class=" text-primary">

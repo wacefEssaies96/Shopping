@@ -5,5 +5,5 @@
         <span>Copyright &copy; Your Website 2019</span>
         </div>
     </div>
-</footer>
+</footer> 
 <!-- End of Footer -->

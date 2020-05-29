@@ -6,6 +6,12 @@
 
 @section('content')
 
+<div class="card-header">
+  <h3 class="card-title">All Demands ( {{$NCD['TDEA']+$NCD['TDAC']}} )</h3>
+</div>
+@if($NCD['TDEA']+$NCD['TDAC']==0)
+  <h3 class="text-warning">There are no Demands </h3>
+@else
 <div class="row">
   <div class="col-md-12">
     <div class="card">
@@ -135,7 +141,7 @@
     </div>
   </div>
 </div>
-
+@endif
 <script>
 
     function d(id){

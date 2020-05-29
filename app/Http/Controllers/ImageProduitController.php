@@ -37,6 +37,7 @@ class ImageProduitController extends Controller
         }else{
             return redirect()->route('home');
         }
+        
     }
     
     /**
