@@ -35,7 +35,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                                     @endadmin
                                     @client
                                         <li class="nav-item">
-                                            <a href="{{ route('Produit.index') }}" class="nav-link" >Mes Produits</a>
+                                            <a href="{{ route('Produit.index') }}" class="nav-link" >My products</a>
                                         </li>
                                         <li class="nav-item" > <a href="{{route('panier.index')}}" class="nav-link">Cart</a></li>
                                         <li class="nav-item"><a href="#" class="nav-link">Checkout</a></li>
