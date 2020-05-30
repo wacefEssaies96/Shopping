@@ -3,7 +3,7 @@
 <input type="hidden" value=" {{$conND+=1}}"> 
 @endforeach
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow ">
 
           <!-- Sidebar Toggle (Topbar) -->
           <!-- <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -23,7 +23,7 @@
           </form> -->
 
           <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
+          <ul class="navbar-nav ml-auto float-right">
 
             <!-- Nav Item - Search Dropdown (Visible Only XS) -->
             <!-- <li class="nav-item dropdown no-arrow d-sm-none">
@@ -46,60 +46,61 @@
             </li> -->
 
             <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
+            <li class="nav-item dropdown no-arrow mx-1 ">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
                 <span class="badge badge-danger badge-counter">{{$NCD['notification']}}</span>
               </a>
               <!-- Dropdown - Alerts -->
-              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown"  style="height:200px; overflow-y:scroll" wirdth="20px">
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"  aria-labelledby="alertsDropdown"  style="height:300px; overflow-y:scroll" wirdth="20px">
                 
               
-                <h6 class="dropdown-header">
+                <h6 class="dropdown-header  text-center">
                   Demands ( {{$conND}} )
                 </h6>
                 @if($conND==0)
-                  <h6 class="text-warning">There are no demands </h6>
+                  <h6 class="text-warning  text-center">There are no demands </h6>
                 @else
                 @foreach ($NCD['Demnotifications'] as $ND)
                 <a class="dropdown-item d-flex align-items-center" href="{{ route('ConsulterDetailleProduit',['prodid' =>  $ND->id_prod,'userid' => $ND->id_user ]) }}">
                   
-                  <div class="mr-3">
+                  <div class="col-3">
                     @foreach ($NCD['usernotification'] as $NU)
                       @if($ND->id_user==$NU->id)
                         <img  class="img-profile icon-circle" src="{{asset('storage/'.$NU->image)}}"  onerror="this.style.display='none'">
-                      @endif
-                    @endforeach
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">{{date('d-m-Y h:i', strtotime($ND->created_at))}}</div>
-                    <span class="font-weight-bold"> 
-                    @foreach ($NCD['usernotification'] as $NU)
-                      @if($ND->id_user==$NU->id)
+                      
                         "{{$NU->name}}"
                       @endif
                     @endforeach
+                  </div>
+                  <div class="col-6">
+                    <div class="small text-gray-500">{{date('d-m-Y h:i', strtotime($ND->created_at))}}</div>
+                    <span class="font-weight-bold"> 
+                    
                     want to add his product 
+                    </span>
+                  </div>
+                  <div class="col-4">
                     @foreach ($NCD['produitnotification'] as $NP)
                       @if($ND->id_prod==$NP->id)
-                        "{{$NP->name}}"
-                        <img  class="img-profile icon-circle" src="{{asset('storage/'.$NP->image)}}"  onerror="this.style.display='none'">
+                          <img  class="img-profile icon-circle" src="{{asset('storage/'.$NP->photo)}}" alt="ID PROD : {{$NP->id}}"  onerror="this.style.display='none'">
+                     
+                          "{{$NP->name}}"
                       @endif
                     @endforeach
-                    </span>
                   </div>
                 </a>
                 @endforeach 
                 @endif 
-                <h6 class="dropdown-header">
-                  Order ( {{$NCD['TCEA']}} )
+                <h6 class="dropdown-header  text-center">
+                  Orders ( {{$NCD['TCEA']}} )
                 </h6>
                 @if($NCD['TCEA']==0)
-                  <h6 class="text-warning">There are no orders </h6>
+                  <h6 class="text-warning  text-center">There are no orders </h6>
                 @else
                 @foreach ($NCD['Comnotifications'] as $NC)
-                <a class="dropdown-item d-flex align-items-center" href="#">
+                <a class="dropdown-item d-flex align-items-center"  href="{{ route('ConsulterDetailleOrder',['prodid' =>  $NC->prod_id,'userid' => $NC->user_id ]) }}" >
                   <div class="mr-3">
                     @foreach ($NCD['usernotification'] as $NU)
                       @if($NC->user_id==$NU->id)

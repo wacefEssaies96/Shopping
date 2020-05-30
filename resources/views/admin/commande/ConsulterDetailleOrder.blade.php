@@ -1,14 +1,14 @@
 @extends('layouts.auth')
 
 @section('title')
-   Detaille de demande
+   Detaille de commande
 @endsection
 
 @section('content')
 
 
 <div class="card-header">
-  <h3 class="card-title">Demand Informations (User ID : {{ $user->id }} *** Prod ID : {{ $Produit->id }})</h3>
+  <h3 class="card-title">Order Informations (User ID : {{ $user->id }} *** Prod ID : {{ $Produit->id }})</h3>
 </div>
 <div class="row text-center">
   <div class="col-md-12">

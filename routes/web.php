@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth','admin']],function(){
 
     /// COMMANDE
     Route::resource('/admin/commandes', 'CommandeController'); 
+    Route::get('admin/commande/ConsulterDetailleOrder/{prodid}/{userid}', 'CommandeController@ConsulterDetailleOrder')->name('ConsulterDetailleOrder');
     /// User active 
     Route::get('/admin/user','Admin\UserController@usered')->name('admin.user');
     Route::get('/user-edit/{id}','Admin\UserController@useredit');

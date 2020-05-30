@@ -259,7 +259,7 @@ class ProduitController extends Controller
         $produits = Produit::paginate(6);
         return view('admin/produit/Produitindex', ['produits' => $produits]);
     }
-    public function OurProdacts()
+    public function OurProducts()
     {
         
         $user = Auth::user();
@@ -274,7 +274,7 @@ class ProduitController extends Controller
         }
 
 
-        return view('/admin/Produit/OurProdacts', [
+        return view('/admin/Produit/OurProducts', [
             'produits' => $produits,
             'NCD' => $NCD,
             'total' => $total,

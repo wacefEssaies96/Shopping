@@ -22,13 +22,15 @@
                   <div class="col-12 col-lg-7">
                       <div class="single_product_thumb">
                           <div id="product_details_slider" class="carousel slide" data-ride="carousel">
+                            
+                         
                             @if($total != 0)
                                 <ol class="carousel-indicators">
-                                    {{$counter = 0}} 
+                                    {{$counter = 0}}
                                     <li class="active" data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
                                     </li>
-                                    @foreach ($ImageProduit as $imgprod)       
-                                        {{$counter++}}
+                                    @foreach ($ImageProduit as $imgprod)    
+                                        {{$counter+=1}}
                                         <li data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$imgprod['image']) }});">
                                         </li>
                                     @endforeach

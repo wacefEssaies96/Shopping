@@ -34,7 +34,7 @@
                           <div id="product_details_slider" class="carousel slide" data-ride="carousel">
                             @if($total != 0)       
                                 <ol class="carousel-indicators">
-                                    {{$counter = 1}} 
+                                    {{$counter = 0}} 
                                     <li class="active" data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
                                     </li>
                                     @foreach ($ImageProduit as $imgprod)       

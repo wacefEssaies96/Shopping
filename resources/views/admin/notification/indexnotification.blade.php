@@ -68,6 +68,9 @@
           <h4 class="card-title">Pending Orders ( {{$NCD['TCEA']}} )</h4>
         </div>
         <div class="card-body">
+          @if($NCD['TCEA']==0)
+            <h3 class="text-warning">There are no Orders </h3>
+          @else
           <div class="table-responsive">
           <?php $counter = 1?>
             <table class="table text-center">
@@ -90,19 +93,21 @@
                   <td>{{$commande->livraison==1?"Livré":"Non livré"}}</td>
                   <td>{{date('d-m-Y h:i', strtotime($commande->created_at))}}</td>
                   <td>
-                      <a href="#" class="btn btn-primary">
-                      <!-- {{ route('ConsulterDetailleProduit',['prodid' =>  $demande->id_prod,'userid' => $demande->id_user ]) }} -->
-                      Show
+                      <a href="{{ route('ConsulterDetailleOrder',['prodid' =>  $commande->prod_id,'userid' => $commande->user_id ]) }}" class="btn btn-primary">
+                      
+                        Show
                       </a>
                   </td>
                 </tr>
               @endforeach
               </tbody>
             </table>
+            @endif
           </div>
         </div>
       </div>
     </div>
+    <br>
   </div>
 @endif              
 @endsection

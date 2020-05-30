@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use App\Panier;
 use App\Paiement;
-
+use App\ImageProduit;
+use App\User;
 use App\Produit;
 use App\commande;
 use Illuminate\Http\Request;
@@ -161,5 +162,41 @@ class CommandeController extends Controller
         $commande->save();
         return redirect('/admin/commandes')->with('message' , 'Commande approuvée avec succès !')
                                            ->with('alertType', 'success');
+    }
+
+    
+    //Admin
+    public function ConsulterDetailleOrder($prodid,$userid) 
+    {
+        $ImageProduit = ImageProduit::where('prod_id', $prodid)->get();
+        $total = 0;
+        foreach($ImageProduit as $item){
+            $total += 1;
+        }
+
+        $user = Auth::user();
+        $Produit = Produit::findOrFail($prodid);
+        $produser = User::findOrFail($Produit->user_id);
+
+        $Notification= new Notification;
+        $NCD = $Notification->notification();
+
+        if($user->role== 'admin'){
+            if($Produit->user_id == $userid){
+                return view('admin.commande.ConsulterDetailleOrder',[
+                    'Produit' => Produit::findOrFail($prodid),
+                    'user' =>  User::findOrFail($userid) ,
+                    'NCD'=>$NCD,
+                    'total'=> $total ,
+                    'ImageProduit' => $ImageProduit,
+                    'produser' => $produser
+                ]);
+            }else{
+                return redirect()->route('indexadmin');
+            }
+        }else{
+            return redirect()->route('home');
+        }
+
     }
 }
