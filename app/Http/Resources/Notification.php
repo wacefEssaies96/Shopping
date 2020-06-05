@@ -73,6 +73,7 @@ class Notification
             $NCD['TCAC']=$TCAC;
             $NCD['TDEA']=$TDEA;
             $NCD['TCEA']=$TCEA;
+            $NCD['user']=$user;
 
             $produitnotification=Produit::all();
             $usernotification=User::all();

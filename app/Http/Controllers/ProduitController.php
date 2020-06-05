@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 
+
 class ProduitController extends Controller
 {
     
@@ -39,7 +40,7 @@ class ProduitController extends Controller
             $total += 1;
         }
         if(Auth::user()->role=="admin"){
-            return redirect()->route('OurProdacts');
+            return redirect()->route('OurProducts');
         }else{
             return view('Produit/indexprod', ['produits' => $produits,'total'=> $total]);
         }
@@ -75,7 +76,7 @@ class ProduitController extends Controller
         
 
         if(Auth::user()->role=="admin"){
-            return redirect()->route('OurProdacts')->with('AddProduit', 'Product successfully add');
+            return redirect()->route('OurProducts')->with('AddProduit', 'Product successfully add');
         }else{
             return redirect()->route('Produit.index')->with('AddProduit', 'Product successfully add');
         }
@@ -225,7 +226,7 @@ class ProduitController extends Controller
         $produit->delete();
 
         if(Auth::user()->role=="admin"){
-            return redirect()->route('OurProdacts')->with('deleteProduit', 'Product successfully deleted');
+            return redirect()->route('OurProducts')->with('deleteProduit', 'Product successfully deleted');
         }else{
         
             return redirect()->route('Produit.index')->with('deleteProduit', 'Product successfully deleted');
@@ -254,31 +255,92 @@ class ProduitController extends Controller
         ];
     }
     /// Admin
+    public function Prodonsite()
+    {
+        $produits = Produit::paginate(9);
+        $Notification= new Notification;
+        $NCD = $Notification->notification();
+        
+        return view('admin/produit/Prodonsite', [
+            'produits' => $produits,
+            'NCD' => $NCD,
+        ]);
+    }
     public function AllProd()
     {
-        $produits = Produit::paginate(6);
-        return view('admin/produit/Produitindex', ['produits' => $produits]);
+        $produits = Produit::paginate(9);
+        $Notification= new Notification;
+        $NCD = $Notification->notification();
+        
+        return view('admin/produit/Produitindex', [
+            'produits' => $produits,
+            'NCD' => $NCD,
+        ]);
     }
     public function OurProducts()
     {
-        
         $user = Auth::user();
+        $users = User::all();
+        
 
         $Notification= new Notification;
         $NCD = $Notification->notification();
 
-        $produits = Produit::paginate(6);
+        $produits =  Produit::paginate(10);
+        
         $total = 0;
         foreach($produits as $item){
             $total += 1;
         }
 
-
-        return view('/admin/Produit/OurProducts', [
-            'produits' => $produits,
-            'NCD' => $NCD,
-            'total' => $total,
-            'user' =>$user
-        ]);
+        if($user->role=="admin" ){
+            return view('/admin/Produit/OurProducts', [
+                'produits' =>$produits,
+                'NCD' => $NCD,
+                'total' => $total,
+                'user' =>$user,
+                'users' =>$users
+            ]);   
+        }else{
+            return redirect()->route('home');
+        }
     }
+
+    
+    public function confirmProducts($id_prod)
+    {
+        $user = Auth::user();
+        $produit = Produit::findOrFail($id_prod);
+
+        if($user->role=="admin" ){
+            $produit->confirm=1;
+            $produit->DtEvoyerDm = now();
+            $produit->save();
+
+            return redirect()->route('OurProducts')->with('confirmProducts', 'Your Product is on the Site now');
+
+        }else{
+            return redirect()->route('home');
+        }
+    }
+    
+    public function noconfirmProducts($id_prod)
+    {
+        $user = Auth::user();
+        $produit = Produit::findOrFail($id_prod);
+
+        if($user->role=="admin" ){
+            
+            $produit->confirm=0;
+            $produit->DtEvoyerDm = null;
+            $produit->save();
+
+            return redirect()->route('OurProducts')->with('noconfirmProducts', 'You delete Your Product fromthe Site now');
+
+        }else{
+            return redirect()->route('home');
+        }
+    }
+
+
 }

@@ -24,7 +24,13 @@ class UserController extends Controller
     public function useredit(Request $request,$id){
 
         $users = User::findOrFail($id);
-        return view ('admin.user.user-edit')->with('users', $users) ; 
+        $Notification= new Notification;
+        $NCD = $Notification->notification();
+        
+        return view ('admin.user.user-edit',[
+            'users'=> $users,
+            'NCD'=>$NCD,
+        ]); 
     }
     public function userupdate(Request $request,$id){
         $users=User::find($id);
@@ -63,5 +69,25 @@ class UserController extends Controller
         $user->save();
         return redirect('/admin/user')->with('message' , 'Compte activé avec succès !')
                                         ->with('alertType', 'success');
+    }
+
+    ///Usershow
+    public function Usershow($userid) 
+    {
+        $user = Auth::user();
+
+        $Notification= new Notification;
+        $NCD = $Notification->notification();
+
+        if($user->role== 'admin'){
+            
+            return view('admin.user.Usershow',[
+                'user' =>  User::findOrFail($userid) ,
+                'NCD'=>$NCD,
+            ]);
+        }else{
+            return redirect()->route('home');
+        }
+
     }
 }

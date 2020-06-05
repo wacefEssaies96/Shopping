@@ -55,9 +55,9 @@
       <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">Manage Product :</h6>
-          <a class="collapse-item" href="#">Product on the Site</a><!-- /admin/Produit/SiteProduits -->
+          <a class="collapse-item" href="/admin/Produit/Produitsonthesite">Product on the Site</a>
           <a class="collapse-item" href="/admin/Produit/OurProducts">Our Product</a>
-          <a class="collapse-item" href="#">Other Product</a><!-- /admin/Produit/OtherProducts -->
+          <!--<a class="collapse-item" href="#">Other Product</a> /admin/Produit/OtherProducts -->
           <a class="collapse-item" href="/admin/Produit/AllProduits">All Product</a>
         </div>
       </div>

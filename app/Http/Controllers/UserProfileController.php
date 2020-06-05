@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -11,7 +12,13 @@ class UserProfileController extends Controller
 {
     public function index()
     {
-        return view('user-profile-edit',['user' => Auth::user()]);
+
+        $Notification= new Notification;
+        $NCD = $Notification->notification();
+        return view('user-profile-edit',[
+            'user' => Auth::user(),
+            'NCD'=>$NCD,
+        ]);
     }
 
     public function update(Request $request)
@@ -54,16 +61,20 @@ class UserProfileController extends Controller
                             ->with('alertType', 'danger');
             }else{
                 $directory = 'images/users';
-                $name = str_replace('-','', date('d-m-Y-H-i-s-u')) . '.' .$request->file('image')->getClientOriginalExtension();
+                $f=$request->file('image');
+                $ext=$f->extension();
+                $name = str_replace('-','', date('d-m-Y-H-i-s-u')) . '.' .$ext;
                 $request->file('image')->move(public_path($directory), $name);
-                $user->image = $directory . '/' . $name;
+                $user->image = 'users/' . $name;
             }
         }
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->adresse = $request->input('adresse');
         $user->phone = $request->input('phone');
-        $user->password = Hash::make($password1);
+        if(!empty($password1)&& $password1==$password2){
+            $user->password = Hash::make($password1); 
+        }  
 
         $user->update();
         return redirect('/profil')->with('message', 'Profil mis à jour avec succès')

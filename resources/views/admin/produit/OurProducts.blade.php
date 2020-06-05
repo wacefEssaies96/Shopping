@@ -9,8 +9,6 @@
 <div class="row">
   <div class="col-md-12">
     <div class="card">
-        
-      <div class="card-header">
 
         @if (session('AddProduit'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -28,69 +26,94 @@
             </button>
         </div>
         @endif    
-        <a href="{{ route('Produit.create') }}" class="btn  btn-primary  float-right" >Add Product</a>
-            
-        <h1>List of Our Products</h1>
-        <div class="card-body">
-                @if($total == 0)
-                    <h3 class="text-warning"> The admistration did not add any product ! </h3>
-                @else
-             
-        <div class="table-responsive">
-          <table class="table text-center">
-            <thead class=" text-primary">
-                <th>Picture</th>
-                <th>Name</th>
-                <th>Add on the site</th>
-                <th >Pictures</th>
-            </thead>
-            <tbody>
-                @foreach ($produits as $prod)
-
-                    <tr>
-                        <td class="cart_product_img">
-                            <a href="#"><img src="{{asset('storage/'.$prod->photo)}}" alt="{{$prod['name']}}"></a>
-                            
-                        </td>
-                        <td class="cart_product_desc">
-                            <a href="{{ route('ConsulterProduit',['prodid' =>  $prod->id ]) }}" >
-                                <h6>{{$prod->name}}</h6><!-- Consulter -->
-                            </a>
-                        </td>
-                        <td >
-                            @if($prod->confirm)
-                                Eleminate from the site
-                            @else
-                                add on the site
-
-                                <!-- @if($prod->DemandeEnvoyer)
-                                    <a href="#" id="d" onClick="d('{{$prod['id']}}');" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDeleteModal"> Cancel this Request </a>
-                                    
-                                @else
-                                    <form action="{{ route('Demandes.store') }}" method="post">
-                                        @csrf
-                                        
-                                        <input type="hidden" name="prod" value="{{$prod['id']}}"  id="prod" class="form-control" >
-                                            
-                                        <button type="submit" name="submit" class="btn btn-warning"> Add Demands </button>
-                                    </form> 
-                                @endif-->
-                            @endif
-                        </td>
-                        <td>
-                            <a href="{{ route('ImgProduit',['prodid' =>  $prod->id ]) }}" class="btn btn-success">
-                                Manage images
-                            </a>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-          </table>
+        @if (session('noconfirmProducts'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('noconfirmProducts') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-        @endif
+        @endif    
+        @if (session('confirmProducts'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('confirmProducts') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        @endif    
+        <div class="card-header">
+            <h1>List of Our Products</h1>
+            <a href="{{ route('Produit.create') }}" class="btn  btn-primary  float-right" >Add Product</a>
+        </div>
+        <div class="card-body">
+            @if($total == 0)
+                <h3 class="text-warning"> The admistration did not add any product ! </h3>
+            @else
+             
+            <div class="table-responsive">
+                <table class="table text-center">
+                    <thead class=" text-primary">
+                        <th colspan="4">Administrator</th>
+                        <th colspan="4">Product</th>
+                        <th colspan="4">Operation</th>
+                    </thead>
+                    <tbody>
+                            
+                        @foreach ($produits as $prod)
+                            @foreach ($users as $us)
+                                @if( $us->id==$prod->user_id && $us->role=="admin")
+                                    <tr>
+                                        <td colspan="4">
+                                            <a href="{{ route('Usershow',['userid' =>  $us->id ]) }} ">
+                                                <h4>{{$us->name}}</h4>
+                                                <img class="img-profile rounded-circle"   src="{{asset('images/'.$us->image)}}"  onerror="this.style.display='none'">
+                                            </a>
+                                            
+                                        </td>
+
+                                        <td colspan="4">
+                                            <a href="{{ route('ConsulterProduit',['prodid' =>  $prod->id ]) }}" >
+                                                <h4>{{$prod->name}}</h4>
+                                                <img width="100%" src="{{asset('storage/'.$prod->photo)}}" onerror="this.style.display='none'">
+                                            </a>
+                                            
+                                        </td>
+                                        <td  colspan="4">
+                                        
+                                            <br>
+                                            <br>
+                                            <a href="{{ route('ImgProduit',['prodid' =>  $prod->id ]) }}" class="btn btn-success">
+                                                Manage images
+                                            </a>
+                                            <br>
+                                            <hr>
+                                            <br>
+                                            @if($prod->confirm)
+                                                <a href="{{ route('noconfirmProducts',['prodid' =>  $prod->id ]) }}" class="btn btn-danger">
+                                                    Eleminate from 
+                                                    <br>
+                                                    the site
+                                                </a>
+                                            @else
+                                                <a href="{{ route('confirmProducts',['prodid' =>  $prod->id ]) }}" class="btn btn-primary">
+                                                    add on the site
+                                                </a>
+                                            @endif
+                                            <br>
+                                            <br>
+                                        </td>
+                                    </tr>
+                                @endif
+                            @endforeach
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            @endif
         
-        {{ $produits->links()}}
-      </div>
+            {{ $produits->links()}}
+        </div>
     </div>
   </div>
 </div>

@@ -14,6 +14,7 @@
 
             <div class="row">
                 @foreach($produits as $produit)
+                    @if($produit->confirm)
                         <!-- Single Product Area -->
                         <div class="col-12 col-sm-4 col-md-12 col-xl-4" >
                             <div class="single-product-wrapper" >
@@ -47,6 +48,7 @@
                                 </div>
                             </div>
                         </div>
+                    @endif
                 @endforeach
             </div>
             

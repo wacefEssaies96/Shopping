@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('title')
-  Notification
+  Statistique
 @endsection
  
 @section('content')

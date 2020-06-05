@@ -1,33 +1,15 @@
-@extends('layouts.app')
-
+ @extends('layouts.auth')
+ 
 @section('content')
 
-
-    <!-- Search Wrapper Area Start -->
-    <div class="search-wrapper section-padding-100">
-        <div class="search-close">
-            <i class="fa fa-close" aria-hidden="true"></i>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="search-content">
-                        <form action="#" method="get">
-                            <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                            <button type="submit"><img src="{{ asset('img/core-img/search.png') }}" alt=""></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Search Wrapper Area End -->
-
+    @client
+      @include('layouts.nav')
+    @endclient
     <!-- ##### Main Content Wrapper Start ##### -->
     <div class="main-content-wrapper d-flex clearfix">
-
-        @include('layouts.navgauche')
-
+        @client
+            @include('layouts.navgauche')
+        @endclient
         <!-- Product Catagories Area Start -->
 <div class="m-auto" style="max-width:800px;">
   <div class="card">
@@ -63,7 +45,7 @@
             </div>
             <div class="col-md-3">
                 @if ($user->image != null && $user->image !='')
-                <img class="img-fluid" style="max-width:150px;" src="{{$user->image}}" alt="Photo de profil">
+                <img class="img-fluid" style="max-width:150px;" src="{{asset('images/'.$user->image)}}" onerror="this.style.display='none'" >
                 @endif
                 <div class="file btn btn-lg btn-default" style="position:relative; overflow:hidden;font-size:15px;">
                     Changer
@@ -92,6 +74,7 @@
         <!-- Product Catagories Area End -->
     </div>
     <!-- ##### Main Content Wrapper End ##### -->
+    @client
     @include('layouts.footer')   
-
+    @endclient
 @endsection

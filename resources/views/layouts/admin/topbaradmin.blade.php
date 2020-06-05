@@ -63,12 +63,12 @@
                   <h6 class="text-warning  text-center">There are no demands </h6>
                 @else
                 @foreach ($NCD['Demnotifications'] as $ND)
-                <a class="dropdown-item d-flex align-items-center" href="{{ route('ConsulterDetailleProduit',['prodid' =>  $ND->id_prod,'userid' => $ND->id_user ]) }}">
+                <a class="dropdown-item d-flex align-items-center" href="{{ route('ConsulterDetailleDemandes',['prodid' =>  $ND->id_prod,'userid' => $ND->id_user ]) }}">
                   
                   <div class="col-3">
                     @foreach ($NCD['usernotification'] as $NU)
                       @if($ND->id_user==$NU->id)
-                        <img  class="img-profile icon-circle" src="{{asset('storage/'.$NU->image)}}"  onerror="this.style.display='none'">
+                        <img  class="img-profile icon-circle" src="{{asset('images/'.$NU->image)}}"  onerror="this.style.display='none'">
                       
                         "{{$NU->name}}"
                       @endif
@@ -104,7 +104,7 @@
                   <div class="mr-3">
                     @foreach ($NCD['usernotification'] as $NU)
                       @if($NC->user_id==$NU->id)
-                        <img  class="img-profile icon-circle" src="{{asset('storage/'.$NU->image)}}"    onerror="this.style.display='none'">
+                        <img  class="img-profile icon-circle" src="{{asset('images/'.$NU->image)}}"    onerror="this.style.display='none'">
                       @endif
                     @endforeach
                     </div>
@@ -213,15 +213,15 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$user->name}}</span>
-                <img class="img-profile rounded-circle" src="{{asset('storage/'.$user->image)}}"  onerror="this.style.display='none'">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{$NCD['user']->name}}</span>
+                <img class="img-profile rounded-circle" src="{{asset('images/'.$NCD['user']->image)}}"  onerror="this.style.display='none'">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <!-- <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="/profil">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Profile
-                </a> -->
+                </a>
                 <!-- <a class="dropdown-item" href="#">
                   <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                   Settings

@@ -55,7 +55,7 @@
                   <td>{{$demande->status}}</td>
                   <td>{{date('d-m-Y h:i', strtotime($demande->created_at))}}</td>
                   <td>
-                      <a href="{{ route('ConsulterDetailleProduit',['prodid' =>  $demande->id_prod,'userid' => $demande->id_user ]) }}" class="btn btn-primary">
+                      <a href="{{ route('ConsulterDetailleDemandes',['prodid' =>  $demande->id_prod,'userid' => $demande->id_user ]) }}" class="btn btn-primary">
                         Show
                       </a>
                   </td>

@@ -56,14 +56,19 @@ Route::group(['middleware' => ['auth','admin']],function(){
     );
 
     Route::get('/admin/Produit/OurProducts', 'ProduitController@OurProducts')->name('OurProducts');
+    Route::get('admin/Produit/Produitsonthesite', 'ProduitController@Prodonsite')->name('Prodonsite');
     Route::get('admin/Produit/AllProduits', 'ProduitController@AllProd')->name('AllProd');
     Route::get('admin/Produit/ConsulterDetailleProduit/{prodid}/{userid}', 'ProduitController@ConsulterDetailleProduit')->name('ConsulterDetailleProduit');
+
+    Route::get('admin/Produit/ConfirmProducts/{prodid}', 'ProduitController@confirmProducts')->name('confirmProducts');
+    Route::get('admin/Produit/NoConfirmProducts/{prodid}', 'ProduitController@noconfirmProducts')->name('noconfirmProducts');
 
     /// Demande
     
     Route::get('admin/Demandes','DemendeController@index')->name('indexadmin');
     Route::get('admin/DemandesTDAC','DemendeController@indexTDAC')->name('indexadminTDAC');
     Route::get('admin/DemandesTDEA','DemendeController@indexTDEA')->name('indexadminTDEA');
+    Route::get('admin/Demandes/ConsulterDetailleDemandes/{prodid}/{userid}', 'DemendeController@ConsulterDetailleDemandes')->name('ConsulterDetailleDemandes');
 
     Route::get('/admin/Demandes/AccepterDemande/{id}/{prodid}/{userid}', 'DemendeController@AccepterDemande')->name('AccepterDemande');
     Route::get('/admin/Demandes/AnnulerDemande/{id}/{prodid}/{userid}', 'DemendeController@AnnulerDemande')->name('AnnulerDemande');
@@ -75,7 +80,8 @@ Route::group(['middleware' => ['auth','admin']],function(){
         //     'except' => ['edit', 'create']
         // ]
     );
-    
+    /// user show
+    Route::get('admin/Usershow/{userid}', 'Admin\UserController@Usershow')->name('Usershow');
     ///notification
     Route::get('indexnotification','Admin\DashboardController@indexnotification')->name('indexnotification');
 });

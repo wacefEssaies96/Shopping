@@ -1,14 +1,14 @@
 @extends('layouts.auth')
 
 @section('title')
-   Detaille de demande
+   Detaille de produit
 @endsection
 
 @section('content')
 
 
 <div class="card-header">
-  <h3 class="card-title">Demand Informations (User ID : {{ $user->id }} *** Prod ID : {{ $Produit->id }})</h3>
+  <h3 class="card-title">Product Informations (User ID : {{ $user->id }} *** Prod ID : {{ $Produit->id }})</h3>
 </div>
 <div class="row text-center">
   <div class="col-md-12">
@@ -115,7 +115,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">User Informations <img class="img-profile rounded-circle " src="{{asset('storage/'.$user->image)}}" alt="{{ asset('login_register/logi.png') }}"></h4>
+        <h4 class="card-title">User Informations <img class="img-profile rounded-circle " src="{{asset('images/'.$user->image)}}" onerror="this.style.display='none'" ></h4>
       </div>
       <div class="card-body" >
         <div class="table-responsive"> 

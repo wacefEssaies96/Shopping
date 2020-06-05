@@ -84,10 +84,14 @@
                         <form class="cart clearfix" method="post">
                             @admin
                                 @if($produser->role=='admin')
-                                    <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a>
-                                    <a href="#"  class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
+                                    @if($Produit->confirm)
+                                      Your Product on the site You cannot modify or delete it
+                                    @else
+                                        <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a>
+                                        <a href="#"  class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
+                                    @endif 
                                 @else
-                                    C'est produit d'un client
+                                Client's Product (Client ID = {{$Produit->user_id}})  
                                 @endif
                             @endadmin
                             @client

@@ -17,7 +17,8 @@
 
   <!-- Custom styles for this template-->
   <link href="{{ asset('tpauthad/css/sb-admin-2.min.css') }}" rel="stylesheet"> 
-    <link rel="stylesheet" href="{{ asset('css/core-style.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/core-style.css') }}">
+	<link href="{{asset('css/rating.css')}}" rel="stylesheet" type="text/css">
 </head>
 @auth
 
@@ -26,15 +27,18 @@
   <!-- Page Wrapper -->
   <div id="wrapper">
   
-    @include('layouts.admin.sidebaradmin')
+    @admin
+      @include('layouts.admin.sidebaradmin')
+    @endadmin
      
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
 
       <!-- Main Content -->
       <div id="content">
+        @admin
           @include('layouts.admin.topbaradmin')
-        
+        @endadmin
           @yield('content')
       </div>
        <!-- End Content  -->
@@ -77,6 +81,7 @@
   <!-- Page level custom scripts -->
   <!-- <script src="{{ asset('tpauthad/js/demo/chart-area-demo.js') }}"></script>
   <script src="{{ asset('tpauthad/js/demo/chart-pie-demo.js') }}"></script> -->
+  <script src="{{asset('js/rating.js')}}" type="text/javascript"></script>
   
 </body>
 

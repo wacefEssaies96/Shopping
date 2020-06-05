@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Produit;
+use App\ImageProduit;
+use App\User;
 use App\demende;
 use App\Http\Resources\Notification;
 use Illuminate\Http\Request;
@@ -122,6 +124,39 @@ class DemendeController extends Controller
         //
     }
 
+    public function ConsulterDetailleDemandes($prodid,$userid) 
+    {
+        $ImageProduit = ImageProduit::where('prod_id', $prodid)->get();
+        $total = 0;
+        foreach($ImageProduit as $item){
+            $total += 1;
+        }
+
+        $user = Auth::user();
+        $Produit = Produit::findOrFail($prodid);
+        $produser = User::findOrFail($Produit->user_id);
+
+        $Notification= new Notification;
+        $NCD = $Notification->notification();
+
+        if($user->role== 'admin'){
+            if($Produit->user_id == $userid){
+                return view('admin.Demande.ConsulterDetailleDemandes',[
+                    'Produit' => Produit::findOrFail($prodid),
+                    'user' =>  User::findOrFail($userid) ,
+                    'NCD'=>$NCD,
+                    'total'=> $total ,
+                    'ImageProduit' => $ImageProduit,
+                    'produser' => $produser
+                ]);
+            }else{
+                return redirect()->route('indexadmin');
+            }
+        }else{
+            return redirect()->route('home');
+        }
+
+    }
     /**
      * Show the form for editing the specified resource.
      *
