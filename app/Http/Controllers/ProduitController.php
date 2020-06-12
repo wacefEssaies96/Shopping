@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Produit;
-use App\ImageProduit;
 use App\User;
 use App\Rating;
-use App\Http\Resources\Notification;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Comment;
+use App\Produit;
+use App\ImageProduit;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use App\Http\Resources\Notification;
+use Illuminate\Support\Facades\Auth;
 
 class ProduitController extends Controller
 {
@@ -109,8 +110,23 @@ class ProduitController extends Controller
             $arrRating = 0;
         }
         $Produit->offsetSet('rating', $arrRating); 
+
         if($Produit->confirm){
-            return view('Produit.showprod',['Produit' => $Produit,'ImageProduit' => $ImageProduit, 'user' => Auth::id(),'total'=> $total ]);
+            $comment = Comment::where('user_id', Auth::id())
+                            ->where('prod_id', $Produit->id)
+                            ->first();
+            //gettings all comments
+            $comments = Comment::where('prod_id', $Produit->id)
+                                ->join('users', 'users.id', '=', 'comments.user_id')
+                                ->get(['comments.*', 'users.image', 'users.name']);
+            return view('Produit.showprod',
+                        ['Produit' => $Produit,
+                         'ImageProduit' => $ImageProduit, 
+                         'user' => Auth::id(),
+                         'total'=> $total,
+                         'canComment' => ($comment == null),
+                         'comments' => $comments
+                        ]);
         }else{
             return redirect()->route('home');
         }

@@ -144,3 +144,8 @@ Route::get('/commande/approve/{id}', 'CommandeController@approve')->name('comman
 Route::get('/admin/user/disable/{id}', 'Admin\UserController@disable')->name('admin.user.disable');
 Route::get('/admin/user/enable/{id}', 'Admin\UserController@enable')->name('admin.user.enable');
 
+//Comment routes
+Route::post('/comment/create', 'CommentController@create')->name('front.comment.create');
+Route::put('/comment/update/{id}', 'CommentController@update')->name('front.comment.update');
+Route::get('/comment/delete/{id}', 'CommentController@delete')->name('front.comment.delete');
+
