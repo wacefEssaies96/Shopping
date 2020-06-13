@@ -21,7 +21,7 @@ class UserProfileController extends Controller
                         ->where('email', '!=', $user->email)
                         ->get();
         if($test != null && $test->count()>0){
-            return redirect('/profil')->with('message', 'Cette adresse email existe déjà')
+            return redirect('/profil')->with('message', 'This email address already exists')
             ->with('alertType', 'danger');
         }
         
@@ -29,28 +29,28 @@ class UserProfileController extends Controller
                         ->where('phone', '!=', $user->phone)
                         ->get();
         if($test != null && $test->count()>0){
-            return redirect('/profil')->with('message', 'Cette adresse email existe déjà')
+            return redirect('/profil')->with('message', 'This email address already exists')
             ->with('alertType', 'danger');
         }
         $password1 = $request->input('password1');
         $password2 = $request->input('password2');
         if(!empty($password1)){
             if(empty($password2)){
-                return redirect('/profil')->with('message', 'Veuillez retaper le mot de passe')
+                return redirect('/profil')->with('message', 'Please retype the password')
                         ->with('alertType', 'danger');
             }
             if($password1 != $password2){
-                return redirect('/profil')->with('message', 'Mots de passe différents !')
+                return redirect('/profil')->with('message', 'Different passwords !')
                         ->with('alertType', 'danger');
             }
             if(strlen($password1) < 8){
-                return redirect('/profil')->with('message', 'Mot de passe trop court. Min. 8 caractères')
+                return redirect('/profil')->with('message', 'Password too short. Min. 8 characters')
                         ->with('alertType', 'danger');
             }
         }
         if($request->hasFile('image')){
             if(!$request->file('image')->isValid()){
-                return redirect('/profil')->with('message', "Veuillez selectionner la bonne extension d'\image")
+                return redirect('/profil')->with('message', "Please select the correct image extension")
                             ->with('alertType', 'danger');
             }else{
                 $directory = 'images/users';
@@ -66,7 +66,7 @@ class UserProfileController extends Controller
         $user->password = Hash::make($password1);
 
         $user->update();
-        return redirect('/profil')->with('message', 'Profil mis à jour avec succès')
+        return redirect('/profil')->with('message', 'Profile successfully updated')
                                     ->with('alertType', 'success');
     }
 
@@ -76,7 +76,7 @@ class UserProfileController extends Controller
         $user->etat = 0;
         $user->update();
         Auth::logout();
-        return redirect('/')->with('message', 'Votre compte a été désactivé, contactez l\'administrateur pour le réactiver !')
+        return redirect('/')->with('message', 'Your account has been deactivated, contact the administrator to reactivate it!')
         ->with('alertType', 'success');
     }
 }
