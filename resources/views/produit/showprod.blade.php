@@ -102,8 +102,8 @@
                                 </div>
                             </div> -->
                             @if($Produit->user_id == $user )
-                                C'est Votre Produit 
-                                <br> Vous ne pouvez ni le modifier ni le supprimer
+                                It's your product 
+                                <br> You can't modify or delete it !
                                 
                             @else
                             
