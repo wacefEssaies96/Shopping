@@ -60,7 +60,7 @@
                 <div class="col-12 col-lg-5">
                     <div class="single_product_desc">
                         <!-- Product Meta Data -->
-                        <div class="product-meta-data">
+                        <div class="product-meta-data" id="review-container">
                             <div class="line"></div>
                             <p class="product-price">{{ $Produit->price }} DT</p>
                             <a href="#"><!--product-details.html-->
@@ -82,6 +82,11 @@
                             
                             <!-- Avaiable -->
                             <p class="avaibility"><i class="fa fa-circle"></i> In Stock</p>
+                            @if($canComment)
+                                <div class="review">
+                                    <a href="#" id="write-review">Write A Review</a>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="short_overview my-5">
@@ -99,8 +104,8 @@
                                 </div>
                             </div> -->
                             @if($Produit->user_id == $user )
-                                C'est Votre Produit 
-                                <br> Vous ne pouvez ni le modifier ni le supprimer
+                                It's your product 
+                                <br> You can't modify or delete it !
                                 
                             @else
                             
@@ -128,6 +133,28 @@
                 </div>
             </div>
         </div>
+        <!--commentaires-->
+        <div class="col-md-10 mt-5" id="comments-area">
+            <h4>Comments</h4>
+        @foreach($comments as $comment)
+            <div class="row mb-3">
+                <div class="col-2">
+                    <img style="width:100px; height:100px;" src="{{(starts_with($comment->image, 'images') ? '/':'') . $comment->image}}" alt="">
+                </div>
+                <div class="col-10">
+                    <p>{{$comment->comment}}</p>
+                    <i class="d-block mt-3">By {{$comment->name}} le {{$comment->created_at}}</p>
+                @if($comment->user_id == Auth::user()->id)
+                <p>
+                    <a href="/edit/{{$comment->id}}" class="edit1">edit</a>
+                    <a href="/comment/delete/{{$comment->id}}" class="delete">delete</a>
+                </p>
+                @endif
+                </div>
+            </div>
+        @endforeach
+        </div>
+        <input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}">
     </div>
     <!-- Product Details Area End -->
 </div>
@@ -144,4 +171,107 @@ function r(value,prodId){
 </script>
 
     @include('layouts.footer')   
+@endsection
+
+@section ('extra-js')
+<script>
+//Edit comment
+function edit(){
+    let edits = $('.edit1');
+    if( edits.length > 0){
+        edits.each(function (index){
+            $(this).on('click', function (e){
+                e.preventDefault();
+                console.log('clicked')
+                let parent = $(this).parent();
+                let oldComment = parent.parent().children().first().text();
+                let htmlForm = `
+                <form id="commentForm" method="post">
+                    <div class="form-group">
+                        <textarea class="form-control" name = "comment" id="comment" row="10">${oldComment}</textarea>
+                        <button class="btn btn-primary mt-1">Update</button>
+                    </div>
+                </form>
+            `;
+                parent.parent().html(htmlForm)
+                $('#commentForm textarea').focus();
+                let commentId = parseInt($(this).attr('href').split('/')[2]);
+                $('#commentForm').on('submit', function(e){
+                    e.preventDefault();
+                    let comment = $("#commentForm textarea").val();
+                    let csrf = $('#csrf-token').val();
+                    $.ajax({
+                        type: "PUT",
+                        url:'/comment/update/' + commentId,
+                        data: {'comment': comment, '_token' : csrf}
+                    })
+                    .done(function (e){
+                        window.location.reload();
+                    })
+                })
+            })
+        })
+    }
+}
+edit();
+
+let writeReview = $('#write-review');
+if(writeReview.length != 0){
+    writeReview.on('click', function (e){
+        e.preventDefault();
+        //append comment form
+        let htmlForm = `
+            <form id="commentForm" method="post">
+                <div class="form-group">
+                    <label>Comment</label>
+                    <textarea class="form-control" name = "comment" id="comment" row="10"></textarea>
+                    <button class="btn btn-primary mt-1">Comment</button>
+                </div>
+            </form>
+        `;
+        let div = document.createElement('div');
+        div.className= "col-12 mt-5";
+        div.id = "review-div"
+        div.innerHTML = htmlForm;
+        let reviewContainer = $('#review-container');
+        reviewContainer.append(div)
+        
+        //add event listener on comment form submit button
+        let form = $('#commentForm');
+        form.on('submit', function(e){
+            e.preventDefault();
+            
+            let idProd = parseInt(window.location.pathname.split('/')[2]);
+            let comment = $("#commentForm textarea").val();
+            let csrf = $('#csrf-token').val();
+
+            $.ajax({
+                type: "POST",
+                url:'/comment/create',
+                data: {'prod_id': idProd, 'comment': comment, '_token' : csrf}
+            })
+            .done(function (e){
+               $('#review-div').remove();
+               $('#comments-area h4').after(`<div class="row mb-3">
+                <div class="col-2">
+                    <img style="width:100px; height:100px;" src="${e.image}" alt="">
+                </div>
+                <div class="col-10">
+                    <p>${comment}</p>
+                    <i class="d-block mt-3">By ${e.name} le ${e.created_at}</p>
+                    <p>
+                        <a href="/edit/${e.id}" class="edit1">edit</a>
+                        <a href="/comment/delete/${e.id}" class="delete">delete</a>
+                    </p>
+                </div>
+            </div>`);
+            edit();
+            })
+        })
+    //remove element
+    $('.review').remove();
+    })
+}
+
+</script>  
 @endsection

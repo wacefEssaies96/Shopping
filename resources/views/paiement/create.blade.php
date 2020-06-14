@@ -64,7 +64,7 @@
                                         <div class="col-12">
                                             <div class="custom-control custom-checkbox d-block mb-2">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck2">
-                                                <label class="custom-control-label" for="customCheck2">Create an accout</label>
+                                                <label class="custom-control-label" for="customCheck2">Create an account</label>
                                             </div>
                                             <div class="custom-control custom-checkbox d-block">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck3">
