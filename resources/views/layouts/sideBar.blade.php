@@ -8,10 +8,13 @@
     <!--  Catagories  -->
     <div class="catagories-menu">
         <ul>
-            
             <li><a href="#" onClick="updateCategorie('Electroménager');">Electroménager</a></li>
             <li><a href="#" onClick="updateCategorie('Informatique');">Informatique</a></li>
             <li><a href="#" onClick="updateCategorie('Bureautique');">Bureautique</a></li>
+            <li><a href="#" onClick="updateCategorie('Alimentaire');">Alimentaire</a></li>
+            <li><a href="#" onClick="updateCategorie('Vehicule');">Vehicule</a></li>
+            <li><a href="#" onClick="updateCategorie('Maison');">Maison</a></li>
+            <li><a href="#" onClick="updateCategorie('Bricolage');">Bricolage</a></li>
             
         </ul>
     </div>

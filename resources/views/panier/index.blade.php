@@ -6,7 +6,7 @@
     <div class="main-content-wrapper d-flex clearfix">
         @include('layouts.navgauche')
         @if($total == 0)
-            <h3 class="text-warning">Votre panier est vide ! </h3>
+            <h3 class="text-warning">Your cart is empty !</h3>
         @else
             <div class="cart-table-area section-padding-100">
             @if (session('deletePanier'))
@@ -72,17 +72,11 @@
                                                             ">
                                                             <i class="fa fa-plus" aria-hidden="true"></i></span>
                                                         </div>
-                                                        
                                                         <button onClick="d('{{$panier->id}}');" type="button" class="close ml-3" data-dismiss="alert" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button> 
-                                                        
                                                     </div>
-                                                    
                                                 </td>
-                                                
-                                                    
-                                                
                                             </tr>
                                         @endforeach
                                         </tbody>

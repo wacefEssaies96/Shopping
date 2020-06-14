@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title', 'Shop')
 
 @section('content')
 
@@ -38,14 +39,14 @@
                                 @if($categorie)
                                     <p>Categorie : {{$categorie}}</p>
                                 @endif
-                                <div class="view d-flex">
+                                <!-- <div class="view d-flex">
                                     <a href="#"><i class="fa fa-th-large" aria-hidden="true"></i></a>
                                     <a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
-                                </div>
+                                </div> -->
                             </div>
                             <!-- Sorting -->
                             <div class="product-sorting d-flex">
-                                <div class="sort-by-date d-flex align-items-center mr-15">
+                                <!-- <div class="sort-by-date d-flex align-items-center mr-15">
                                     <p>Sort by</p>
                                     <form action="#" method="get">
                                         <select name="select" id="sortBydate">
@@ -54,7 +55,7 @@
                                             <option value="value">Popular</option>
                                         </select>
                                     </form>
-                                </div>
+                                </div> -->
                                 <div class="view-product d-flex align-items-center">
                                     <p>View</p>
                                     <form action="{{route('shop')}}" method="get">
@@ -103,16 +104,25 @@
                                     <!-- Ratings & Cart -->
                                     <div class="ratings-cart text-right">
                                         <div class="ratings">
-                                        
                                         </div>
-                                        <div class="cart">
-                                            <form action="{{route('panier.store')}}" method="post">
-                                                @csrf
-                                                <input type="hidden" name="qtt"  value="1">
-                                                <input type="hidden" name="prod_id"  value="{{$produit->id}}">
-                                                <button class="btn" type="submit" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="{{asset('img/core-img/cart.png')}}" alt=""></button>
-                                            </form>
-                                        </div>
+                                        @foreach($users as $user)
+                                            @if($user->id == $produit->user_id)
+                                                @if($user->role == 'admin' && $produit->quantity > 0 )
+                                                    <div class="cart">
+                                                        <form action="{{route('panier.store')}}" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="qtt"  value="1">
+                                                            <input type="hidden" name="prod_id"  value="{{$produit->id}}">
+                                                            <button class="btn" type="submit" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="{{asset('img/core-img/cart.png')}}" alt=""></button>
+                                                        </form>
+                                                    </div>@endif
+                                                    @if($produit->quantity < 1 )
+                                                        <p class="avaibility"><i class="fa fa-circle" style="color:red;"></i> Out of stock</p>
+                                                    @endif
+                                                
+                                            @endif
+                                        @endforeach
+
                                     </div>
                                 </div>
                             </div>

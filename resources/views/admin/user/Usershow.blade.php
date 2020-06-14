@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('title')
-   Detaille de commande
+   Details of order
 @endsection
 
 @section('content')
@@ -36,7 +36,7 @@
                 </table>
                 <table class="table text-center">
                     <thead class=" text-primary">
-                        <th>Adresse</th>
+                        <th>Address</th>
                         <th>Phone</th>
                         <th>Account</th>
                     </thead>

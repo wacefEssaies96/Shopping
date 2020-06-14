@@ -37,11 +37,9 @@ class HomeController extends Controller
         $user = Auth::user();
 
         if($user->role== 'admin'){
-            return redirect()->route('home.index');
+            return redirect()->route('indexnotification');
         }elseif($user->role == 'client'){
             return redirect()->route('shop');
-        }else{
-            return redirect()->route('indexadmin');
         }
         
     }

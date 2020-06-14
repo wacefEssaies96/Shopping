@@ -2,7 +2,7 @@
 @extends('layouts.auth')
 
 @section('title')
-   All Demands
+   Notification
 @endsection
 
 @section('content')

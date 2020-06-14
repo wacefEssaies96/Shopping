@@ -1,7 +1,7 @@
 
 @extends('layouts.app')
 
-@section('title', ' Produits')
+@section('title', 'My products')
 
 @section('content')
 
@@ -47,7 +47,7 @@
             
             <h1>List of Products</h1>
             @if($total == 0)
-                <h3 class="text-warning"> Your did not add any product ! </h3>
+                <h3 class="text-warning"> You didn't added any product ! </h3>
             @else
                 <div class="row">
                     <div class="col-12 lg-6">
@@ -75,10 +75,10 @@
                                             </td>
                                             <td >
                                                 @if($prod->confirm)
-                                                    Your Product on the site
+                                                    Your Product is on the site
                                                 @else
                                                     @if($prod->DemandeEnvoyer)
-                                                        <a href="#" id="d" onClick="d('{{$prod['id']}}');" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDeleteModal"> Cancel this Request </a>
+                                                        <a href="#" id="d" onClick="d('{{$prod['id']}}');" class="btn btn-outline-danger" data-toggle="modal" data-target="#confirmDeleteModal"> Cancel this demand </a>
                                                         
                                                     @else
                                                         <form action="{{ route('Demandes.store') }}" method="post">
@@ -126,13 +126,13 @@
         </button>
         </div>
         <div class="modal-body">
-        Are you sure to delete your request to add this Product to the site ?
+        Are you sure to delete your demand ?
         </div>
         <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-outline-danger"
             onclick="event.preventDefault();
-            document.querySelector('#delete-Demande-form').submit();">Confirm </button>
+            document.querySelector('#delete-Demande-form').submit();"> Yes </button>
         </div>
         <form id="delete-Demande-form" action="{{ route('deleted') }}" method="POST" style="display: none;">
             @csrf

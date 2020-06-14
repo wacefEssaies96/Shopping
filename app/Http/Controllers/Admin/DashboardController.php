@@ -30,7 +30,7 @@ class DashboardController extends Controller
             
             $Notification= new Notification;
             $NCD = $Notification->notification();
-
+            // dd($NCD);
             return view('admin.notification.indexnotification',[
                 'NCD'=>$NCD,
                 'user'=>$user

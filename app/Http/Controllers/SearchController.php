@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\Produit;
 use App\Rating;
+use App\User;
 
 class SearchController extends Controller{
     
@@ -96,7 +97,8 @@ class SearchController extends Controller{
             'price' => $price,
             'min' => $min,
             'max' => $max,
-            'search' => $search
+            'search' => $search,
+            'users' => User::all()
         ]);
     }
 }

@@ -150,7 +150,7 @@ class DemendeController extends Controller
                     'produser' => $produser
                 ]);
             }else{
-                return redirect()->route('indexadmin');
+                return redirect()->route('indexnotification');
             }
         }else{
             return redirect()->route('home');

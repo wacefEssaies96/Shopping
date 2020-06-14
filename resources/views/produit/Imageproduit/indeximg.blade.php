@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Index image')
 @section('content')
 
     <div class="main-content-wrapper d-flex clearfix">
@@ -43,13 +43,13 @@
             @endif
             @if($Produit->confirm==0)
                 <a href="{{ route('createimgProduit',['prodid' =>  $Produit->id ]) }}" class="btn btn-primary  float-right" role="button" aria-pressed="true">
-                    ADD Image
+                    Add Image
                 </a>
             @else
                 <div class="float-right text-danger" >
                     You can not ADD Image.
                     <br>
-                    Your product on the site.
+                    Your product is on the site.
                 </div>
             @endif
             <hr>
@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col">
                     @if($total == 0)
-                        <h3 class="text-warning"> Your did not add another image to this product ! </h3>
+                        <h3 class="text-warning"> You didn't added another image to this product ! </h3>
                     @else
                     <hr>
                     <div class="row text-center">   <h3>Others Images </h3> </div>
@@ -76,7 +76,9 @@
                                     <div class="product_image">
                                         <img src="{{asset('storage/'.$imgprod->image)}}" style="width:100%;height:100%;" alt="">
                                         <a href="{{ route('ChangeimgPrincipale',['imgid' =>  $imgprod->id,'prodid' =>  $Produit->id ] ) }}" >
-                                            <div class="product_tag">Change</div>
+                                            @if($Produit->confirm==0 )
+                                                <div class="product_tag">Change</div>
+                                            @endif
                                         </a>
                                     </div>
                                     <div class="product_content text-center">
@@ -89,7 +91,7 @@
                                                 <a id="d" onClick="d('{{$imgprod->id}}','{{$Produit->id}}');" class="btn btn-danger" href="#"  >
                                             
                                                 <!-- data-toggle="modal" data-target="#confirmDeleteModal"> -->
-                                                    DELETE
+                                                    Delete
                                                 </a>
                                             </div>
                                             
@@ -122,7 +124,7 @@
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete this Image</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Delete image</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -134,7 +136,7 @@
         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-outline-danger"
             onclick="event.preventDefault();
-            document.querySelector('#delete-Produit-form').submit();">Confirm delete</button>
+            document.querySelector('#delete-Produit-form').submit();">Delete</button>
         </div>
         <form id="delete-Produit-form" action="{{ route('deleteimg') }}" method="POST" style="display: none;">
             @csrf

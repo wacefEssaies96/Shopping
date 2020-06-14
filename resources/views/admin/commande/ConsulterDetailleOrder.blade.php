@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('title')
-   Detaille de commande
+   Details of Order
 @endsection
 
 @section('content')

@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('title')
-  Notification
+  All Prod
 @endsection
  
 @section('content')
@@ -36,7 +36,7 @@
                                 <div class="ratings-cart text-center">
                                     <!-- Ratings -->
                                     <div class="ratings-review mb-15 d-flex align-items-center justify-content-between">
-                                        <input id="input-2" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="{{$produit->rating}}"  data-size="md" disabled >
+                                        <input id="input-2" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="1" value="{{$produit->average_rating}}"  data-size="md" disabled >
                                     </div>
                                 </div>
                                 

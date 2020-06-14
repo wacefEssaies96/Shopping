@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Image Produit')
+@section('title', 'Edit Image')
 @section('content')
 
 <!-- ##### Main Content Wrapper Start ##### -->
@@ -39,7 +39,7 @@
                             </div>
                         </div>
                         <div class="row justify-content-center">
-                            <button type="submit" name="submit" class="btn amado-btn "> Confirm update</button>
+                            <button type="submit" name="submit" class="btn amado-btn ">Update</button>
                         </div>
                     </form>
                 </div>

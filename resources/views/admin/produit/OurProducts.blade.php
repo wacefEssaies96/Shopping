@@ -48,7 +48,7 @@
         </div>
         <div class="card-body">
             @if($total == 0)
-                <h3 class="text-warning"> The admistration did not add any product ! </h3>
+                <h3 class="text-warning"> The admistration didn't added any product ! </h3>
             @else
              
             <div class="table-responsive">
@@ -67,7 +67,7 @@
                                         <td colspan="4">
                                             <a href="{{ route('Usershow',['userid' =>  $us->id ]) }} ">
                                                 <h4>{{$us->name}}</h4>
-                                                <img class="img-profile rounded-circle"   src="{{asset('images/'.$us->image)}}"  onerror="this.style.display='none'">
+                                                <img style="width:100px; height:100px;" class="img-profile rounded-circle"  src="{{asset('images/'.$us->image)}}"  onerror="this.style.display='none'">
                                             </a>
                                             
                                         </td>
@@ -75,7 +75,7 @@
                                         <td colspan="4">
                                             <a href="{{ route('ConsulterProduit',['prodid' =>  $prod->id ]) }}" >
                                                 <h4>{{$prod->name}}</h4>
-                                                <img width="100%" src="{{asset('storage/'.$prod->photo)}}" onerror="this.style.display='none'">
+                                                <img style="width:300px; height:300px;"  src="{{asset('storage/'.$prod->photo)}}" onerror="this.style.display='none'">
                                             </a>
                                             
                                         </td>

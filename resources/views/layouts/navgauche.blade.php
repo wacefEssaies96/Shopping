@@ -28,7 +28,7 @@
             </li> -->
             @admin 
                 <li>
-                    <a id="home_admin" href="/admin/indexadmin" >Home Admin</a>
+                    <a id="home_admin" href="indexnotification" >Home Admin</a>
                 </li>
             @endadmin
             @client

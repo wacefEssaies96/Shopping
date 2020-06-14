@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('title')
-   Admin
+  All Commandes
 @endsection
 
 @section('content')
@@ -36,9 +36,9 @@
                 <td>{{$commande->quantity_prod}}</td>
                 <td>{{$commande->livraison==1?"Livré":"Non livré"}}</td>
                 <td>{{date('d-m-Y h:i', strtotime($commande->created_at))}}</td>
-                <td><a href="/commande/approve/{{$commande->id}}" class="btn btn-success">Accepter</a></td>
+                <td><a href="/commande/approve/{{$commande->id}}" class="btn btn-success">Accept</a></td>
                 <td><a href="/commande/delete/{{$commande->id}}" class="btn btn-danger delete"
-                data-toggle="modal" data-target="#confirmDeletionModal">Refuser</a>
+                data-toggle="modal" data-target="#confirmDeletionModal">Refuse</a>
                        
                 </td>
               </tr>
@@ -53,7 +53,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Commandes acceptées</h4>
+        <h4 class="card-title">Orders accepted</h4>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -61,10 +61,10 @@
           <table class="table">
             <thead class=" text-primary">
               <th>#</th>
-              <th>id produit</th>
+              <th>Product id</th>
               <th>User ID</th>
-              <th>Quantité</th>
-              <th>Livraison</th>
+              <th>Quantity</th>
+              <th>Delivery</th>
               <th>Date</th>
             </thead>
             <tbody>
@@ -91,18 +91,18 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="confirmDeletionModalLabel">Annuler Commande</h5>
+        <h5 class="modal-title" id="confirmDeletionModalLabel">Cancel order</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-          vous êtes sur de supprimer la commande ??
+          Are you sure to delete this order ?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
         <button type="button" class="btn btn-outline-primary" onclick="event.preventDefault();
-                document.querySelector('#delete-commande-form').submit()">Oui Supprimer</button>
+                document.querySelector('#delete-commande-form').submit()">Delete</button>
       </div>
         <form id="delete-commande-form" action="{{ route('commande.destroy', $commande->id) }}" method="POST" style="display: none;">
           @csrf

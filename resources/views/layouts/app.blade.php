@@ -7,20 +7,23 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Shopping') }}</title>
+    <title>
+        @yield('title')
+    </title>
     @yield('extra-script')
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/core-style.css') }}">
 	<link href="{{asset('css/rating.css')}}" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="{{asset('tpauthad/vendor/fontawesome-free/css/all.min.css')}}">
     <!--Image-->
-<link rel="stylesheet" type="text/css" href="{{asset('aStar/styles/bootstrap-4.1.3/bootstrap.css') }}">
-<link href="{{asset('aStar/plugins/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="{{asset('aStar/plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}">
-<link rel="stylesheet" type="text/css" href="{{asset('aStar/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}">
-<link rel="stylesheet" type="text/css" href="{{asset('aStar/plugins/OwlCarousel2-2.2.1/animate.css') }}">
-<link rel="stylesheet" type="text/css" href="{{asset('aStar/styles/categories.css') }}">
-<link rel="stylesheet" type="text/css" href="{{asset('aStar/styles/categories_responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('aStar/styles/bootstrap-4.1.3/bootstrap.css') }}">
+    <link href="{{asset('aStar/plugins/font-awesome-4.7.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{{asset('aStar/plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('aStar/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('aStar/plugins/OwlCarousel2-2.2.1/animate.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('aStar/styles/categories.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('aStar/styles/categories_responsive.css') }}">
+    
 </head>
 <body>
     <div id="app">

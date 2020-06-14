@@ -1,7 +1,7 @@
 @extends('layouts.auth')
  
 @section('title')
-  Admin
+  User
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h4 class="card-title">Les users</h4>
+        <h4 class="card-title">Users</h4>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -19,11 +19,11 @@
             <thead class=" text-primary">
               <th>#</th>
               <th>Id</th>
-              <th>name</th>
-              <th>email</th>
-              <th>role</th>
-              <th>adresse</th>
-              <th>phone</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Address</th>
+              <th>Phone</th>
               <th>Actions</th>
               
             </thead>
@@ -39,12 +39,12 @@
                 <td>{{$user->phone}}</td>
                 <td>
                 @if($user->role!='admin')
-                <a href="/user-edit/{{$user->id}}" class="btn btn-success">Modifier</a>
+                <a href="/user-edit/{{$user->id}}" class="btn btn-success">Edit</a>
                 <a href="/admin/user/{{$user->etat==1?'disable/' . $user->id : 'enable/' . $user->id}}" class="btn btn-{{$user->etat==1?'primary':'default'}}">{{$user->etat==1?'Désactiver':'Activer'}}</a>
                 <form action="/user-delete/{{$user->id}}" method="post">
                       {{csrf_field()}}
                       {{method_field('DELETE')}}
-                      <button type="submit" class="btn btn-danger delete">Supprimer</button>
+                      <button type="submit" class="btn btn-danger delete">Delete</button>
                   </form>
                 @endif
                 </td>

@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('title')
-  edit-user
+  Edit User
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
 <div class="m-auto" style="max-width:500px;">
   <div class="card">
     <div class="card-header">
-      <h3>Modifier les roles des utilisateurs</h3>
+      <h3>Change user roles</h3>
     </div>
     <div class="card-body">
       <form action="/role-user-update/{{$users->id}}" method="POST">
@@ -20,15 +20,14 @@
           <input type="text" name="name" value="{{$users->name}}" class="form-control">
         </div>
         <div class="form-group">
-          <label>Role-user</label>
+          <label>User-Role</label><br>
           <select name="role" class="form-control">
             <option value="admin">Admin</option>
-            <option value="client">Client(e)</option>
-            <option value="admin-entreprise">admin-entreprise</option>
+            <option value="client">Custmer</option>
           </select>
-        </div>
-        <button type="submit" class="btn btn-success">Mise a jour </button>
-        <a href type="/admin/user" class="btn btn-danger">Annuler </a>
+        </div><br>
+        <button type="submit" class="btn btn-success"> Update </button>
+        <a href type="/admin/user" class="btn btn-danger"> Cancel </a>
       </form>
     </div>
   </div><!--CARD END-->

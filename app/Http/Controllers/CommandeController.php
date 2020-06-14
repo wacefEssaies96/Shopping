@@ -88,7 +88,7 @@ class CommandeController extends Controller
             $commande->livraison = 0;
             $commande->confirm = 0;
             $commande->save(); 
-            $total += $item->quantity_prod * $item->price;
+            $total += ($item->quantity_prod * $item->price)*1.15;
             $produit = Produit::find($item->prod_id);
             $produit->quantity -= $item->quantity_prod;
             $produit->update();
@@ -192,7 +192,7 @@ class CommandeController extends Controller
                     'produser' => $produser
                 ]);
             }else{
-                return redirect()->route('indexadmin');
+                return redirect()->route('indexnotification');
             }
         }else{
             return redirect()->route('home');

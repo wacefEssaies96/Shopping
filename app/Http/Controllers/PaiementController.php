@@ -33,7 +33,6 @@ class PaiementController extends Controller
     public function create()
     {
         Stripe::setApiKey('sk_test_W4rmc6j0k6XCOg8cvVjD7g6a00yW882oW2');
-
         $intent = PaymentIntent::create([
         'amount' => $this->calculTotal(),
         'currency' => 'usd',
@@ -44,10 +43,16 @@ class PaiementController extends Controller
         $user = Auth::user();
         $nameClient = $user->name;
         $total = $this->calculTotal();
+        $paniers = Auth::user()
+            ->paniers()
+            ->join('produits','paniers.prod_id','=','produits.id')
+            ->select('paniers.id','produits.price','produits.photo','paniers.quantity_prod','produits.name','produits.description','produits.quantity')
+            ->get();
         return view('paiement.create',[
             'clientSecret' => $clientSecret,
             'nameClient' => $nameClient,
-            'total' => $total
+            'total' => $total,
+            'paniers' => $paniers
         ]);
     }
 

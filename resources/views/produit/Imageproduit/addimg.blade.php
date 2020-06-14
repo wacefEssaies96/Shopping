@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Edit Image Produit')
+@section('title', 'Add Image')
 @section('content')
 
 <!-- ##### Main Content Wrapper Start ##### -->
@@ -11,7 +11,7 @@
             <div class="col-12 col-lg-10">
                 <div class="checkout_details_area mt-50 clearfix">
                     <div  class="h4 text-gray-900 mb-4 text-warning ">
-                        Ajouter Image
+                        Add Image
                     </div>
 
                     <form action="{{ route('ImageProduit.store') }}" method="post" enctype="multipart/form-data">
@@ -22,7 +22,7 @@
                             <div class="col-6 mb-3">
                                 <label > Image   </label>
                                 
-                                <input type="file" id="image"  name="image" class="form-control"  placeholder="Entrer La Photo de produit">
+                                <input type="file" id="image"  name="image" class="form-control"  placeholder="Place your image here">
                     
                                     
                                 <!-- if( image not null){
@@ -37,7 +37,7 @@
 
                         
                         <div class="row justify-content-center">
-                            <button type="submit" name="submit" class="btn amado-btn "> Ajouter </button>
+                            <button type="submit" name="submit" class="btn amado-btn "> Add </button>
                         </div>
                     </form>
                 </div>

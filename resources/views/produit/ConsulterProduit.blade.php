@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Manage products')
 @section('content')
 @include('layouts.searchWrapper')
 <div class="main-content-wrapper d-flex clearfix">
@@ -22,7 +22,7 @@
                       <nav aria-label="breadcrumb">
                       <ol class="breadcrumb mt-50">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Produit</a></li>
+                        <li class="breadcrumb-item"><a href="#">Product</a></li>
                         <li class="breadcrumb-item"><a href="#">{{$Produit->name}}</a></li>
                       </ol>
                     </nav>
@@ -55,7 +55,7 @@
                                         @foreach ($ImageProduit as $imgprod)
                                             <div class="carousel-item">
                                                 <a class="gallery_img" href="{{ asset('storage/'.$imgprod['image']) }}">
-                                                    <img class="d-block w-100" src="{{ asset('storage/'.$imgprod['image']) }}" alt="ID img prod {{$imgprod['id']}}">
+                                                    <img style="height:600px;" class="d-block w-100" src="{{ asset('storage/'.$imgprod['image']) }}" alt="ID img prod {{$imgprod['id']}}">
                                                 </a>
                                             </div>
                                         @endforeach
@@ -70,7 +70,7 @@
                         <!-- Product Meta Data -->
                         <div class="product-meta-data">
                             <div class="line"></div>
-                            <p class="product-price">{{ $Produit->price }} DT</p>
+                            <p class="product-price">{{ $Produit->price }} $</p>
                             <a href="#"><!--product-details.html-->
                                 <h6>{{ $Produit->name }}</h6>
                             </a>
@@ -85,7 +85,7 @@
                             @admin
                                 @if($produser->role=='admin')
                                     @if($Produit->confirm)
-                                      Your Product on the site You cannot modify or delete it
+                                      Your Product is on the site You cannot modify or delete it
                                     @else
                                         <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a>
                                         <a href="#"  class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
@@ -97,7 +97,7 @@
                             @client
                                 @if($Produit->user_id == $user->id )
                                     @if($Produit->confirm)
-                                      Your Product on the site You cannot modify or delete it
+                                      Your Product is on the site You cannot modify or delete it
                                     @else
                                         <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a>
                                         <a href="#" class="btn amado-btn" data-toggle="modal" data-target="#confirmDeleteModal">Delete</a>
@@ -117,7 +117,7 @@
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Delete Product </h5>
+        <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

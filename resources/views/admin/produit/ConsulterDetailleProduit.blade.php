@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('title')
-   Detaille de produit
+   Details of product
 @endsection
 
 @section('content')

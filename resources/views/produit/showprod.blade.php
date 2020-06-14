@@ -1,6 +1,7 @@
 @extends('layouts.app')
-
+@section('title', 'Show products')
 @section('content')
+@include('layouts.searchWrapper')
 <div class="main-content-wrapper d-flex clearfix">
     @include('layouts.navgauche')
 
@@ -12,7 +13,7 @@
                       <nav aria-label="breadcrumb">
                       <ol class="breadcrumb mt-50">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Produit</a></li>
+                        <li class="breadcrumb-item"><a href="#">Product</a></li>
                         <li class="breadcrumb-item"><a href="#">{{$Produit->name}}</a></li>
                       </ol>
                     </nav>
@@ -27,7 +28,7 @@
                             @if($total != 0)
                                 <ol class="carousel-indicators">
                                     {{$counter = 0}}
-                                    <li class="active" data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
+                                    <li  class="active" data-target="#product_details_slider" data-slide-to="{{$counter}}" style="background-image: url({{ asset('storage/'.$Produit['photo']) }});">
                                     </li>
                                     @foreach ($ImageProduit as $imgprod)    
                                         {{$counter+=1}}
@@ -39,7 +40,7 @@
                               <div class="carousel-inner">
                                   <div class="carousel-item active">
                                       <a class="gallery_img" href="{{ asset('storage/'.$Produit['photo']) }}">
-                                          <img class="d-block w-100" src="{{ asset('storage/'.$Produit['photo']) }}" alt="ID img prod  {{$Produit['id']}}">
+                                          <img style="height:600px;" class="d-block w-100" src="{{ asset('storage/'.$Produit['photo']) }}" alt="ID img prod  {{$Produit['id']}}">
                                       </a>
                                   </div>
                                   
@@ -47,7 +48,7 @@
                                         @foreach ($ImageProduit as $imgprod)
                                             <div class="carousel-item">
                                                 <a class="gallery_img" href="{{ asset('storage/'.$imgprod['image']) }}">
-                                                    <img class="d-block w-100" src="{{ asset('storage/'.$imgprod['image']) }}" alt="ID img prod {{$imgprod['id']}}">
+                                                    <img style="height:600px;" class="d-block w-100" src="{{ asset('storage/'.$imgprod['image']) }}" alt="ID img prod {{$imgprod['id']}}">
                                                 </a>
                                             </div>
                                         @endforeach
@@ -81,7 +82,11 @@
                                 
                             
                             <!-- Avaiable -->
-                            <p class="avaibility"><i class="fa fa-circle"></i> In Stock</p>
+                            @if($Produit->quantity > 0)
+                                <p class="avaibility"><i class="fa fa-circle"></i> In stock</p>
+                            @else
+                                <p class="avaibility"><i class="fa fa-circle" style="color:red;"></i> Out of stock</p>
+                            @endif
                             @if($canComment)
                                 <div class="review">
                                     <a href="#" id="write-review">Write A Review</a>
@@ -112,12 +117,34 @@
                                
                                     <form action="{{route('panier.store')}}" method="post">
                                         @csrf
-                                        <div class="form-group">
-                                            <label>Quantity : </label>
-                                            <input class="form-control" value="1" min="1" max="{{$Produit->quantity}}" type="number"  type="number" name="qtt" id="qtt">
-                                        </div>
-                                        <input type="hidden" name="prod_id" id="prod_id" value="{{$Produit->id}}">
-                                        <button class="btn amado-btn" type="submit"><img src="{{ asset('img/core-img/cart.png') }}" alt="">Add to cart</button>
+                                        
+                                        @foreach($users as $u)
+                                            @if( $u->id == $Produit->user_id)
+                                                @if($u->role == 'admin' )
+                                                @if($Produit->quantity > 0)
+                                                    
+                                                <div class="form-group">
+                                                        <label>Quantity : </label>
+                                                        <input class="form-control" value="1" min="1" max="{{$Produit->quantity}}" type="number"  type="number" name="qtt" id="qtt">
+                                                    </div>
+                                                    <input type="hidden" name="prod_id" id="prod_id" value="{{$Produit->id}}">
+                                                    <button class="btn amado-btn" type="submit"><img src="{{ asset('img/core-img/cart.png') }}" alt="">Add to cart</button>
+                                                    
+                                                    
+                                                @endif
+
+                                                    
+                                                @else
+                                                
+                                                <div class="card" style="width: 18rem;">
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item"><h3>Phone number : </h3>{{$u->phone}}</li>
+                                                        <li class="list-group-item"><h3>Email : </h3>{{$u->email}}</li>
+                                                    </ul>
+                                                </div>
+                                                @endif
+                                            @endif
+                                        @endforeach
                                     </form>
                                 
                                 <!-- <a href="{{ route('Produit.edit', $Produit->id) }}" class="btn amado-btn">Edit</a><--class="btn btn-outline-info"-->
@@ -139,7 +166,7 @@
         @foreach($comments as $comment)
             <div class="row mb-3">
                 <div class="col-2">
-                    <img style="width:100px; height:100px;" src="{{(starts_with($comment->image, 'images') ? '/':'') . $comment->image}}" alt="">
+                    <img style="width:100px; height:100px;" src="{{asset('images/'.$comment->image)}}" alt="">
                 </div>
                 <div class="col-10">
                     <p>{{$comment->comment}}</p>

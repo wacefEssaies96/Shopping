@@ -126,7 +126,8 @@ class ProduitController extends Controller
                          'user' => Auth::id(),
                          'total'=> $total,
                          'canComment' => ($comment == null),
-                         'comments' => $comments
+                         'comments' => $comments,
+                         'users' => User::all()
                         ]);
         }else{
             return redirect()->route('home');
@@ -180,7 +181,7 @@ class ProduitController extends Controller
                     'produser' => $produser
                 ]);
             }else{
-                return redirect()->route('indexadmin');
+                return redirect()->route('indexnotification');
             }
         }else{
             return redirect()->route('home');
@@ -303,7 +304,8 @@ class ProduitController extends Controller
         $NCD = $Notification->notification();
 
         $produits =  Produit::paginate(10);
-        
+      
+
         $total = 0;
         foreach($produits as $item){
             $total += 1;

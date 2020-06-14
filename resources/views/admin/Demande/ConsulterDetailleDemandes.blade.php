@@ -1,7 +1,7 @@
 @extends('layouts.auth')
 
 @section('title')
-   Detaille de demande
+   Details of demands
 @endsection
 
 @section('content')
